@@ -1,0 +1,38 @@
+{
+  "name": "dindinwebui",
+  "version": "0.0.1",
+  "description": "Web interface for DinDin",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "build-dev": "webpack --progress --colors --watch",
+    "test": "jest",
+    "test-dev": "jest --watch"
+  },
+  "author": "Dan Thompson",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "6.23.0",
+    "babel-eslint": "8.2.5",
+    "babel-jest": "23.2.0",
+    "babel-loader": "7.1.5",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-react": "6.24.1",
+    "dotenv": "6.0.0",
+    "eslint": "5.0.1",
+    "jest": "23.3.0",
+    "jsdom": "11.11.0",
+    "scss": "0.2.4",
+    "sinon": "6.1.2",
+    "webpack": "4.15.1",
+    "webpack-cli": "3.0.8"
+  },
+  "dependencies": {
+    "babel-polyfill": "6.26.0",
+    "rambda": "1.1.5",
+    "react": "16.4.1",
+    "react-dom": "16.4.1"
+  }
+}
