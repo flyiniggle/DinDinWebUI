@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "babel-polyfill": "6.26.0",
-    "rambda": "1.1.5",
+    "ramda": "0.25.0",
     "react": "16.4.1",
     "react-dom": "16.4.1"
   }
