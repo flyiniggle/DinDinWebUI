@@ -1,7 +1,7 @@
 module.exports = {
     coverageDirectory: "./app",
     moduleDirectories: ["node_modules"],
-    moduleNameMappers: {
+    moduleNameMapper: {
         "^DinDin(.*)$": "<rootDir>/",
         "^Components(.*)$": "<rootDir>/Components"
     },
