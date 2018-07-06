@@ -13,7 +13,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            "dindin": __dirname + "/app"
+            'DinDin': `${__dirname}/app`,
+            'Components': `${__dirname}/app/Components`
         }
     },
     module: {
