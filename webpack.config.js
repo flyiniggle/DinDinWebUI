@@ -1,8 +1,11 @@
-path = require("path");
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
 require('dotenv').config();
 
-const environment = process.env.DEVELOPMENT ? "development" : "production";
-const minimize = !process.env.DEVELOPMENT;
+const environment = process.env.NODE_ENV || "production";
+const minimize = environment === "production";
 
 module.exports = {
     mode: environment,
@@ -13,7 +16,8 @@ module.exports = {
         vendors: ['babel-polyfill', 'react', 'react-dom', 'ramda']
     },
     output: {
-        path: path.join(__dirname, 'build')
+        path: path.join(__dirname, 'build'),
+        filename: '[name].[chunkhash].js'
     },
     resolve: {
         alias: {
@@ -29,11 +33,27 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
+                test: /\.(sa|sc|c)ss$/,
+                use: [
+                    // fallback to style-loader in development
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "sass-loader"
+                ]
             }
         ]
     },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'style.[contenthash].css'
+        }),
+        new HtmlWebpackPlugin({
+            hash: true,
+            template: './index.html',
+            filename: 'index.html'
+        }),
+        new WebpackMd5Hash()
+    ],
     optimization: {
         minimize: minimize,
         splitChunks: {
