@@ -21,8 +21,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'DinDin': `${__dirname}/app`,
-            'Components': `${__dirname}/app/Components`
+            DinDin: `${__dirname}/app`,
+            Components: `${__dirname}/app/Components`
         }
     },
     module: {
@@ -35,7 +35,6 @@ module.exports = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    // fallback to style-loader in development
                     MiniCssExtractPlugin.loader,
                     "css-loader",
                     "sass-loader"
