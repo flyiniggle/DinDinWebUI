@@ -61,6 +61,7 @@
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/jsx-indent": ["warn", 4],
     "react/jsx-one-expression-per-line": "off",
+    "react/jsx-tag-spacing": "warn",
     "react/prefer-stateless-function": "warn",
     "semi": ["warn", "always"],
     "space-before-function-paren": [
