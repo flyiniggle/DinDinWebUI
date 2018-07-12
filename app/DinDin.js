@@ -12,7 +12,7 @@ export default function() {
                 <Link to="/dashboard">Dashboard</Link>
             </nav>
             <div>
-                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/dashboard" component={ Dashboard } />
             </div>
         </div>
     );
