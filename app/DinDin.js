@@ -3,7 +3,7 @@ import { Link, Route } from 'react-router-dom';
 
 import Dashboard from "Components/Dashboard/core";
 
-import "DinDin/DinDin.css";
+import "Styles/core.sass";
 
 export default function() {
     return (
