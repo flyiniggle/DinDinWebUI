@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --progress --colors",
     "build-dev": "webpack --progress --colors --watch",
-    "lint": "eslint --fix app/",
+    "lint": "eslint --fix ./",
     "storybook": "start-storybook -p 9001 -c storybook",
     "test": "jest",
     "test-dev": "jest --watch"
@@ -26,7 +26,7 @@
     "babel-preset-react": "6.24.1",
     "css-loader": "^1.0.0",
     "dotenv": "6.0.0",
-    "eslint": "5.0.1",
+    "eslint": "^5.1.0",
     "eslint-config-airbnb": "17.0.0",
     "eslint-plugin-import": "2.13.0",
     "eslint-plugin-jsx-a11y": "6.1.0",
