@@ -11,4 +11,13 @@ storiesOf('Inputs/TextInput', module)
     })
     .add('show a value', function() {
         return <TextInput value="some text" />;
+    })
+    .add('show an error', function() {
+        return <TextInput value="bad text" errorMessage="wrong!" />;
+    })
+    .add('show a warning', function() {
+        return <TextInput value="bad text" warningMessage="watch out!" />;
+    })
+    .add('show an info message', function() {
+        return <TextInput value="bad text" infoMessage="um hey..." />;
     });

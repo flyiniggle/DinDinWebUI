@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import TextInput, { getErrorState } from './TextInput';
+import styles from './TextInput.sass';
 
 describe('#Components #Shared #Inputs #TextInput', function() {
     describe('#getErrorState', function() {
@@ -13,8 +14,8 @@ describe('#Components #Shared #Inputs #TextInput', function() {
             };
             const expected = {
                 message: 'Error!',
-                messageClass: 'err',
-                inputClass: 'err'
+                messageClass: styles.errorMessage,
+                inputClass: styles.errorInput
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -28,8 +29,8 @@ describe('#Components #Shared #Inputs #TextInput', function() {
             };
             const expected = {
                 message: 'Watch out...',
-                messageClass: 'warn',
-                inputClass: 'warn'
+                messageClass: styles.warningMessage,
+                inputClass: styles.warningInput
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -43,8 +44,8 @@ describe('#Components #Shared #Inputs #TextInput', function() {
             };
             const expected = {
                 message: 'Hey, fyi...',
-                messageClass: 'info',
-                inputClass: 'info'
+                messageClass: styles.infoMessage,
+                inputClass: styles.infoInput
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -73,8 +74,8 @@ describe('#Components #Shared #Inputs #TextInput', function() {
             };
             const expected = {
                 message: 'Error!',
-                messageClass: 'err',
-                inputClass: 'err'
+                messageClass: styles.errorMessage,
+                inputClass: styles.errorInput
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -88,8 +89,8 @@ describe('#Components #Shared #Inputs #TextInput', function() {
             };
             const expected = {
                 message: 'Watch out...',
-                messageClass: 'warn',
-                inputClass: 'warn'
+                messageClass: styles.warningMessage,
+                inputClass: styles.warningInput
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -115,6 +116,35 @@ describe('#Components #Shared #Inputs #TextInput', function() {
             const input = shallow(<TextInput value={ value } />);
 
             expect(input.find('input[type="text"]').prop('value')).toEqual(value);
+        });
+
+        describe('#Errors', function() {
+            it('should display an error state.', function() {
+                const error = 'wrong!';
+                const input = shallow(<TextInput value="bad input" errorMessage={ error } />);
+
+                expect(input.find('input[type="text"]').hasClass(styles.errorInput)).toBe(true);
+                expect(input.find('span').hasClass(styles.errorMessage)).toBe(true);
+                expect(input.find('span').text()).toBe(error);
+            });
+
+            it('should display a warning state.', function() {
+                const warning = 'watch out';
+                const input = shallow(<TextInput value="weird input" warningMessage={ warning } />);
+
+                expect(input.find('input[type="text"]').hasClass(styles.warningInput)).toBe(true);
+                expect(input.find('span').hasClass(styles.warningMessage)).toBe(true);
+                expect(input.find('span').text()).toBe(warning);
+            });
+
+            it('should display an info state.', function() {
+                const info = 'hey man';
+                const input = shallow(<TextInput value="just some input" infoMessage={ info } />);
+
+                expect(input.find('input[type="text"]').hasClass(styles.infoInput)).toBe(true);
+                expect(input.find('span').hasClass(styles.infoMessage)).toBe(true);
+                expect(input.find('span').text()).toBe(info);
+            });
         });
     });
 });

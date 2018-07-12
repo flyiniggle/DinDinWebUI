@@ -6,7 +6,7 @@ module.exports = {
     moduleNameMapper: {
         '^DinDin(.*)$': path.join('<rootDir>', 'app', '$1'),
         '^Components(.*)$': path.join('<rootDir>', 'app', 'Components', '$1'),
-        '^\\.(css|scss|sass)$': 'identity-obj-proxy'
+        '^.+\\.(css|scss|sass)$': 'identity-obj-proxy'
     },
     rootDir: '../',
     roots: ['<rootDir>/app'],

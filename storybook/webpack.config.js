@@ -19,7 +19,12 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     'style-loader',
-                    'css-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true
+                        }
+                    },
                     {
                         loader: 'postcss-loader',
                         options: {

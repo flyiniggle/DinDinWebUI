@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './TextInput.sass';
+
 
 function getErrorState(props) {
     const { errorMessage, warningMessage, infoMessage } = props;
@@ -14,11 +16,11 @@ function getErrorState(props) {
     let errorState;
 
     if (errorMessage) {
-        errorState = new ErrorState(errorMessage, 'err', 'err');
+        errorState = new ErrorState(errorMessage, styles.errorMessage, styles.errorInput);
     } else if (warningMessage) {
-        errorState = new ErrorState(warningMessage, 'warn', 'warn');
+        errorState = new ErrorState(warningMessage, styles.warningMessage, styles.warningInput);
     } else if (infoMessage) {
-        errorState = new ErrorState(infoMessage, 'info', 'info');
+        errorState = new ErrorState(infoMessage, styles.infoMessage, styles.infoInput);
     } else {
         errorState = new ErrorState('', '', '');
     }
@@ -37,7 +39,7 @@ const TextInput = function(props) {
                 value={ value }
                 placeholder={ placeholder }
                 className={ errorLevelState.inputClass } />
-            <span className={ errorLevelState.messageClass }>{errorLevelState.message}</span>
+            <span className={ `${errorLevelState.messageClass} ${styles.errorStateMessage}` }>{errorLevelState.message}</span>
         </div>
     );
 };

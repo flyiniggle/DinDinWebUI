@@ -1,0 +1,25 @@
+@import "~Styles/core.sass"
+@import "~Styles/Feedback/errorColor.mixin.sass"
+@import "~Styles/Feedback/warningColor.mixin.sass"
+@import "~Styles/Feedback/infoColor.mixin.sass"
+
+.errorStateMessage
+  //display: none
+
+.errorMessage
+  @include errorColor
+
+.warningMessage
+  @include warningColor
+
+.infoMessage
+  @include infoColor
+
+.errorInput
+  @include errorColor
+
+.warningInput
+  @include warningColor
+
+.infoInput
+  @include infoColor
