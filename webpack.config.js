@@ -1,13 +1,13 @@
-const path = require("path");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 require('dotenv').config();
 
-const ENV = process.env.NODE_ENV || "production";
-const IN_PRODUCTION = ENV === "production";
+const ENV = process.env.NODE_ENV || 'production';
+const IN_PRODUCTION = ENV === 'production';
 
 module.exports = {
     mode: ENV,
@@ -39,7 +39,7 @@ module.exports = {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader",
+                    'css-loader',
                     {
                         loader: 'postcss-loader',
                         options: {
@@ -48,7 +48,7 @@ module.exports = {
                             })]
                         }
                     },
-                    "sass-loader?sourceMap"
+                    'sass-loader?sourceMap'
                 ]
             }
         ]

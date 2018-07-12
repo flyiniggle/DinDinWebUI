@@ -1,10 +1,10 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
-    context: path.join(__dirname, ".."),
+    context: path.join(__dirname, '..'),
     devtool: 'source-map',
     resolve: {
         alias: {
@@ -18,8 +18,8 @@ module.exports = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    "style-loader",
-                    "css-loader",
+                    'style-loader',
+                    'css-loader',
                     {
                         loader: 'postcss-loader',
                         options: {
@@ -28,7 +28,7 @@ module.exports = {
                             })]
                         }
                     },
-                    "sass-loader?sourceMap"
+                    'sass-loader?sourceMap'
                 ]
             }
         ]

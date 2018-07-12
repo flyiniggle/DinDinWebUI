@@ -54,7 +54,7 @@
     "prefer-const": 1,
     "prefer-destructuring": 0,
     "prefer-template": 1,
-    "quotes": 0,
+    "quotes": ["warn", "single"],
     "quote-props": 1,
     "radix": "off",
     "react/jsx-closing-tag-location": "warn",
