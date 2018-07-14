@@ -57,6 +57,7 @@
     "quotes": ["warn", "single"],
     "quote-props": 1,
     "radix": "off",
+    "react/destructuring-assignment": "off",
     "react/jsx-closing-bracket-location": 0,
     "react/jsx-closing-tag-location": "warn",
     "react/jsx-curly-spacing": ["warn", {"when": "always"}],
@@ -67,6 +68,7 @@
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-tag-spacing": "warn",
     "react/prefer-stateless-function": "warn",
+    "react/sort-comp": "warn",
     "semi": ["warn", "always"],
     "space-before-function-paren": [
       "warn",

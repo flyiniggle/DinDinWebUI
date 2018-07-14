@@ -8,8 +8,10 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
         alias: {
+            Business: `${__dirname}/../app/Business`,
             DinDin: `${__dirname}/../app`,
             Components: `${__dirname}/../app/Components`,
+            UI: `${__dirname}/../app/UI`,
             Styles: `${__dirname}/../app/Styles`
         }
     },

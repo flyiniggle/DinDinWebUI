@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import TextInput, { getErrorState } from './TextInput';
 import styles from './TextInput.sass';
 
-describe('#Components #Shared #Inputs #TextInput', function() {
+describe('#UI #Form #TextInput', function() {
     describe('#getErrorState', function() {
         it('should return an error level state if given an error message.', function() {
             const input = {
@@ -144,6 +144,15 @@ describe('#Components #Shared #Inputs #TextInput', function() {
                 expect(input.find('input[type="text"]').hasClass(styles.infoInput)).toBe(true);
                 expect(input.find('span').hasClass(styles.infoMessage)).toBe(true);
                 expect(input.find('span').text()).toBe(info);
+            });
+
+            it('should display a normal state.', function() {
+                const input = shallow(<TextInput value="just some input" />);
+
+                expect(input.find('input[type="text"]').hasClass(styles.infoInput)).toBe(false);
+                expect(input.find('input[type="text"]').hasClass(styles.warningInput)).toBe(false);
+                expect(input.find('input[type="text"]').hasClass(styles.errorInput)).toBe(false);
+                expect(input.find('span').exists()).toBe(false);
             });
         });
     });

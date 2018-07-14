@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import TextInput from 'Components/Shared/Inputs/TextInput/TextInput';
+import TextInput from 'UI/Forms/TextInput/TextInput';
 
-storiesOf('Inputs/TextInput', module)
+storiesOf('UI/Inputs/TextInput', module)
     .add('Render', function() {
         return <TextInput />;
     })

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 
-import Dashboard from 'Components/Dashboard/core';
+import Dashboard from 'Components/Dashboard/Dashboard';
 
 import 'Styles/core.sass';
 
