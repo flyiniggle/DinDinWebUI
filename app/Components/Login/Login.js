@@ -4,7 +4,7 @@ import AuthService from 'Business/Auth/Service';
 import getMessagesForField from 'Business/Validation/getMessagesForField';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 
-import check from './Validate';
+import check from './validate';
 
 const getPasswordErrors = getMessagesForField('password');
 const getUsernameErrors = getMessagesForField('username');
