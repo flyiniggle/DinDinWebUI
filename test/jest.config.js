@@ -2,6 +2,9 @@ const path = require('path');
 
 module.exports = {
     coverageDirectory: path.join('<rootDir>', 'test', 'coverage'),
+    globals: {
+        __APIRoot__: 'test'
+    },
     moduleDirectories: ['node_modules'],
     moduleNameMapper: {
         '^Business(.*)$': path.join('<rootDir>', 'app', 'Business', '$1'),

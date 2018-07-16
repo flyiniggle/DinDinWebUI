@@ -1,5 +1,6 @@
 import React from 'react';
 import AuthService from 'Business/Auth/Service';
+import TextInput from 'UI/Forms/TextInput/TextInput';
 
 
 class Login extends React.Component {
@@ -7,7 +8,9 @@ class Login extends React.Component {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            usernameError: '',
+            passwordError: ''
         };
     }
 
@@ -22,10 +25,10 @@ class Login extends React.Component {
             <form>
                 <div className="form-group">
                     <label>username</label>
-                    <input
-                        type="text"
+                    <TextInput
+                        placeholder="Username"
                         onChange={ (e) => this.setState({ username: e.target.value }) }
-                        className="form-control" />
+                    />
                     <label>password</label>
                     <input
                         type="text"
