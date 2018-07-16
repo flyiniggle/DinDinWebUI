@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { identity, ifElse } from 'ramda';
 
-//import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import styles from './TextInput.sass';
 
 
@@ -78,7 +77,7 @@ class TextInput extends React.Component {
                     type="text"
                     value={ this.state.value }
                     placeholder={ placeholder }
-                    className={ errorLevelState.inputClass }
+                    className={ `form-control ${errorLevelState.inputClass}` }
                     onChange={ this.update } />
                 {renderErrorMessage(errorLevelState)}
             </div>
