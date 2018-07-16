@@ -1,4 +1,6 @@
 const path = require('path');
+
+const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -8,6 +10,7 @@ require('dotenv').config();
 
 const ENV = process.env.NODE_ENV || 'production';
 const IN_PRODUCTION = ENV === 'production';
+const APIRoot = process.env.API_ROOT;
 
 module.exports = {
     mode: ENV,
@@ -69,7 +72,10 @@ module.exports = {
             template: './index.html',
             filename: 'index.html'
         }),
-        new WebpackMd5Hash()
+        new WebpackMd5Hash(),
+        new webpack.DefinePlugin({
+            __APIRoot__: JSON.stringify(`${APIRoot}`)
+        })
     ],
     optimization: {
         minimize: IN_PRODUCTION,

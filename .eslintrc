@@ -12,6 +12,9 @@
     "prototypejs": false, // prototypejs global variables
     "shelljs": false      // shelljs global variables
   },
+  "globals": {
+    "__APIRoot__": true
+  },
   "parser": "babel-eslint",
   "rules": {
     "arrow-parens": 0,
@@ -28,7 +31,9 @@
     "import/no-dynamic-require": 0,
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 0,
+    "import/order": ["warn", {"newlines-between": "always"}],
     "import/prefer-default-export": 0,
+    "jsx-a11y/label-has-for": "off",
     "max-len": 0,
     "no-cond-assign": 0,
     "no-multi-spaces": 1,
