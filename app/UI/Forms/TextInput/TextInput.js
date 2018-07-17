@@ -72,14 +72,18 @@ class TextInput extends React.Component {
         const errorLevelState = getErrorState({ errorMessage, warningMessage, infoMessage });
 
         return (
-            <div>
-                <input
-                    type="text"
-                    value={ this.state.value }
-                    placeholder={ placeholder }
-                    className={ `form-control ${errorLevelState.inputClass}` }
-                    onChange={ this.update } />
-                {renderErrorMessage(errorLevelState)}
+            <div className="grid">
+                <div className="row">
+                    <input
+                        type="text"
+                        value={ this.state.value }
+                        placeholder={ placeholder }
+                        className={ `form-control ${errorLevelState.inputClass}` }
+                        onChange={ this.update } />
+                </div>
+                <div className="row">
+                    {renderErrorMessage(errorLevelState)}
+                </div>
             </div>
         );
     }

@@ -1,4 +1,4 @@
-import { head, pipe, prop } from 'ramda';
+import { curry, head, pipe, prop } from 'ramda';
 import React from 'react';
 import AuthService from 'Business/Auth/Service';
 import getMessagesForField from 'Business/Validation/getMessagesForField';
@@ -10,7 +10,18 @@ const getPasswordErrors = getMessagesForField('password');
 const getUsernameErrors = getMessagesForField('username');
 const getErrorMessage = pipe(head, prop('message'));
 
+const updateField = curry(function(field, value) {
+    this.setState({
+        [field]: value,
+        [`${field}Error`]: ''
+    });
+});
+
 class Login extends React.Component {
+    updateUsername = updateField('username');
+
+    updatePassword = updateField('password');
+
     constructor(props) {
         super(props);
         this.state = {
@@ -19,6 +30,9 @@ class Login extends React.Component {
             usernameError: '',
             passwordError: ''
         };
+
+        this.updateUsername.bind(this);
+        this.updatePassword.bind(this);
     }
 
     login = () => {
@@ -44,16 +58,16 @@ class Login extends React.Component {
                         placeholder="Username"
                         errorMessage={ this.state.usernameError }
                         value={ this.state.username }
-                        onChange={ (e) => this.setState({ username: e.target.value }) }
+                        onChange={ (e) => this.updateUsername(e.target.value) }
                     />
                     <label>password</label>
                     <TextInput
                         placeholder="Password"
                         errorMessage={ this.state.passwordError }
                         value={ this.state.password }
-                        onChange={ (e) => this.setState({ password: e.target.value}) }
+                        onChange={ (e) => this.updatePassword(e.target.value) }
                     />
-                    <input type="button" onClick={ this.login } />
+                    <input type="button" value="log in" onClick={ this.login } />
                 </div>
             </form>
         );
