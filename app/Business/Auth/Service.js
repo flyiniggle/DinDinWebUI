@@ -10,7 +10,8 @@ const AuthService = {
         return fetch(`${DinDinAPI}/api-token-auth/`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json; charset=utf-8'
+                'Content-Type': 'application/json; charset=utf-8',
+                Accept: 'application/json'
             },
             body: JSON.stringify({username: u, password: p})
         });
