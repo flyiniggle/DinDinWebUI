@@ -1,5 +1,4 @@
 import ErrorType from 'Business/Validation/Types/ErrorLevel';
-import Result from 'Business/Validation/Types/Message';
 
 import Message from './Message';
 
@@ -41,13 +40,13 @@ describe('#Business #Validation #Types #Message', function() {
     });
 
     it('should throw an error if the type param is not an ErrorType.', function() {
-        const thrower = () => new Result('lalala', 'testField', 5, 'no');
+        const thrower = () => new Message('lalala', 'testField', 5, 'no');
 
         expect(thrower).toThrow('"type" parameter must be an ErrorLevel value.');
     });
 
     it('should throw an error if the field param is missing.', function() {
-        const thrower = () => new Result(ErrorType.error);
+        const thrower = () => new Message(ErrorType.error);
 
         expect(thrower).toThrow('"field" parameter is required.');
     });

@@ -1,3 +1,4 @@
+import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { fake, stub } from 'sinon';
@@ -22,7 +23,8 @@ describe('#Components #Login #Login', function() {
         wrapper.setState({password: 'test'});
         wrapper.find('input[type="button"]').simulate('click');
 
-        expect(wrapper.state()).toHaveProperty('usernameError', 'required');
+        expect(wrapper.state()).toHaveProperty('usernameError.errorLevel', ErrorLevel.error);
+        expect(wrapper.state()).toHaveProperty('usernameError.message', 'required');
     });
 
     it('should have an error message if the user tries to login without a password.', function() {
@@ -31,7 +33,8 @@ describe('#Components #Login #Login', function() {
         wrapper.setState({username: 'test'});
         wrapper.find('input[type="button"]').simulate('click');
 
-        expect(wrapper.state()).toHaveProperty('passwordError', 'required');
+        expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
+        expect(wrapper.state()).toHaveProperty('passwordError.message', 'required');
     });
 
     it('should request an auth token.', function() {

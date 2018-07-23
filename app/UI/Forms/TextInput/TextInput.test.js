@@ -1,21 +1,24 @@
+import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
+import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
 import React from 'react';
 import { shallow } from 'enzyme';
 
 import TextInput, { getErrorState } from './TextInput';
-import styles from './TextInput.sass';
+import './TextInput.sass';
 
 describe('#UI #Form #TextInput', function() {
     describe('#getErrorState', function() {
-        it('should return an error level state if given an error message.', function() {
+        it('should return an error level state if given an error.', function() {
             const input = {
-                errorMessage: 'Error!',
-                warningMessage: '',
-                infoMessage: ''
+                message: 'Error!',
+                errorLevel: ErrorLevel.error
             };
             const expected = {
                 message: 'Error!',
-                messageClass: styles.errorMessage,
-                inputClass: styles.errorInput
+                messageClass: 'errorMessage',
+                inputTextClass: 'errorInputText',
+                inputClass: 'is-invalid',
+                formClass: 'has-danger'
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -23,14 +26,15 @@ describe('#UI #Form #TextInput', function() {
 
         it('should return an warning level state if given a warning message.', function() {
             const input = {
-                errorMessage: '',
-                warningMessage: 'Watch out...',
-                infoMessage: ''
+                message: 'Watch out...',
+                errorLevel: ErrorLevel.warning
             };
             const expected = {
                 message: 'Watch out...',
-                messageClass: styles.warningMessage,
-                inputClass: styles.warningInput
+                messageClass: 'warningMessage',
+                inputTextClass: 'warningInputText',
+                inputClass: 'is-invalid',
+                formClass: 'has-warning'
             };
 
             expect(getErrorState(input)).toEqual(expected);
@@ -38,62 +42,68 @@ describe('#UI #Form #TextInput', function() {
 
         it('should return an info level state if given a info message.', function() {
             const input = {
-                errorMessage: '',
-                warningMessage: '',
-                infoMessage: 'Hey, fyi...'
+                message: 'Hey, fyi...',
+                errorLevel: ErrorLevel.info
             };
             const expected = {
                 message: 'Hey, fyi...',
-                messageClass: styles.infoMessage,
-                inputClass: styles.infoInput
+                messageClass: 'infoMessage',
+                inputTextClass: 'infoInputText',
+                inputClass: 'is-invalid',
+                formClass: 'has-info'
             };
 
             expect(getErrorState(input)).toEqual(expected);
         });
 
         it('should return an empty level state if given no message.', function() {
-            const input = {
-                errorMessage: '',
-                warningMessage: '',
-                infoMessage: ''
-            };
             const expected = {
                 message: '',
                 messageClass: '',
-                inputClass: ''
+                inputTextClass: '',
+                inputClass: '',
+                formClass: ''
             };
 
-            expect(getErrorState(input)).toEqual(expected);
+            expect(getErrorState()).toEqual(expected);
+        });
+    });
+
+    describe('#showInputErrorClass', function() {
+        it('should return true if there is an error message.', function() {
+            const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
+            const input = shallow(<TextInput value="just some input" message={ error } />);
+
+            expect(input.instance().showInputErrorClass()).toBe(true);
         });
 
-        it('should give precedence to error messages over warning and info messages.', function() {
-            const input = {
-                errorMessage: 'Error!',
-                warningMessage: 'not me',
-                infoMessage: 'not me either'
-            };
-            const expected = {
-                message: 'Error!',
-                messageClass: styles.errorMessage,
-                inputClass: styles.errorInput
-            };
+        it('should return false if there is no error message.', function() {
+            const input = shallow(<TextInput value="just some input" />);
 
-            expect(getErrorState(input)).toEqual(expected);
+            expect(input.instance().showInputErrorClass()).toBe(false);
+        });
+    });
+
+    describe('#showInputTextErrorClass', function() {
+        it('should return true if there is an error message and the input is not focused.', function() {
+            const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
+            const input = shallow(<TextInput value="just some input" message={ error } />);
+
+            expect(input.instance().showInputTextErrorClass()).toBe(true);
         });
 
-        it('should give precedence to warning messages over info messages.', function() {
-            const input = {
-                errorMessage: '',
-                warningMessage: 'Watch out...',
-                infoMessage: 'not me'
-            };
-            const expected = {
-                message: 'Watch out...',
-                messageClass: styles.warningMessage,
-                inputClass: styles.warningInput
-            };
+        it('should return false if there is an error message and the input is focused.', function() {
+            const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
+            const input = shallow(<TextInput value="just some input" message={ error } />);
 
-            expect(getErrorState(input)).toEqual(expected);
+            input.setState({focusedAfterError: true});
+            expect(input.instance().showInputTextErrorClass()).toBe(false);
+        });
+
+        it('should return false if there is no error message.', function() {
+            const input = shallow(<TextInput value="just some input" />);
+
+            expect(input.instance().showInputTextErrorClass()).toBe(false);
         });
     });
 
@@ -120,38 +130,38 @@ describe('#UI #Form #TextInput', function() {
 
         describe('#Errors', function() {
             it('should display an error state.', function() {
-                const error = 'wrong!';
-                const input = shallow(<TextInput value="bad input" errorMessage={ error } />);
+                const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
+                const input = shallow(<TextInput value="bad input" message={ error } />);
 
-                expect(input.find('input[type="text"]').hasClass(styles.errorInput)).toBe(true);
-                expect(input.find('span').hasClass(styles.errorMessage)).toBe(true);
-                expect(input.find('span').text()).toBe(error);
+                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
+                expect(input.find('span').hasClass('errorMessage')).toBe(true);
+                expect(input.find('span').text()).toBe(error.message);
             });
 
             it('should display a warning state.', function() {
-                const warning = 'watch out';
-                const input = shallow(<TextInput value="weird input" warningMessage={ warning } />);
+                const warning = new InputMessage({message: 'watch out', type: ErrorLevel.warning});
+                const input = shallow(<TextInput value="weird input" message={ warning } />);
 
-                expect(input.find('input[type="text"]').hasClass(styles.warningInput)).toBe(true);
-                expect(input.find('span').hasClass(styles.warningMessage)).toBe(true);
-                expect(input.find('span').text()).toBe(warning);
+                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
+                expect(input.find('span').hasClass('warningMessage')).toBe(true);
+                expect(input.find('span').text()).toBe(warning.message);
             });
 
             it('should display an info state.', function() {
-                const info = 'hey man';
-                const input = shallow(<TextInput value="just some input" infoMessage={ info } />);
+                const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
+                const input = shallow(<TextInput value="just some input" message={ info } errorLevel={ ErrorLevel.info } />);
 
-                expect(input.find('input[type="text"]').hasClass(styles.infoInput)).toBe(true);
-                expect(input.find('span').hasClass(styles.infoMessage)).toBe(true);
-                expect(input.find('span').text()).toBe(info);
+                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
+                expect(input.find('span').hasClass('infoMessage')).toBe(true);
+                expect(input.find('span').text()).toBe(info.message);
             });
 
             it('should display a normal state.', function() {
                 const input = shallow(<TextInput value="just some input" />);
 
-                expect(input.find('input[type="text"]').hasClass(styles.infoInput)).toBe(false);
-                expect(input.find('input[type="text"]').hasClass(styles.warningInput)).toBe(false);
-                expect(input.find('input[type="text"]').hasClass(styles.errorInput)).toBe(false);
+                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(false);
+                expect(input.find('input[type="text"]').hasClass('warningInput')).toBe(false);
+                expect(input.find('input[type="text"]').hasClass('errorInput')).toBe(false);
                 expect(input.find('span').exists()).toBe(false);
             });
         });

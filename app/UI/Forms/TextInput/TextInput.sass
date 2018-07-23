@@ -9,17 +9,27 @@
 .errorMessage
   @include errorColor
 
+.errorInputText
+  @include errorColor
+
+.errorInput
+  border-bottom: 1px solid map-get($theme-colors, "danger")
+
+
 .warningMessage
   @include warningColor
+
+.warningInputText
+  @include warningColor
+
+.warningInput
+  border-bottom: 1px solid map-get($theme-colors, "warning")
 
 .infoMessage
   @include infoColor
 
-.errorInput
-  @include errorColor
-
-.warningInput
-  @include warningColor
+.infoInputText
+  @include infoColor
 
 .infoInput
-  @include infoColor
+  border-bottom: 1px solid map-get($theme-colors, "info")

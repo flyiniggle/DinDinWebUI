@@ -18,6 +18,7 @@
   "parser": "babel-eslint",
   "rules": {
     "arrow-parens": 0,
+	"block-spacing": "warn",
     "camelcase": 0,
     "comma-dangle": ["error", "never"],
     "consistent-return": "off",
@@ -84,6 +85,7 @@
         "asyncArrow": "ignore"
       }
     ],
-    "spaced-comment": 0
+    "spaced-comment": 0,
+	"template-curly-spacing": ["warn", "never"]
   }
 }

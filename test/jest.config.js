@@ -11,7 +11,7 @@ module.exports = {
         '^DinDin(.*)$': path.join('<rootDir>', 'app', '$1'),
         '^Components(.*)$': path.join('<rootDir>', 'app', 'Components', '$1'),
         '^UI(.*)$': path.join('<rootDir>', 'app', 'UI', '$1'),
-        '^.+\\.(css|scss|sass)$': 'identity-obj-proxy'
+        '^.+\\.(css|scss|sass)$': path.join('<rootDir>', 'test', 'mocks', 'styles.js')
     },
     rootDir: '../',
     roots: ['<rootDir>/app'],

@@ -1,85 +1,125 @@
+import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
+import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { identity, ifElse } from 'ramda';
 
-import styles from './TextInput.sass';
+import './TextInput.sass';
 
 
-function getErrorState(props) {
-    const { errorMessage, warningMessage, infoMessage } = props;
-    const ErrorState = function(message, messageClass, inputClass) {
-        return {
-            message,
-            messageClass,
-            inputClass
-        };
-    };
-    let errorState;
+function getErrorState(props = {}) {
+    const message = props.message || '';
+    const errorLevel = props.errorLevel || ErrorLevel.ok;
 
-    if (errorMessage) {
-        errorState = new ErrorState(errorMessage, styles.errorMessage, styles.errorInput);
-    } else if (warningMessage) {
-        errorState = new ErrorState(warningMessage, styles.warningMessage, styles.warningInput);
-    } else if (infoMessage) {
-        errorState = new ErrorState(infoMessage, styles.infoMessage, styles.infoInput);
+    let inputClass;
+    let messageClass;
+    let inputTextClass;
+    let formClass;
+
+    if (errorLevel === ErrorLevel.error) {
+        messageClass = 'errorMessage';
+        inputTextClass = 'errorInputText';
+        inputClass = 'is-invalid';
+        formClass = 'has-danger';
+    } else if (errorLevel === ErrorLevel.warning) {
+        messageClass = 'warningMessage';
+        inputTextClass = 'warningInputText';
+        inputClass = 'is-invalid';
+        formClass = 'has-warning';
+    } else if (errorLevel === ErrorLevel.info) {
+        messageClass = 'infoMessage';
+        inputTextClass = 'infoInputText';
+        inputClass = 'is-invalid';
+        formClass = 'has-info';
     } else {
-        errorState = new ErrorState('', '', '');
+        messageClass = '';
+        inputTextClass = '';
+        inputClass = '';
+        formClass = '';
     }
 
-    return errorState;
+    return {
+        message,
+        inputClass,
+        inputTextClass,
+        messageClass,
+        formClass
+    };
 }
 
 const renderErrorMessage = ifElse(
     (errState) => !!errState.message,
-    (errState) => <span className={ `${errState.messageClass} ${styles.errorStateMessage}` }>{errState.message}</span>,
+    (errState) => <span className={ `${errState.messageClass} ${'errorStateMessage'}` }>{errState.message}</span>,
     () => undefined
 );
 
 class TextInput extends React.Component {
     static propTypes = {
         placeholder: PropTypes.string,
-        errorMessage: PropTypes.string,
-        warningMessage: PropTypes.string,
-        infoMessage: PropTypes.string,
+        message: PropTypes.oneOfType([
+            PropTypes.instanceOf(InputMessage),
+            PropTypes.shape({
+                errorLevel: PropTypes.oneOf(Object.values(ErrorLevel)),
+                message: PropTypes.string
+            })
+        ]),
         value: PropTypes.string,
         onChange: PropTypes.func
-    }
+    };
 
     static defaultProps = {
         placeholder: '',
-        errorMessage: '',
-        warningMessage: '',
-        infoMessage: '',
+        message: {},
         value: '',
         onChange: identity
-    }
+    };
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: props.value
+            value: props.value,
+            focusedAfterError: false
+            //changedAfterEror: true
         };
     }
 
+    onFocus = () => {
+        const errorMessage = this.props.message.message;
+
+        if (errorMessage) {
+            this.setState({ focusedAfterError: true });
+        }
+    };
+
+    onBlur = () => {
+        this.setState({focusedAfterError: false});
+    };
+
     update = (event) => {
-        this.setState({ value: event.target.value });
+        this.setState({value: event.target.value});
         this.props.onChange(event);
-    }
+    };
+
+    showInputErrorClass = () => !!this.props.message.message;
+
+    showInputTextErrorClass = () => this.showInputErrorClass() && !this.state.focusedAfterError;
 
     render() {
-        const { placeholder, errorMessage, warningMessage, infoMessage } = this.props;
-        const errorLevelState = getErrorState({ errorMessage, warningMessage, infoMessage });
+        const { placeholder } = this.props;
+        const errorLevelState = getErrorState(this.props.message);
 
         return (
             <div className="grid">
-                <div className="row">
+                <div className={ `row ${errorLevelState.formClass}` }>
                     <input
                         type="text"
                         value={ this.state.value }
                         placeholder={ placeholder }
-                        className={ `form-control ${errorLevelState.inputClass}` }
-                        onChange={ this.update } />
+                        className={ `form-control ${this.showInputErrorClass() ? errorLevelState.inputClass : ''} ${this.showInputTextErrorClass() ? errorLevelState.inputTextClass : ''}` }
+                        onChange={ this.update }
+                        onFocus={ this.onFocus }
+                        onBlur={ this.onBlur } />
                 </div>
                 <div className="row">
                     {renderErrorMessage(errorLevelState)}
