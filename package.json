@@ -55,6 +55,7 @@
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "bootstrap": "^4.1.1",
+    "folktale": "2.1.0",
     "ramda": "0.25.0",
     "react": "16.4.1",
     "react-dom": "16.4.1",

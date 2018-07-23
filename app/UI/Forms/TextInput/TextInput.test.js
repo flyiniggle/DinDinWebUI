@@ -3,109 +3,10 @@ import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import TextInput, { getErrorState } from './TextInput';
+import TextInput from './TextInput';
 import './TextInput.sass';
 
 describe('#UI #Form #TextInput', function() {
-    describe('#getErrorState', function() {
-        it('should return an error level state if given an error.', function() {
-            const input = {
-                message: 'Error!',
-                errorLevel: ErrorLevel.error
-            };
-            const expected = {
-                message: 'Error!',
-                messageClass: 'errorMessage',
-                inputTextClass: 'errorInputText',
-                inputClass: 'is-invalid',
-                formClass: 'has-danger'
-            };
-
-            expect(getErrorState(input)).toEqual(expected);
-        });
-
-        it('should return an warning level state if given a warning message.', function() {
-            const input = {
-                message: 'Watch out...',
-                errorLevel: ErrorLevel.warning
-            };
-            const expected = {
-                message: 'Watch out...',
-                messageClass: 'warningMessage',
-                inputTextClass: 'warningInputText',
-                inputClass: 'is-invalid',
-                formClass: 'has-warning'
-            };
-
-            expect(getErrorState(input)).toEqual(expected);
-        });
-
-        it('should return an info level state if given a info message.', function() {
-            const input = {
-                message: 'Hey, fyi...',
-                errorLevel: ErrorLevel.info
-            };
-            const expected = {
-                message: 'Hey, fyi...',
-                messageClass: 'infoMessage',
-                inputTextClass: 'infoInputText',
-                inputClass: 'is-invalid',
-                formClass: 'has-info'
-            };
-
-            expect(getErrorState(input)).toEqual(expected);
-        });
-
-        it('should return an empty level state if given no message.', function() {
-            const expected = {
-                message: '',
-                messageClass: '',
-                inputTextClass: '',
-                inputClass: '',
-                formClass: ''
-            };
-
-            expect(getErrorState()).toEqual(expected);
-        });
-    });
-
-    describe('#showInputErrorClass', function() {
-        it('should return true if there is an error message.', function() {
-            const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
-            const input = shallow(<TextInput value="just some input" message={ error } />);
-
-            expect(input.instance().showInputErrorClass()).toBe(true);
-        });
-
-        it('should return false if there is no error message.', function() {
-            const input = shallow(<TextInput value="just some input" />);
-
-            expect(input.instance().showInputErrorClass()).toBe(false);
-        });
-    });
-
-    describe('#showInputTextErrorClass', function() {
-        it('should return true if there is an error message and the input is not focused.', function() {
-            const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
-            const input = shallow(<TextInput value="just some input" message={ error } />);
-
-            expect(input.instance().showInputTextErrorClass()).toBe(true);
-        });
-
-        it('should return false if there is an error message and the input is focused.', function() {
-            const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
-            const input = shallow(<TextInput value="just some input" message={ error } />);
-
-            input.setState({focusedAfterError: true});
-            expect(input.instance().showInputTextErrorClass()).toBe(false);
-        });
-
-        it('should return false if there is no error message.', function() {
-            const input = shallow(<TextInput value="just some input" />);
-
-            expect(input.instance().showInputTextErrorClass()).toBe(false);
-        });
-    });
 
     describe('#Integration', function() {
         it('should render.', function() {
@@ -133,7 +34,7 @@ describe('#UI #Form #TextInput', function() {
                 const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
                 const input = shallow(<TextInput value="bad input" message={ error } />);
 
-                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
+                expect(input.find('input[type="text"]').closest('is-invalid').exists()).toBe(true);
                 expect(input.find('span').hasClass('errorMessage')).toBe(true);
                 expect(input.find('span').text()).toBe(error.message);
             });

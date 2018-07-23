@@ -1,57 +1,35 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
+import getInputTextErrorClass from 'DinDin/UI/Forms/TextInput/getInputTextErrorClass';
+import getFormMessageClass from 'DinDin/UI/Forms/Validation/Bootstrap/getFormMessageClass';
+import getInputErrorClass from 'DinDin/UI/Forms/Validation/Bootstrap/getInputErrorClass';
 import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { identity, ifElse } from 'ramda';
+import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
+import { identity, prop } from 'ramda';
 
 import './TextInput.sass';
 
 
-function getErrorState(props = {}) {
-    const message = props.message || '';
-    const errorLevel = props.errorLevel || ErrorLevel.ok;
-
-    let inputClass;
-    let messageClass;
-    let inputTextClass;
-    let formClass;
+function getFeedbackClass(errorLevel) {
+    let feedbackTextClass;
 
     if (errorLevel === ErrorLevel.error) {
-        messageClass = 'errorMessage';
-        inputTextClass = 'errorInputText';
-        inputClass = 'is-invalid';
-        formClass = 'has-danger';
+        feedbackTextClass = 'errorMessage';
     } else if (errorLevel === ErrorLevel.warning) {
-        messageClass = 'warningMessage';
-        inputTextClass = 'warningInputText';
-        inputClass = 'is-invalid';
-        formClass = 'has-warning';
+        feedbackTextClass = 'warningMessage';
     } else if (errorLevel === ErrorLevel.info) {
-        messageClass = 'infoMessage';
-        inputTextClass = 'infoInputText';
-        inputClass = 'is-invalid';
-        formClass = 'has-info';
+        feedbackTextClass = 'infoMessage';
     } else {
-        messageClass = '';
-        inputTextClass = '';
-        inputClass = '';
-        formClass = '';
+        feedbackTextClass = '';
     }
 
-    return {
-        message,
-        inputClass,
-        inputTextClass,
-        messageClass,
-        formClass
-    };
+    return feedbackTextClass;
 }
 
-const renderErrorMessage = ifElse(
-    (errState) => !!errState.message,
-    (errState) => <span className={ `${errState.messageClass} ${'errorStateMessage'}` }>{errState.message}</span>,
-    () => undefined
-);
+const renderErrorMessage = function(message) {
+    return <span className={ `${getFeedbackClass(message.errorLevel)} errorStateMessage` }>{message.message}</span>;
+};
 
 class TextInput extends React.Component {
     static propTypes = {
@@ -69,7 +47,7 @@ class TextInput extends React.Component {
 
     static defaultProps = {
         placeholder: '',
-        message: {},
+        message: undefined,
         value: '',
         onChange: identity
     };
@@ -80,7 +58,7 @@ class TextInput extends React.Component {
         this.state = {
             value: props.value,
             focusedAfterError: false
-            //changedAfterEror: true
+            //changedAfterError: true
         };
     }
 
@@ -101,28 +79,26 @@ class TextInput extends React.Component {
         this.props.onChange(event);
     };
 
-    showInputErrorClass = () => !!this.props.message.message;
-
-    showInputTextErrorClass = () => this.showInputErrorClass() && !this.state.focusedAfterError;
+    showInputTextErrorClass = (className) => (this.state.focusedAfterError ? className : '');
 
     render() {
         const { placeholder } = this.props;
-        const errorLevelState = getErrorState(this.props.message);
+        const message = nullableToMaybe(this.props.message);
 
         return (
             <div className="grid">
-                <div className={ `row ${errorLevelState.formClass}` }>
+                <div className={ `row ${message.map(getFormMessageClass).getOrElse('')}` }>
                     <input
                         type="text"
                         value={ this.state.value }
                         placeholder={ placeholder }
-                        className={ `form-control ${this.showInputErrorClass() ? errorLevelState.inputClass : ''} ${this.showInputTextErrorClass() ? errorLevelState.inputTextClass : ''}` }
+                        className={ `form-control ${message.map(prop('errorLevel')).map(getInputErrorClass).getOrElse('')} ${message.map(prop('errorLevel')).map(getInputTextErrorClass).map(this.showInputTextErrorClass).getOrElse('')}` }
                         onChange={ this.update }
                         onFocus={ this.onFocus }
                         onBlur={ this.onBlur } />
                 </div>
                 <div className="row">
-                    {renderErrorMessage(errorLevelState)}
+                    {message.map(renderErrorMessage).getOrElse('')}
                 </div>
             </div>
         );
@@ -132,6 +108,5 @@ class TextInput extends React.Component {
 export default TextInput;
 
 export {
-    getErrorState,
     renderErrorMessage
 };

@@ -1,9 +1,9 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
 // UI.Forms.Validation.InputMessage => String
-function getFormMessageClass(inputMessage) {
+function getFormMessageClass(error) {
     let c;
-    switch (inputMessage.errorLevel) {
+    switch (error) {
     case ErrorLevel.error:
         c = 'has-danger';
         break;

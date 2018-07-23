@@ -1,6 +1,6 @@
 import isError from 'Business/Validation/isError';
 
-//Business.Validation.Types.ErrorLevel => String => {}
+//{type: Business.Validation.Types.ErrorLevel, message: String} => {}
 function InputMessage(m) {
     if (!m) {
         throw new TypeError('Provide a message.');
