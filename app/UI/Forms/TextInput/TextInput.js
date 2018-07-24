@@ -15,15 +15,22 @@ import './TextInput.sass';
 const pickErrorLevel = prop('errorLevel');
 const getValueOrEmptyString = maybe => maybe.getOrElse('');
 
+
 // Maybe => String
-const inputErrorClass = pipe(
+const showFormErrorClass = pipe(
+    map(getFormMessageClass),
+    getValueOrEmptyString
+);
+
+// Maybe => String
+const showInputErrorClass = pipe(
     map(pickErrorLevel),
     map(getInputErrorClass),
     getValueOrEmptyString
 );
 
 // state => Maybe => String
-const inputTextErrorClass = function(state, message) {
+const showInputTextErrorClass = function(state, message) {
     return pipe(
         map(pickErrorLevel),
         map(getInputTextErrorClass),
@@ -34,7 +41,7 @@ const inputTextErrorClass = function(state, message) {
 
 // InputMessage => Feedback
 const showFeedback = pipe(
-    map((props) => <Feedback {...props} />),
+    map((props) => <Feedback { ...props } />),
     getValueOrEmptyString
 );
 
@@ -94,12 +101,12 @@ class TextInput extends React.Component {
 
         return (
             <div className="grid">
-                <div className={ `row ${message.map(getFormMessageClass).getOrElse('')}` }>
+                <div className={ `row ${showFormErrorClass(message)}` }>
                     <input
                         type="text"
                         value={ this.state.value }
                         placeholder={ placeholder }
-                        className={ `form-control ${inputErrorClass(message)} ${inputTextErrorClass(this.state, message)}` }
+                        className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(this.state, message)}` }
                         onChange={ this.update }
                         onFocus={ this.onFocus }
                         onBlur={ this.onBlur } />
