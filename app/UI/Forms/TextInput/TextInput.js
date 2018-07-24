@@ -78,9 +78,7 @@ class TextInput extends React.Component {
     }
 
     onFocus = () => {
-        const errorMessage = this.props.message.message;
-
-        if (errorMessage) {
+        if (this.props.message) {
             this.setState({ focusedAfterError: true });
         }
     };
