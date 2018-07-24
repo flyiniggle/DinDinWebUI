@@ -10,7 +10,7 @@ function checkPassword(password) {
 
 }
 
-function check(data = {}) {
+function preflightCheck(data = {}) {
     const {username, password} = data;
     const usernameValidation = checkUsername(username);
     const passwordValidation = checkPassword(password);
@@ -27,7 +27,7 @@ function check(data = {}) {
     return result;
 }
 
-export default check;
+export default preflightCheck;
 
 export {
     checkPassword,

@@ -21,20 +21,23 @@ describe('#Components #Login #Login', function() {
         const wrapper = shallow(<Login />);
 
         wrapper.setState({password: 'test'});
-        wrapper.find('input[type="button"]').simulate('click');
-
-        expect(wrapper.state()).toHaveProperty('usernameError.errorLevel', ErrorLevel.error);
-        expect(wrapper.state()).toHaveProperty('usernameError.message', 'required');
+        expect.assertions(2);
+        wrapper.instance().login().then(function() {
+            expect(wrapper.state()).toHaveProperty('usernameError.errorLevel', ErrorLevel.error);
+            expect(wrapper.state()).toHaveProperty('usernameError.message', 'required');
+        });
     });
 
     it('should have an error message if the user tries to login without a password.', function() {
         const wrapper = shallow(<Login />);
 
         wrapper.setState({username: 'test'});
-        wrapper.find('input[type="button"]').simulate('click');
+        expect.assertions(2);
+        wrapper.instance().login().then(function() {
+            expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
+            expect(wrapper.state()).toHaveProperty('passwordError.message', 'required');
+        });
 
-        expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
-        expect(wrapper.state()).toHaveProperty('passwordError.message', 'required');
     });
 
     it('should request an auth token.', function() {

@@ -1,11 +1,10 @@
-import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
+import authenticate from 'Business/Auth/authenticate';
+import InputMessage from 'UI/Forms/Validation/InputMessage';
 import { construct, curry, head, isNil, pipe, unless } from 'ramda';
 import React from 'react';
-import AuthService from 'Business/Auth/Service';
 import getMessagesForField from 'Business/Validation/getMessagesForField';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 
-import check from './validate';
 
 const getPasswordErrors = getMessagesForField('password');
 const getUsernameErrors = getMessagesForField('username');
@@ -40,18 +39,21 @@ class Login extends React.Component {
         this.updatePassword.bind(this);
     }
 
-    login = () => {
-        const errors = check(this.state);
-        if (errors.length === 0) {
-            AuthService.get(this.state.username, this.state.password)
-                .then(console.log);
-        } else {
-            const usernameError = pipe(getUsernameErrors, getInputMessage)(errors);
-            const passwordError = pipe(getPasswordErrors, getInputMessage)(errors);
+    redirect = () => console.log('success!');
 
-            this.setState({usernameError, passwordError});
-        }
-    }
+    showErrors = (errors) => {
+        const usernameError = pipe(getUsernameErrors, getInputMessage)(errors);
+        const passwordError = pipe(getPasswordErrors, getInputMessage)(errors);
+
+        this.setState({usernameError, passwordError});
+    };
+
+    login = () => {
+        const { username, password } = this.state;
+
+        return authenticate(username, password)
+            .then(this.redirect, this.showErrors);
+    };
 
     render() {
         return (
