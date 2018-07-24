@@ -18,7 +18,7 @@ const getInputMessage = pipe(head, maybeInputMessage);
 const updateField = curry(function(field, value) {
     this.setState({
         [field]: value,
-        [`${field}Error`]: ''
+        [`${field}Error`]: undefined
     });
 });
 
@@ -44,7 +44,6 @@ class Login extends React.Component {
         const errors = check(this.state);
         if (errors.length === 0) {
             AuthService.get(this.state.username, this.state.password)
-                .then(data => data.JSON())
                 .then(console.log);
         } else {
             const usernameError = pipe(getUsernameErrors, getInputMessage)(errors);

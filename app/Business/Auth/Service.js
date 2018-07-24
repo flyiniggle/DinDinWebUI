@@ -15,7 +15,7 @@ const AuthService = {
                 Accept: 'application/json'
             },
             body: JSON.stringify({username: u, password: p})
-        });
+        }).then(body => body.json());
     }
 };
 

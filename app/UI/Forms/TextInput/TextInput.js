@@ -92,7 +92,6 @@ class TextInput extends React.Component {
         this.props.onChange(event);
     };
 
-
     render() {
         const { placeholder } = this.props;
         const message = nullableToMaybe(this.props.message);
