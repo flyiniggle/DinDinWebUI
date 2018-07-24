@@ -11,17 +11,6 @@ Array [
 ]
 `;
 
-exports[`#Business #Auth #suthenticate should reject if it recieves a failed validation message from the server 1`] = `
-Array [
-  Message {
-    "field": "password",
-    "message": "Username and password did not match.",
-    "type": "Error",
-    "value": "",
-  },
-]
-`;
-
 exports[`#Business #Auth #suthenticate should reject if it recieves an uknown validation message from the server 1`] = `
 Array [
   Message {
@@ -46,23 +35,6 @@ Array [
 
 exports[`#Business #Auth #suthenticate should reject if no password is provided. 1`] = `
 Array [
-  Message {
-    "field": "password",
-    "message": "required",
-    "type": "Error",
-    "value": undefined,
-  },
-]
-`;
-
-exports[`#Business #Auth #suthenticate should reject if no username is provided 1`] = `
-Array [
-  Message {
-    "field": "username",
-    "message": "required",
-    "type": "Error",
-    "value": undefined,
-  },
   Message {
     "field": "password",
     "message": "required",

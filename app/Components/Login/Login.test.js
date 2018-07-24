@@ -1,7 +1,7 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { fake, stub } from 'sinon';
+import { fake, replace, restore, stub } from 'sinon';
 import Service from 'Business/Auth/Service';
 
 import Login from './Login';
@@ -37,7 +37,22 @@ describe('#Components #Login #Login', function() {
             expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
             expect(wrapper.state()).toHaveProperty('passwordError.message', 'required');
         });
+    });
 
+    it('should have an error message if it recieves a server message rejecting the credentials.', function() {
+        const wrapper = shallow(<Login />);
+        const serviceFake = fake.resolves({non_field_errors: ['Unable to log in with provided credentials.']});
+
+        replace(Service, 'get', serviceFake);
+
+        wrapper.setState({username: 'testUsername', password: 'testPassword'});
+        expect.assertions(2);
+        wrapper.instance().login().then(function() {
+            expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
+            expect(wrapper.state()).toHaveProperty('passwordError.message', 'Username and password did not match.');
+        });
+
+        restore();
     });
 
     it('should request an auth token.', function() {
