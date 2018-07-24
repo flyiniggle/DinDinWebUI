@@ -75,6 +75,7 @@
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-tag-spacing": "warn",
     "react/prefer-stateless-function": "warn",
+	"react/require-default-props": "off",
     "react/sort-comp": "warn",
     "semi": ["warn", "always"],
     "space-before-function-paren": [

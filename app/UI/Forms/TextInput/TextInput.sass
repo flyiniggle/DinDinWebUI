@@ -3,12 +3,6 @@
 @import "~Styles/Feedback/warningColor.mixin.sass"
 @import "~Styles/Feedback/infoColor.mixin.sass"
 
-.errorStateMessage
-  //display: none
-
-.errorMessage
-  @include errorColor
-
 .errorInputText
   @include errorColor
 
@@ -16,17 +10,12 @@
   border-bottom: 1px solid map-get($theme-colors, "danger")
 
 
-.warningMessage
-  @include warningColor
-
 .warningInputText
   @include warningColor
 
 .warningInput
   border-bottom: 1px solid map-get($theme-colors, "warning")
 
-.infoMessage
-  @include infoColor
 
 .infoInputText
   @include infoColor
