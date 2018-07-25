@@ -1,14 +1,14 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import getErrorClassForText from 'DinDin/UI/Forms/Validation/getErrorClassForText';
-import getErrorClassForInput from 'DinDin/UI/Forms/Validation/getErrorClassForInput';
-import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
-import Feedback from 'DinDin/UI/Forms/Feedback/Feedback';
+import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
+import getErrorClassForInput from 'UI/Forms/Validation/getErrorClassForInput';
+import InputMessage from 'UI/Forms/Validation/InputMessage';
+import Feedback from 'UI/Forms/Feedback/Feedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
 import { identity, map, pipe, prop } from 'ramda';
 
-import './TextInput.sass';
+import 'UI/Forms/TextInput/TextInput.sass';
 
 
 const pickErrorLevel = prop('errorLevel');

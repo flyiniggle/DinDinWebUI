@@ -1,14 +1,10 @@
 @import "~Styles/core.sass"
-@import "~Styles/Feedback/errorColor.mixin.sass"
-@import "~Styles/Feedback/warningColor.mixin.sass"
-@import "~Styles/Feedback/infoColor.mixin.sass"
 
-
-@each $level in error, warning, info
-  $color: map-get($theme-colors, #{$level})
+@each $level in $ErrorLevels
+  $color: map-get($ErrorLevelColors, #{$level})
 
   .#{$level}-text
-    color: #{$color}
+    color: #{$color} !important
 
   .#{$level}-input
-    color: #{$color}
+    border-bottom: 1px solid #{$color} !important

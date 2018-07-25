@@ -5,8 +5,6 @@ import 'babel-polyfill';
 
 import DinDin from 'DinDin/DinDin';
 
-import 'DinDin/Styles/bootstrap.scss';
-
 ReactDOM.render((
     <BrowserRouter>
         <DinDin />
