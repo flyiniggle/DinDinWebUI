@@ -34,8 +34,8 @@ describe('#UI #Form #TextInput', function() {
                 const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
                 const input = mount(<TextInput value="bad input" message={ error } />);
 
-                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
-                expect(input.find('span').hasClass('errorMessage')).toBe(true);
+                expect(input.find('input[type="text"]').hasClass('error-input')).toBe(true);
+                expect(input.find('span').hasClass('error-text')).toBe(true);
                 expect(input.find('span').text()).toBe(error.message);
             });
 
@@ -43,8 +43,8 @@ describe('#UI #Form #TextInput', function() {
                 const warning = new InputMessage({message: 'watch out', type: ErrorLevel.warning});
                 const input = mount(<TextInput value="weird input" message={ warning } />);
 
-                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
-                expect(input.find('span').hasClass('warningMessage')).toBe(true);
+                expect(input.find('input[type="text"]').hasClass('warning-input')).toBe(true);
+                expect(input.find('span').hasClass('warning-text')).toBe(true);
                 expect(input.find('span').text()).toBe(warning.message);
             });
 
@@ -52,8 +52,8 @@ describe('#UI #Form #TextInput', function() {
                 const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
                 const input = mount(<TextInput value="just some input" message={ info } errorLevel={ ErrorLevel.info } />);
 
-                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(true);
-                expect(input.find('span').hasClass('infoMessage')).toBe(true);
+                expect(input.find('input[type="text"]').hasClass('info-input')).toBe(true);
+                expect(input.find('span').hasClass('info-text')).toBe(true);
                 expect(input.find('span').text()).toBe(info.message);
             });
 

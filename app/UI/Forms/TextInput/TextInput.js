@@ -1,7 +1,6 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import getInputTextErrorClass from 'DinDin/UI/Forms/TextInput/getInputTextErrorClass';
-import getFormMessageClass from 'DinDin/UI/Forms/Validation/Bootstrap/getFormMessageClass';
-import getInputErrorClass from 'DinDin/UI/Forms/Validation/Bootstrap/getInputErrorClass';
+import getErrorClassForText from 'DinDin/UI/Forms/Validation/getErrorClassForText';
+import getErrorClassForInput from 'DinDin/UI/Forms/Validation/getErrorClassForInput';
 import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
 import Feedback from 'DinDin/UI/Forms/Feedback/Feedback';
 import React from 'react';
@@ -17,15 +16,9 @@ const getValueOrEmptyString = maybe => maybe.getOrElse('');
 
 
 // Maybe => String
-const showFormErrorClass = pipe(
-    map(getFormMessageClass),
-    getValueOrEmptyString
-);
-
-// Maybe => String
 const showInputErrorClass = pipe(
     map(pickErrorLevel),
-    map(getInputErrorClass),
+    map(getErrorClassForInput),
     getValueOrEmptyString
 );
 
@@ -33,8 +26,8 @@ const showInputErrorClass = pipe(
 const showInputTextErrorClass = function(state, message) {
     return pipe(
         map(pickErrorLevel),
-        map(getInputTextErrorClass),
-        map((className) => (state.focusedAfterError ? className : '')),
+        map(getErrorClassForText),
+        map((className) => (state.focusedAfterError ? '' : className)),
         getValueOrEmptyString
     )(message);
 };
@@ -98,7 +91,7 @@ class TextInput extends React.Component {
 
         return (
             <div className="grid">
-                <div className={ `row ${showFormErrorClass(message)}` }>
+                <div className="row form-group">
                     <input
                         type="text"
                         value={ this.state.value }

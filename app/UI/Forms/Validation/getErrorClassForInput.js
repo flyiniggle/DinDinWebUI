@@ -1,17 +1,18 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
-// UI.Forms.Validation.InputMessage => String
-function getFormMessageClass(error) {
+
+// Business.Validation.Types.ErrorLevel => String
+function getErrorClassForInput(error) {
     let c;
     switch (error) {
     case ErrorLevel.error:
-        c = 'has-danger';
+        c = 'error-input';
         break;
     case ErrorLevel.warning:
-        c = 'has-warning';
+        c = 'warning-input';
         break;
     case ErrorLevel.info:
-        c = 'has-info';
+        c = 'info-input';
         break;
     case ErrorLevel.ok:
         c = '';
@@ -24,4 +25,4 @@ function getFormMessageClass(error) {
     return c;
 }
 
-export default getFormMessageClass;
+export default getErrorClassForInput;

@@ -2,15 +2,15 @@ import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
 
 // Business.Validation.Types.ErrorLevel => String
-function getInputTextErrorClass(error) {
+function getErrorClassForText(error) {
     let feedbackTextClass;
 
     if (error === ErrorLevel.error) {
-        feedbackTextClass = 'errorInputText';
+        feedbackTextClass = 'error-text';
     } else if (error === ErrorLevel.warning) {
-        feedbackTextClass = 'waringInputText';
+        feedbackTextClass = 'warning-text';
     } else if (error === ErrorLevel.info) {
-        feedbackTextClass = 'infoInputText';
+        feedbackTextClass = 'info-text';
     } else {
         feedbackTextClass = '';
     }
@@ -18,4 +18,4 @@ function getInputTextErrorClass(error) {
     return feedbackTextClass;
 }
 
-export default getInputTextErrorClass;
+export default getErrorClassForText;

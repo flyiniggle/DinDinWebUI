@@ -3,22 +3,12 @@
 @import "~Styles/Feedback/warningColor.mixin.sass"
 @import "~Styles/Feedback/infoColor.mixin.sass"
 
-.errorInputText
-  @include errorColor
 
-.errorInput
-  border-bottom: 1px solid map-get($theme-colors, "danger")
+@each $level in error, warning, info
+  $color: map-get($theme-colors, #{$level})
 
+  .#{$level}-text
+    color: #{$color}
 
-.warningInputText
-  @include warningColor
-
-.warningInput
-  border-bottom: 1px solid map-get($theme-colors, "warning")
-
-
-.infoInputText
-  @include infoColor
-
-.infoInput
-  border-bottom: 1px solid map-get($theme-colors, "info")
+  .#{$level}-input
+    color: #{$color}

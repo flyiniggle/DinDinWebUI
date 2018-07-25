@@ -12,7 +12,7 @@ describe('#UI #Forms #Feedback', function() {
         const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
         const wrapper = shallow(<Feedback { ...error } />);
 
-        expect(wrapper.find('.errorMessage').exists()).toBe(true);
+        expect(wrapper.find('.error-text').exists()).toBe(true);
         expect(wrapper.text()).toEqual('wrong!');
     });
 
@@ -20,7 +20,7 @@ describe('#UI #Forms #Feedback', function() {
         const warning = new InputMessage({message: 'watch out', type: ErrorLevel.warning});
         const wrapper = shallow(<Feedback { ...warning } />);
 
-        expect(wrapper.find('.warningMessage').exists()).toBe(true);
+        expect(wrapper.find('.warning-text').exists()).toBe(true);
         expect(wrapper.text()).toEqual('watch out');
     });
 
@@ -28,7 +28,7 @@ describe('#UI #Forms #Feedback', function() {
         const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
         const wrapper = shallow(<Feedback { ...info } />);
 
-        expect(wrapper.find('.infoMessage').exists()).toBe(true);
+        expect(wrapper.find('.info-text').exists()).toBe(true);
         expect(wrapper.text()).toEqual('hey man');
     });
 });
