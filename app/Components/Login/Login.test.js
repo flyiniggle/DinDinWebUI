@@ -39,7 +39,7 @@ describe('#Components #Login #Login', function() {
         });
     });
 
-    it('should have an error message if it recieves a server message rejecting the credentials.', function() {
+    it('should have an error message if it receives a server message rejecting the credentials.', function() {
         const wrapper = shallow(<Login />);
         const serviceFake = fake.resolves({non_field_errors: ['Unable to log in with provided credentials.']});
 
