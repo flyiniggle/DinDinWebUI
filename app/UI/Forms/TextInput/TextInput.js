@@ -49,8 +49,8 @@ const messageIsLongerThanInput = curry(function(input, message) {
 function showFeedback(input, message, tooltipActive) {
     const getFeedbackComponent = ifElse(
         messageIsLongerThanInput(input),
-        props => <InlineFeedback {...props} />,
-        props => <TooltipFeedback active={tooltipActive} { ...props } />
+        props => <TooltipFeedback active={tooltipActive} {...props} />,
+        props => <InlineFeedback {...props} />
     );
 
     return pipe(
