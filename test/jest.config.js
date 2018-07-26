@@ -7,11 +7,12 @@ module.exports = {
     },
     moduleDirectories: ['node_modules'],
     moduleNameMapper: {
+        '^.+\\.(css|scss|sass)$': path.join('<rootDir>', 'test', 'mocks', 'styles.js'),
         '^Business(.*)$': path.join('<rootDir>', 'app', 'Business', '$1'),
         '^DinDin(.*)$': path.join('<rootDir>', 'app', '$1'),
         '^Components(.*)$': path.join('<rootDir>', 'app', 'Components', '$1'),
         '^UI(.*)$': path.join('<rootDir>', 'app', 'UI', '$1'),
-        '^.+\\.(css|scss|sass)$': path.join('<rootDir>', 'test', 'mocks', 'styles.js')
+        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": path.join('<rootDir>', 'test', 'mocks', 'files.js')
     },
     rootDir: '../',
     roots: ['<rootDir>/app'],
