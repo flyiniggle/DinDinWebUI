@@ -4,7 +4,6 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 
 import TextInput from './TextInput';
-import './TextInput.sass';
 
 describe('#UI #Form #TextInput', function() {
 

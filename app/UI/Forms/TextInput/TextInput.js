@@ -2,11 +2,12 @@ import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import getErrorClassForInput from 'UI/Forms/Validation/getErrorClassForInput';
 import InputMessage from 'UI/Forms/Validation/InputMessage';
-import Feedback from 'UI/Forms/Feedback/Feedback';
+import InlineFeedback from 'UI/Forms/Feedback/InlineFeedback';
+import TooltipFeedback from "UI/Forms/Feedback/TooltipFeedback";
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
-import { identity, map, pipe, prop } from 'ramda';
+import { curry, identity, ifElse, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
 
@@ -32,12 +33,31 @@ const showInputTextErrorClass = function(state, message) {
     )(message);
 };
 
-// InputMessage => Feedback
-const showFeedback = pipe(
-    map((props) => <Feedback { ...props } />),
-    getValueOrEmptyString
-);
+// HTMLInputElement => InputMessage => Boolean
+const messageIsLongerThanInput = curry(function(input, message) {
+    const testSpan = document.createElement('span');
 
+    testSpan.innerHTML = message.message;
+    testSpan.style.position = 'absolute';
+    testSpan.style.top = '-500px';
+    document.body.appendChild(testSpan);
+
+    return testSpan.offsetWidth > input.current.offsetWidth;
+});
+
+// HTMLInputElement => InputMessage => Feedback
+function showFeedback(input, message) {
+    const getFeedbackComponent = ifElse(
+        messageIsLongerThanInput(input),
+        props => <TooltipFeedback {...props} />,
+        props => <InlineFeedback {...props} />
+    );
+
+    return pipe(
+        map(getFeedbackComponent),
+        getValueOrEmptyString
+    )(message);
+}
 
 class TextInput extends React.Component {
     static propTypes = {
@@ -66,8 +86,8 @@ class TextInput extends React.Component {
         this.state = {
             value: props.value,
             focusedAfterError: false
-            //changedAfterError: true
         };
+        this.input = React.createRef();
     }
 
     onFocus = () => {
@@ -93,6 +113,7 @@ class TextInput extends React.Component {
             <div className="grid">
                 <div className="row form-group">
                     <input
+                        ref={ this.input }
                         type="text"
                         value={ this.state.value }
                         placeholder={ placeholder }
@@ -102,7 +123,7 @@ class TextInput extends React.Component {
                         onBlur={ this.onBlur } />
                 </div>
                 <div className="row">
-                    {showFeedback(message)}
+                    {showFeedback(this.input, message)}
                 </div>
             </div>
         );

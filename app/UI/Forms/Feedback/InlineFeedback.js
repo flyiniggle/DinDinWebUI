@@ -3,14 +3,14 @@ import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Feedback.sass';
+import './InlineFeedback.sass';
 
 
-function Feedback(props) {
+function InlineFeedback(props) {
     return <span className={ getErrorClassForText(props.errorLevel) }>{props.message}</span>;
 }
 
-Feedback.propTypes = {
+InlineFeedback.propTypes = {
     message: PropTypes.string.isRequired,
     errorLevel: function(props, propName) {
         if (!isError(props[propName])) {
@@ -19,4 +19,4 @@ Feedback.propTypes = {
     }
 };
 
-export default Feedback;
+export default InlineFeedback;
