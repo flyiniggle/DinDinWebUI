@@ -7,7 +7,7 @@ import './TooltipFeedback.sass';
 
 
 function InlineFeedback(props) {
-    return props.active ? <div className={ `tooltipFeedback ${getErrorClassForText(props.errorLevel)}` }>{props.message}</div> : null
+    return document.activeElement === props.input ? <div className={ `tooltipFeedback ${getErrorClassForText(props.errorLevel)}` }>{props.message}</div> : null;
 }
 
 InlineFeedback.propTypes = {
@@ -17,7 +17,7 @@ InlineFeedback.propTypes = {
             return new TypeError('errorLevel prop must be an ErrorLevel variant.');
         }
     },
-    active: PropTypes.bool
+    input: PropTypes.instanceOf(Element)
 };
 
 export default InlineFeedback;
