@@ -3,7 +3,7 @@ import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import getErrorClassForInput from 'UI/Forms/Validation/getErrorClassForInput';
 import InputMessage from 'UI/Forms/Validation/InputMessage';
 import InlineFeedback from 'UI/Forms/Feedback/InlineFeedback';
-import TooltipFeedback from "UI/Forms/Feedback/TooltipFeedback";
+import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
@@ -45,12 +45,12 @@ const messageIsLongerThanInput = curry(function(input, message) {
     return testSpan.offsetWidth > input.current.offsetWidth;
 });
 
-// HTMLInputElement => InputMessage => Feedback
-function showFeedback(input, message) {
+// HTMLInputElement => InputMessage => Boolean => Feedback
+function showFeedback(input, message, tooltipActive) {
     const getFeedbackComponent = ifElse(
         messageIsLongerThanInput(input),
-        props => <TooltipFeedback {...props} />,
-        props => <InlineFeedback {...props} />
+        props => <InlineFeedback {...props} />,
+        props => <TooltipFeedback active={tooltipActive} { ...props } />
     );
 
     return pipe(
@@ -123,7 +123,7 @@ class TextInput extends React.Component {
                         onBlur={ this.onBlur } />
                 </div>
                 <div className="row">
-                    {showFeedback(this.input, message)}
+                    {showFeedback(this.input, message, this.state.focusedAfterError)}
                 </div>
             </div>
         );
