@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import 'babel-polyfill';
 
-import DinDin from 'DinDin/DinDin';
+import DinDin from 'Components/DinDin/DinDin';
 
 ReactDOM.render((
     <BrowserRouter>

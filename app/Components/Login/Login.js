@@ -57,25 +57,27 @@ class Login extends React.Component {
 
     render() {
         return (
-            <form>
-                <div className="form-group">
-                    <label>username</label>
-                    <TextInput
-                        placeholder="Username"
-                        message={ this.state.usernameError }
-                        value={ this.state.username }
-                        onChange={ (e) => this.updateUsername(e.target.value) }
-                    />
-                    <label>password</label>
-                    <TextInput
-                        placeholder="Password"
-                        message={ this.state.passwordError }
-                        value={ this.state.password }
-                        onChange={ (e) => this.updatePassword(e.target.value) }
-                    />
-                    <input className="btn btn-primary" type="button" value="log in" onClick={ this.login } />
-                </div>
-            </form>
+            <div className="row justify-content-center">
+                <form className="d-flex col-lg-4 col-md-6 col-sm-8">
+                    <div className="form-group">
+                        <label>username</label>
+                        <TextInput
+                            placeholder="Username"
+                            message={ this.state.usernameError }
+                            value={ this.state.username }
+                            onChange={ (e) => this.updateUsername(e.target.value) }
+                        />
+                        <label>password</label>
+                        <TextInput
+                            placeholder="Password"
+                            message={ this.state.passwordError }
+                            value={ this.state.password }
+                            onChange={ (e) => this.updatePassword(e.target.value) }
+                        />
+                        <input className="btn btn-primary" type="button" value="log in" onClick={ this.login } />
+                    </div>
+                </form>
+            </div>
         );
     }
 }
