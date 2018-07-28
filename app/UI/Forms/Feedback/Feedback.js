@@ -7,7 +7,7 @@ import './Feedback.sass';
 
 
 function Feedback(props) {
-    return <span className={ getErrorClassForText(props.errorLevel) }>{props.message}</span>;
+    return <span className={ `feedback ${getErrorClassForText(props.errorLevel)}` }>{props.message}</span>;
 }
 
 Feedback.propTypes = {

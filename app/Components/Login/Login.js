@@ -60,20 +60,24 @@ class Login extends React.Component {
     render() {
         return (
             <div className="row d-flex justify-content-center">
-                <form className="login col-lg-4 col-md-6 col-sm-8">
-                    <div className="form-group">
-                        <TextInput
-                            placeholder="Username"
-                            message={ this.state.usernameError }
-                            value={ this.state.username }
-                            onChange={ (e) => this.updateUsername(e.target.value) }
-                        />
-                        <TextInput
-                            placeholder="Password"
-                            message={ this.state.passwordError }
-                            value={ this.state.password }
-                            onChange={ (e) => this.updatePassword(e.target.value) }
-                        />
+                <form className="login col-xl-2 col-lg-4 col-md-6 col-8">
+                    <div className="form-group row d-flex flex-column">
+                        <div className="mb-4">
+                            <TextInput
+                                placeholder="Username"
+                                message={ this.state.usernameError }
+                                value={ this.state.username }
+                                onChange={ (e) => this.updateUsername(e.target.value) }
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <TextInput
+                                placeholder="Password"
+                                message={ this.state.passwordError }
+                                value={ this.state.password }
+                                onChange={ (e) => this.updatePassword(e.target.value) }
+                            />
+                        </div>
                         <input className="btn btn-primary" type="button" value="log in" onClick={ this.login } />
                     </div>
                 </form>

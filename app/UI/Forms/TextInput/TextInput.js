@@ -90,20 +90,16 @@ class TextInput extends React.Component {
         const message = nullableToMaybe(this.props.message);
 
         return (
-            <div className="grid">
-                <div className="row form-group">
-                    <input
-                        type="text"
-                        value={ this.state.value }
-                        placeholder={ placeholder }
-                        className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(this.state, message)}` }
-                        onChange={ this.update }
-                        onFocus={ this.onFocus }
-                        onBlur={ this.onBlur } />
-                </div>
-                <div className="row">
-                    {showFeedback(message)}
-                </div>
+            <div className="row d-flex flex-column">
+                <input
+                    type="text"
+                    value={ this.state.value }
+                    placeholder={ placeholder }
+                    className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(this.state, message)}` }
+                    onChange={ this.update }
+                    onFocus={ this.onFocus }
+                    onBlur={ this.onBlur } />
+                {showFeedback(message)}
             </div>
         );
     }

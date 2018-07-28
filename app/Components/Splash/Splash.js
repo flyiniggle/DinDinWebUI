@@ -36,7 +36,7 @@ class Splash extends React.Component {
                             type="button"
                             className="btn btn-primary"
                             onClick={ () => { this.show('login'); } }>
-                            Logn in
+                            Log in
                         </button>
                         <button
                             type="button"
