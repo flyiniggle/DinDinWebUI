@@ -1,8 +1,41 @@
 *
   box-sizing: border-box
 
-.background
-  background: url('./Assets/SplashBackgroundBase.jpg') no-repeat
+=background($img-url)
+  background: url($img-url) no-repeat
   background-size: cover
   height: 100vh
   width: 100vw
+
+
+@media only screen and (max-width : 640px)
+  .background
+    +background('./Assets/splash-background-sm.jpg')
+
+@media only screen and (max-width : 800px) and (min-width: 641px)
+  .background
+    +background('./Assets/splash-background-md.jpg')
+
+@media only screen and (max-width : 1366px) and (min-width: 801px)
+  .background
+    +background('./Assets/splash-background-lg.jpg')
+
+@media only screen and (min-width: 1361px)
+  .background
+    +background('./Assets/splash-background-xl.jpg')
+
+@media only screen and (orientation: portrait) and (max-height : 640px)
+  .background
+    +background('./Assets/splash-background-sm-portrait.jpg')
+
+@media only screen and (orientation: portrait) and (max-height : 800px) and (min-height: 641px)
+  .background
+    +background('./Assets/splash-background-md-portrait.jpg')
+
+@media only screen and (orientation: portrait) and (max-height : 1366px) and (min-height: 801px)
+  .background
+    +background('./Assets/splash-background-lg-portrait.jpg')
+
+@media only screen and (orientation: portrait) and (min-height: 1361px)
+  .background
+    +background('./Assets/splash-background-xl-portrait.jpg')

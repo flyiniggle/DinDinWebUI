@@ -5,6 +5,8 @@ import React from 'react';
 import getMessagesForField from 'Business/Validation/getMessagesForField';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 
+import './Login.sass';
+
 
 const getPasswordErrors = getMessagesForField('password');
 const getUsernameErrors = getMessagesForField('username');
@@ -57,17 +59,15 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="row justify-content-center">
-                <form className="d-flex col-lg-4 col-md-6 col-sm-8">
+            <div className="row d-flex justify-content-center">
+                <form className="login col-lg-4 col-md-6 col-sm-8">
                     <div className="form-group">
-                        <label>username</label>
                         <TextInput
                             placeholder="Username"
                             message={ this.state.usernameError }
                             value={ this.state.username }
                             onChange={ (e) => this.updateUsername(e.target.value) }
                         />
-                        <label>password</label>
                         <TextInput
                             placeholder="Password"
                             message={ this.state.passwordError }
