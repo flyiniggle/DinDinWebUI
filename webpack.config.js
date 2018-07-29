@@ -33,6 +33,12 @@ module.exports = {
             Styles: `${__dirname}/app/Styles`
         }
     },
+    devServer: {
+        historyApiFallback: true,
+        compress: true,
+        overlay: true,
+        port: 9000
+    },
     module: {
         rules: [
             {
