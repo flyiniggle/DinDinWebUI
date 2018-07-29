@@ -1,0 +1,20 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="502" width="502" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_1" height="500" width="500" y="0" x="0" fill-opacity="0" stroke-width="25" stroke="#0fffd3" fill="#0fffd3"/>
+  <g id="svg_6">
+   <rect id="svg_2" height="440" width="450" y="30" x="25" stroke-width="0" stroke="#0fffd3" fill="#0fffd3"/>
+   <text font-weight="normal" xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="250" id="svg_4" y="262.649994" x="69.458328" stroke-width="0" stroke="#0fffd3" fill="#000000">DD</text>
+   <text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="80" id="svg_5" y="394.649994" x="121.133324" stroke-width="0" stroke="#0fffd3" fill="#000000">DinDin</text>
+   <path id="svg_7" d="m104.5,157.649994" opacity="0.5" stroke-width="0" stroke="#0fffd3" fill="#000000"/>
+  </g>
+ </g>
+</svg>

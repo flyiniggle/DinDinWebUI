@@ -60,7 +60,7 @@ class Login extends React.Component {
     render() {
         return (
             <div className="row d-flex justify-content-center">
-                <form className="login col-xl-2 col-lg-4 col-md-6 col-8">
+                <form className="login col-xl-3 col-lg-4 col-md-6 col-8 p-5">
                     <div className="form-group row d-flex flex-column">
                         <div className="mb-4">
                             <TextInput
