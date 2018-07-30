@@ -59,10 +59,10 @@ describe('#UI #Form #TextInput', function() {
             it('should display a normal state.', function() {
                 const input = mount(<TextInput value="just some input" />);
 
-                expect(input.find('input[type="text"]').hasClass('is-invalid')).toBe(false);
-                expect(input.find('input[type="text"]').hasClass('warningInput')).toBe(false);
-                expect(input.find('input[type="text"]').hasClass('errorInput')).toBe(false);
-                expect(input.find('span').exists()).toBe(false);
+                expect(input.find('input[type="text"]').hasClass('error-input')).toBe(false);
+                expect(input.find('input[type="text"]').hasClass('warning-input')).toBe(false);
+                expect(input.find('input[type="text"]').hasClass('info-input')).toBe(false);
+                expect(input.find('.textInputFeedback').children().length).toEqual(0);
             });
         });
     });

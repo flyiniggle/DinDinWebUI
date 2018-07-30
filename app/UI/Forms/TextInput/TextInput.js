@@ -47,9 +47,14 @@ const messageIsLongerThanInput = curry(function(input, message) {
 
 // HTMLInputElement => InputMessage => Feedback
 function showFeedback(input, message) {
+    if (!input) {
+        return;
+    }
+
+    const active = document.activeElement === input;
     const getFeedbackComponent = ifElse(
         messageIsLongerThanInput(input),
-        props => <TooltipFeedback {...props} input={input}/>,
+        props => <TooltipFeedback { ...props } active={ active } />,
         props => <InlineFeedback { ...props } />
     );
 
@@ -90,6 +95,12 @@ class TextInput extends React.Component {
         this.input = React.createRef();
     }
 
+    componentDidMount = () => {
+        if (this.input.current) {
+            this.forceUpdate();
+        }
+    }
+
     onFocus = () => {
         if (this.props.message) {
             this.setState({ focusedAfterError: true });
@@ -122,7 +133,7 @@ class TextInput extends React.Component {
                         onFocus={ this.onFocus }
                         onBlur={ this.onBlur } />
                 </div>
-                <div className="row">
+                <div className="textInputFeedback row">
                     {showFeedback(this.input.current, message)}
                 </div>
             </div>
