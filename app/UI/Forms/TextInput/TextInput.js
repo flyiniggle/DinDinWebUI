@@ -53,7 +53,7 @@ function showFeedback(input, message, feedbackType) {
 
     const active = document.activeElement === input;
     const getFeedbackComponent = function(m) {
-        if ((feedbackType === 'tooltip') || ((feedbackType === 'auto') && messageIsLongerThanInput(input))) {
+        if ((feedbackType === 'tooltip') || ((feedbackType === 'auto') && messageIsLongerThanInput(input, m))) {
             return <TooltipFeedback { ...m } active={ active } />;
         }
 
