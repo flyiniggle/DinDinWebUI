@@ -1,3 +1,4 @@
+import SignUp from 'app/Components/SignUp/SignUp';
 import React from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 import Login from 'Components/Login/Login';
@@ -30,10 +31,7 @@ function Splash() {
 
                 <Route path="/login" component={ Login } />
 
-                <Route path="/signup"
-                    render={ () => (
-                        <span>Sign up!</span>
-                    ) } />
+                <Route path="/signup" component={ SignUp } />
             </Switch>
         </div>
     );
