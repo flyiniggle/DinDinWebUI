@@ -1,4 +1,4 @@
-import SignUp from 'app/Components/SignUp/SignUp';
+import SignUp from 'Components/SignUp/SignUp';
 import React from 'react';
 import { Link, Switch, Route } from 'react-router-dom';
 import Login from 'Components/Login/Login';

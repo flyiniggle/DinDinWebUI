@@ -3,20 +3,25 @@ import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Feedback.sass';
+import './TooltipFeedback.sass';
 
 
-function Feedback(props) {
-    return <span className={ `feedback ${getErrorClassForText(props.errorLevel)}` }>{props.message}</span>;
+function InlineFeedback(props) {
+    return props.active ? <div className={ `tooltipFeedback ${getErrorClassForText(props.errorLevel)}` }>{props.message}</div> : null;
 }
 
-Feedback.propTypes = {
+InlineFeedback.propTypes = {
     message: PropTypes.string.isRequired,
     errorLevel: function(props, propName) {
         if (!isError(props[propName])) {
             return new TypeError('errorLevel prop must be an ErrorLevel variant.');
         }
-    }
+    },
+    active: PropTypes.bool
 };
 
-export default Feedback;
+InlineFeedback.defaultProps = {
+    active: false
+};
+
+export default InlineFeedback;
