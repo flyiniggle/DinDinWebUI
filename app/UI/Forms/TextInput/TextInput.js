@@ -54,8 +54,8 @@ function showFeedback(input, message) {
     const active = document.activeElement === input;
     const getFeedbackComponent = ifElse(
         messageIsLongerThanInput(input),
-        props => <TooltipFeedback { ...props } active={ active } />,
-        props => <InlineFeedback { ...props } />
+        props => <TooltipFeedback {...props} active={active}/>,
+        props => <InlineFeedback {...props} />
     );
 
     return pipe(
@@ -133,7 +133,7 @@ class TextInput extends React.Component {
                         onFocus={ this.onFocus }
                         onBlur={ this.onBlur } />
                 </div>
-                <div className="textInputFeedback row">
+                <div className="textInputFeedback row position-absolute">
                     {showFeedback(this.input.current, message)}
                 </div>
             </div>
