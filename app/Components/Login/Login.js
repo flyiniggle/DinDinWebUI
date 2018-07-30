@@ -78,7 +78,7 @@ class Login extends React.Component {
                                 onChange={ (e) => this.updatePassword(e.target.value) }
                             />
                         </div>
-                        <input className="btn btn-primary" type="button" value="log in" onClick={ this.login } />
+                        <input className="btn btn-secondary" type="button" value="log in" onClick={ this.login } />
                     </div>
                 </form>
             </div>

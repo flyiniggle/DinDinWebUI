@@ -11,10 +11,10 @@ function Splash() {
         <div className="splash">
             <div className="row header d-flex flex-row-reverse">
                 <div className="btn-group" role="group">
-                    <Link to="/login" className="btn btn-primary">
+                    <Link to="/login" className="btn btn-secondary">
                         Log in
                     </Link>
-                    <Link to="/signup" className="btn btn-primary">
+                    <Link to="/signup" className="btn btn-secondary">
                         Sign up!
                     </Link>
                 </div>
