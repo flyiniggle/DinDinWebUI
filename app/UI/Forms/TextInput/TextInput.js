@@ -7,7 +7,7 @@ import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
-import { curry, identity, ifElse, map, pipe, prop } from 'ramda';
+import { curry, identity, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
 
@@ -45,18 +45,20 @@ const messageIsLongerThanInput = curry(function(input, message) {
     return testSpan.offsetWidth > input.offsetWidth;
 });
 
-// HTMLInputElement => InputMessage => Feedback
-function showFeedback(input, message) {
+// HTMLInputElement => InputMessage => feedbackTypeProp => Feedback
+function showFeedback(input, message, feedbackType) {
     if (!input) {
         return;
     }
 
     const active = document.activeElement === input;
-    const getFeedbackComponent = ifElse(
-        messageIsLongerThanInput(input),
-        props => <TooltipFeedback {...props} active={active}/>,
-        props => <InlineFeedback {...props} />
-    );
+    const getFeedbackComponent = function(m) {
+        if ((feedbackType === 'tooltip') || ((feedbackType === 'auto') && messageIsLongerThanInput(input))) {
+            return <TooltipFeedback { ...m } active={ active } />;
+        }
+
+        return <InlineFeedback { ...m } />;
+    };
 
     return pipe(
         map(getFeedbackComponent),
@@ -75,14 +77,18 @@ class TextInput extends React.Component {
             })
         ]),
         value: PropTypes.string,
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        feedbackType: PropTypes.oneOf(['inline', 'tooltip', 'auto']),
+        feedbackPosition: PropTypes.oneOf(['top', 'bottom', 'auto'])
     };
 
     static defaultProps = {
         placeholder: '',
         message: undefined,
         value: '',
-        onChange: identity
+        onChange: identity,
+        feedbackType: 'auto',
+        feedbackPosition: 'auto'
     };
 
     constructor(props) {
@@ -134,7 +140,7 @@ class TextInput extends React.Component {
                         onBlur={ this.onBlur } />
                 </div>
                 <div className="textInputFeedback row position-absolute">
-                    {showFeedback(this.input.current, message)}
+                    {showFeedback(this.input.current, message, this.props.feedbackType)}
                 </div>
             </div>
         );

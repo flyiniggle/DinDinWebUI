@@ -22,6 +22,6 @@ InlineFeedback.propTypes = {
 
 InlineFeedback.defaultProps = {
     active: false
-}
+};
 
 export default InlineFeedback;
