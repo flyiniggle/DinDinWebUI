@@ -42,7 +42,11 @@ const messageIsLongerThanInput = curry(function(input, message) {
     testSpan.style.top = '-500px';
     document.body.appendChild(testSpan);
 
-    return testSpan.offsetWidth > input.offsetWidth;
+    const isLonger = testSpan.offsetWidth > input.offsetWidth;
+
+    document.body.removeChild(testSpan);
+
+    return isLonger;
 });
 
 // HTMLInputElement => InputMessage => feedbackTypeProp => Feedback
