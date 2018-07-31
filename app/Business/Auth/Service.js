@@ -1,19 +1,10 @@
-const DinDinAPI = __APIRoot__;
+import DinDinService from 'Business/Services/DinDinService';
 
-const formdata = new FormData();
 
 const AuthService = {
     get: function(u, p) {
-        formdata.append('username', u);
-        formdata.append('password', p);
-
-        return fetch(`${DinDinAPI}/api-token-auth/`, {
+        return DinDinService.send('/api-token-auth/', {
             method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                Accept: 'application/json'
-            },
             body: JSON.stringify({username: u, password: p})
         }).then(body => body.json());
     }
