@@ -1,11 +1,12 @@
-import SignUp from  './SignUp';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-describe("#Components #Signup", function() {
+import SignUp from './SignUp';
+
+describe('#Components #Signup', function() {
     it('should render.', function() {
-        const wrapper = shallow(<SignUp/>);
+        const wrapper = shallow(<SignUp />);
 
         expect(wrapper.html()).toMatchSnapshot();
-    })
-})
+    });
+});
