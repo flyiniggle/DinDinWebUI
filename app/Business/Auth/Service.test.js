@@ -3,20 +3,22 @@ import { stub } from 'sinon';
 import AuthService from './Service';
 
 describe('#Business #Auth #Service', function() {
-    window.fetch = stub().resolves({json: () => ({token: '1234'})});
+    beforeEach(() => fetch.mockResponse(JSON.stringify({token: '1234'})));
+    afterEach(fetch.resetMocks);
+
 
     describe('#get', function() {
-        it('should send a username and password to a server.', function() {
+        it('should send a username and password to a server.', async function() {
             const u = 'username test';
             const p = 'passwordTest';
 
             expect.assertions(2);
-            AuthService.get(u, p).then(function() {
-                const { username, password } = JSON.parse(window.fetch.firstCall.args[1].body);
+            await AuthService.get(u, p);
 
-                expect(username).toEqual(u);
-                expect(password).toEqual(p);
-            });
+            const { username, password } = JSON.parse(fetch.mock.calls[0][1].body);
+
+            expect(username).toEqual(u);
+            expect(password).toEqual(p);
         });
     });
 });
