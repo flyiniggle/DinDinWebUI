@@ -1,5 +1,3 @@
-import { stub } from 'sinon';
-
 import AuthService from './Service';
 
 describe('#Business #Auth #Service', function() {
