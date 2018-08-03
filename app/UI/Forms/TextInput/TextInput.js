@@ -7,7 +7,8 @@ import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
-import { curry, identity, map, pipe, prop } from 'ramda';
+import Maybe from 'folktale/maybe';
+import { curry, identity, ifElse, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
 
@@ -49,26 +50,18 @@ const messageIsLongerThanInput = curry(function(input, message) {
     return isLonger;
 });
 
-// HTMLInputElement => InputMessage => feedbackTypeProp => Feedback
-function showFeedback(input, message, feedbackType) {
-    if (!input) {
-        return;
+// InputMessage => feedbackType => Feedback
+const getFeedback = curry(function(message, active, feedbackType) {
+    let feedback;
+
+    if (feedbackType === 'inline') {
+        feedback = <InlineFeedback { ...message } />;
+    } else if (feedbackType === 'tooltip') {
+        feedback = <TooltipFeedback { ...message } active={ active } />;
     }
 
-    const active = document.activeElement === input;
-    const getFeedbackComponent = function(m) {
-        if ((feedbackType === 'tooltip') || ((feedbackType === 'auto') && messageIsLongerThanInput(input, m))) {
-            return <TooltipFeedback { ...m } active={ active } />;
-        }
-
-        return <InlineFeedback { ...m } />;
-    };
-
-    return pipe(
-        map(getFeedbackComponent),
-        getValueOrEmptyString
-    )(message);
-}
+    return feedback;
+});
 
 class TextInput extends React.Component {
     static propTypes = {
@@ -83,7 +76,8 @@ class TextInput extends React.Component {
         value: PropTypes.string,
         onChange: PropTypes.func,
         feedbackType: PropTypes.oneOf(['inline', 'tooltip', 'auto']),
-        feedbackPosition: PropTypes.oneOf(['top', 'bottom', 'auto'])
+        feedbackPosition: PropTypes.oneOf(['top', 'bottom', 'auto']),
+        tabIndex: PropTypes.number //mostly for testing purposes: JSDom requires a tabIndex to set document.activeElement correctly.
     };
 
     static defaultProps = {
@@ -92,7 +86,8 @@ class TextInput extends React.Component {
         value: '',
         onChange: identity,
         feedbackType: 'auto',
-        feedbackPosition: 'auto'
+        feedbackPosition: 'auto',
+        tabIndex: undefined
     };
 
     constructor(props) {
@@ -126,9 +121,28 @@ class TextInput extends React.Component {
         this.props.onChange(event);
     };
 
+    checkFeedback = (message) => {
+        let calculatedFeedbackType;
+
+        switch (this.props.feedbackType) {
+        case 'tooltip':
+            calculatedFeedbackType = 'tooltip';
+            break;
+        case 'inline':
+            calculatedFeedbackType = 'inline';
+            break;
+        case 'auto':
+        default:
+            calculatedFeedbackType = messageIsLongerThanInput(this.input.current, message) ? 'tooltip' : 'inline';
+        }
+
+        return calculatedFeedbackType;
+    }
+
     render() {
         const { placeholder } = this.props;
         const message = nullableToMaybe(this.props.message);
+        const inputIsFocused = this.input.current === document.activeElement;
 
         return (
             <div>
@@ -144,7 +158,9 @@ class TextInput extends React.Component {
                         onBlur={ this.onBlur } />
                 </div>
                 <div className="textInputFeedback row position-absolute">
-                    {showFeedback(this.input.current, message, this.props.feedbackType)}
+                    {message.map(this.checkFeedback)
+                        .map(getFeedback(this.props.message, inputIsFocused))
+                        .getOrElse(null)}
                 </div>
             </div>
         );
