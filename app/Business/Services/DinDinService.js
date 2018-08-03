@@ -16,8 +16,8 @@ function DinDinService() {
         return fetch(`${DinDinAPI}${url}`, requestOptions)
             .then(function(response) {
                 if (response.status === 401) {
-                    if (this.handleNotLoggedIn) {
-                        this.handleNotLoggedIn();
+                    if (this.handlerNotLoggedIn) {
+                        this.handlerNotLoggedIn();
                         Promise.reject();
                     }
                 } else if (!response.ok) {
@@ -28,11 +28,11 @@ function DinDinService() {
                 }
 
                 return response;
-            });
+            }.bind(this));
     };
 
     this.addNotLoggedInHandler = function(handler) {
-        this.handleNotLoggedIn = handler;
+        this.handlerNotLoggedIn = handler;
     }.bind(this);
 
     this.addNotOkResponseHandler = function(handler) {

@@ -1,3 +1,5 @@
+import { spy } from 'sinon';
+
 import DinDinService from './DinDinService';
 
 describe('#Business #Services #DinDinService', function() {
@@ -86,6 +88,33 @@ describe('#Business #Services #DinDinService', function() {
                 Connection: 'keep-alive',
                 'Accept-Encoding': 'gzip, deflate'
             });
+        });
+    });
+
+    describe('#addNotLoggedInHandler', function() {
+        it('should call a registered logged out handler if the response status is 401.', async function() {
+            const handler = spy();
+
+            expect.assertions(1);
+            fetch.mockResponse(JSON.stringify({}), { status: 401 });
+            DinDinService.addNotLoggedInHandler(handler);
+            await DinDinService.send('/test/');
+
+            expect(handler.calledOnce).toBe(true);
+        });
+
+        it('should not call a registered logged out handler if the response status is not 401.', async function() {
+            const handler = spy();
+
+            expect.assertions(1);
+            DinDinService.addNotLoggedInHandler(handler);
+            fetch.mockResponse(JSON.stringify({}), { status: 400 });
+            await DinDinService.send('/test/');
+
+            fetch.mockResponse(JSON.stringify({}), { status: 200 });
+            await DinDinService.send('/test/');
+
+            expect(handler.callCount).toBe(0);
         });
     });
 });
