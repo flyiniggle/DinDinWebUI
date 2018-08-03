@@ -96,7 +96,7 @@ describe('#Business #Services #DinDinService', function() {
             const handler = spy();
 
             expect.assertions(1);
-            fetch.mockResponse(JSON.stringify({}), { status: 401 });
+            fetch.mockResponseOnce(JSON.stringify({}), { status: 401 });
             DinDinService.addNotLoggedInHandler(handler);
             await DinDinService.send('/test/');
 
@@ -108,10 +108,34 @@ describe('#Business #Services #DinDinService', function() {
 
             expect.assertions(1);
             DinDinService.addNotLoggedInHandler(handler);
-            fetch.mockResponse(JSON.stringify({}), { status: 400 });
+            fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
             await DinDinService.send('/test/');
 
-            fetch.mockResponse(JSON.stringify({}), { status: 200 });
+            fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
+            await DinDinService.send('/test/');
+
+            expect(handler.callCount).toBe(0);
+        });
+    });
+
+    describe('#addNotOkResponseHandler', function() {
+        it('should call an error handler if the response status is not ok.', async function() {
+            const handler = spy();
+
+            expect.assertions(1);
+            fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
+            DinDinService.addNotOkResponseHandler(handler);
+            await DinDinService.send('/test/');
+
+            expect(handler.calledOnce).toBe(true);
+        });
+
+        it('should not call an error handler if the response status is ok.', async function() {
+            const handler = spy();
+
+            expect.assertions(1);
+            DinDinService.addNotOkResponseHandler(handler);
+            fetch.mockResponseOnce(JSON.stringify({}));
             await DinDinService.send('/test/');
 
             expect(handler.callCount).toBe(0);
