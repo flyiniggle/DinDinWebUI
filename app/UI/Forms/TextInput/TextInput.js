@@ -8,9 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
 import Maybe from 'folktale/maybe';
-import { curry, identity, ifElse, map, pipe, prop } from 'ramda';
+import { curry, identity, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
+import getPosition from 'DinDin/UI/Utils/getPosition';
 
 
 const pickErrorLevel = prop('errorLevel');
@@ -50,19 +51,6 @@ const messageIsLongerThanInput = curry(function(input, message) {
     return isLonger;
 });
 
-// InputMessage => feedbackType => Feedback
-const getFeedback = curry(function(message, active, feedbackType) {
-    let feedback;
-
-    if (feedbackType === 'inline') {
-        feedback = <InlineFeedback { ...message } />;
-    } else if (feedbackType === 'tooltip') {
-        feedback = <TooltipFeedback { ...message } active={ active } />;
-    }
-
-    return feedback;
-});
-
 class TextInput extends React.Component {
     static propTypes = {
         placeholder: PropTypes.string,
@@ -76,8 +64,7 @@ class TextInput extends React.Component {
         value: PropTypes.string,
         onChange: PropTypes.func,
         feedbackType: PropTypes.oneOf(['inline', 'tooltip', 'auto']),
-        feedbackPosition: PropTypes.oneOf(['top', 'bottom', 'auto']),
-        tabIndex: PropTypes.number //mostly for testing purposes: JSDom requires a tabIndex to set document.activeElement correctly.
+        feedbackPosition: PropTypes.oneOf(['top', 'bottom', 'auto'])
     };
 
     static defaultProps = {
@@ -86,8 +73,7 @@ class TextInput extends React.Component {
         value: '',
         onChange: identity,
         feedbackType: 'auto',
-        feedbackPosition: 'auto',
-        tabIndex: undefined
+        feedbackPosition: 'auto'
     };
 
     constructor(props) {
@@ -98,6 +84,7 @@ class TextInput extends React.Component {
             focusedAfterError: false
         };
         this.input = React.createRef();
+        this.feedback = React.createRef();
     }
 
     componentDidMount = () => {
@@ -106,9 +93,25 @@ class TextInput extends React.Component {
         }
     }
 
+    componentDidUpdate = () => {
+        const message = this.props.message;
+
+        if (message) {
+            this.positionFeedback(message);
+        }
+        /*if (message) {
+            if (this.getFeedbackType(message) === 'tooltip') {
+                this.getPositionType(message)
+            } else {
+                const {bottom} = this.input.current.getBoundingClientRect();
+
+            }
+        }*/
+    }
+
     onFocus = () => {
         if (this.props.message) {
-            this.setState({ focusedAfterError: true });
+            this.setState({focusedAfterError: true});
         }
     };
 
@@ -121,7 +124,8 @@ class TextInput extends React.Component {
         this.props.onChange(event);
     };
 
-    checkFeedback = (message) => {
+    // (side effects) + InputMessage => feedbackType
+    getFeedbackType = (message) => {
         let calculatedFeedbackType;
 
         switch (this.props.feedbackType) {
@@ -139,14 +143,66 @@ class TextInput extends React.Component {
         return calculatedFeedbackType;
     }
 
+    // (side effects) + feedbackType  => Feedback
+    getFeedback = (feedbackType) => {
+        let feedback;
+
+        if (feedbackType === 'inline') {
+            feedback = <InlineFeedback { ...this.props.message } />;
+        } else if (feedbackType === 'tooltip') {
+            feedback = <TooltipFeedback { ...this.props.message } active={ this.input.current === document.activeElement } />;
+        }
+
+        return feedback;
+    }
+
+    positionFeedback = (message) => {
+        const PADDING = 5;
+        const positionSetting = this.props.feedbackPosition;
+        const messageHeight = this.feedback.current.getBoundingClientRect().height;
+        const inputHeight = this.input.current.getBoundingClientRect().height;
+        const inputPosition = this.input.current.offsetTop;
+        const inputDistanceFromBottomOfScreen = window.innerHeight - (inputPosition + inputHeight);
+
+        if (positionSetting === 'top'
+            || (positionSetting === 'auto' && (inputDistanceFromBottomOfScreen < (messageHeight + PADDING)))) {
+            // show feedback above input if 1.) feedbackPosition is set to top or 2.) feedbackPosition is set to auto and the input is very close to the bottom of the screen
+            this.feedback.current.style.top = `${inputPosition - (messageHeight + PADDING)}px`;
+        } else {
+            this.feedback.current.style.top = `${inputPosition + inputHeight + PADDING}px`;
+        }
+    }
+
+    getFlexColumnOrder = (message) => {
+        let position;
+
+        switch (this.props.feedbackPosition) {
+        case 'top':
+            position = 'flex-column-reverse';
+            break;
+        case 'bottom':
+            position = 'flex-column';
+            break;
+        case 'auto':
+        default:
+            position = 'flex-column-reverse';
+            break;
+        }
+
+        return position;
+    }
+
     render() {
         const { placeholder } = this.props;
         const message = nullableToMaybe(this.props.message);
-        const inputIsFocused = this.input.current === document.activeElement;
+        const flexOrder = message
+            .chain((m) => (this.getFeedbackType(m) === 'tooltip' ? Maybe.of(m) : Maybe.empty()))
+            .map(this.getFlexColumnOrder)
+            .getOrElse('flex-column');
 
         return (
-            <div>
-                <div className="row d-flex flex-column form-group">
+            <div className={ `row d-flex form-group ${flexOrder}` }>
+                <div>
                     <input
                         ref={ this.input }
                         type="text"
@@ -157,9 +213,10 @@ class TextInput extends React.Component {
                         onFocus={ this.onFocus }
                         onBlur={ this.onBlur } />
                 </div>
-                <div className="textInputFeedback row position-absolute">
-                    {message.map(this.checkFeedback)
-                        .map(getFeedback(this.props.message, inputIsFocused))
+                <div className="textInputFeedback position-absolute" ref={ this.feedback }>
+                    {message
+                        .map(this.getFeedbackType)
+                        .map(this.getFeedback)
                         .getOrElse(null)}
                 </div>
             </div>
