@@ -16,7 +16,7 @@ module.exports = {
     },
     rootDir: '../',
     roots: ['<rootDir>/app'],
-    setupFiles: [path.join('<rootDir>', 'test', 'jestsetup.js')],
+    setupFiles: [path.join('<rootDir>', 'test', 'jestsetup.js'), 'jest-localstorage-mock'],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     transform: {
         '^.+\\.js$': 'babel-jest'

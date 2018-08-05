@@ -1,17 +1,25 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { fake, replace, restore, stub } from 'sinon';
+import { fake, replace, restore, createSandbox, stub } from 'sinon';
 import Service from 'Business/Auth/Service';
+import authStatus from 'Business/Auth/authStatus';
 
 import Login from './Login';
 
 describe('#Components #Login #Login', function() {
     const authServiceSpy = fake.resolves('12345');
+    const sandbox = createSandbox();
 
     beforeAll(function() {
         stub(Service, 'get').callsFake(authServiceSpy);
     });
+
+    beforeEach(function() {
+        sandbox.replaceGetter(authStatus, 'loggedIn', () => false);
+    });
+
+    afterEach(() => { sandbox.restore(); });
 
     it('should render.', function() {
         expect(() => shallow(<Login />)).not.toThrow();
@@ -62,5 +70,22 @@ describe('#Components #Login #Login', function() {
         wrapper.find('input[type="button"]').simulate('click');
 
         expect(authServiceSpy.calledWith('testUsername', 'testPassword')).toBe(true);
+    });
+
+    describe('#Auth redirect', function() {
+        it('should redirect to the dashboard if the user is logged in.', function() {
+            sandbox.restore();
+            sandbox.replaceGetter(authStatus, 'loggedIn', () => true);
+
+            const wrapper = shallow(<Login />);
+
+            expect(wrapper.find('Redirect').exists()).toBe(true);
+        });
+
+        it('should not redirect if the user is not logged in.', function() {
+            const wrapper = shallow(<Login />);
+
+            expect(wrapper.find('Redirect').exists()).toBe(false);
+        });
     });
 });

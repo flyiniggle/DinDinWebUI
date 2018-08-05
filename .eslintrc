@@ -66,6 +66,7 @@
     "quote-props": 1,
     "radix": "off",
     "react/destructuring-assignment": "off",
+    "react/forbid-prop-types": "off",
     "react/jsx-closing-bracket-location": 0,
     "react/jsx-closing-tag-location": "warn",
     "react/jsx-curly-brace-presence": "warn",

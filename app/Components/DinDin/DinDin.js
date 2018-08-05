@@ -1,37 +1,30 @@
+import authStatus from 'Business/Auth/authStatus';
 import DinDinService from 'Business/Services/DinDinService';
 import React from 'react';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Splash from 'Components/Splash/Splash';
+import ProtectedRoute from 'UI/ProtectedRoute';
 
 import 'Styles/core.sass';
 import './DinDin.sass';
 
 class DinDin extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            loggedIn: true
-        };
-    }
-
     componentWillMount = () => {
         DinDinService.addNotLoggedInHandler(this.logOut);
     }
 
     logOut = () => {
-        this.setState({loggedIn: false});
+        authStatus.loggedIn = false;
+        this.forceUpdate();
     }
 
     render() {
-        if (!this.state.loggedIn) {
-            return <Redirect to="/login" />;
-        }
-
         return (
             <div className="background">
                 <div className="container-fluid">
                     <Switch>
+                        <ProtectedRoute path="/dashboard" component={ Dashboard } />
                         <Route path="/" component={ Splash } />
                     </Switch>
                 </div>
