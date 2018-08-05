@@ -1,3 +1,4 @@
+import authStatus from 'Business/Auth/authStatus';
 import AuthService from 'Business/Auth/Service';
 import preflightCheck from 'Business/Auth/Validation/preflightCheck';
 import responseCheck from 'Business/Auth/Validation/responsesCheck';
@@ -12,6 +13,7 @@ function authenticate(username, password) {
                 const responseErrors = responseCheck(data);
 
                 if (responseErrors.length === 0) {
+                    authStatus.loggedIn = true;
                     return data;
                 }
 

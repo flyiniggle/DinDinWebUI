@@ -16,6 +16,7 @@ class DinDin extends React.Component {
 
     logOut = () => {
         authStatus.loggedIn = false;
+        console.log(this)
         this.forceUpdate();
     }
 

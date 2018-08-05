@@ -43,6 +43,10 @@ class Login extends React.Component {
         this.updatePassword.bind(this);
     }
 
+    redirect = () => {
+        this.forceUpdate();
+    }
+
     showErrors = (errors) => {
         const usernameError = pipe(getUsernameErrors, getInputMessage)(errors);
         const passwordError = pipe(getPasswordErrors, getInputMessage)(errors);
@@ -54,12 +58,12 @@ class Login extends React.Component {
         const { username, password } = this.state;
 
         return authenticate(username, password)
-            .then(this.forceUpdate, this.showErrors);
+            .then(this.redirect, this.showErrors);
     };
 
     render() {
         if (authStatus.loggedIn) {
-            return <Redirect to="/dasbhoard" />;
+            return <Redirect to="/dashboard" />;
         }
 
         return (

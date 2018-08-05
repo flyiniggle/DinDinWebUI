@@ -1,4 +1,5 @@
 import authenticate from 'Business/Auth/authenticate';
+import authStatus from 'Business/Auth/authStatus';
 import { fake, replace, restore } from 'sinon';
 import AuthService from 'Business/Auth/Service';
 
@@ -21,7 +22,7 @@ describe('#Business #Auth #suthenticate', function() {
         restore();
     });
 
-    it('should reject if it recieves an uknown validation message from the server', function() {
+    it('should reject if it receives an unknown validation message from the server', function() {
         const serviceFake = fake.resolves({someError: ['this is an error.']});
 
         replace(AuthService, 'get', serviceFake);
@@ -30,7 +31,7 @@ describe('#Business #Auth #suthenticate', function() {
         restore();
     });
 
-    it('should reject if it recieves no token', function() {
+    it('should reject if it receives no token', function() {
         const serviceFake = fake.resolves({});
 
         replace(AuthService, 'get', serviceFake);
@@ -45,6 +46,18 @@ describe('#Business #Auth #suthenticate', function() {
         replace(AuthService, 'get', serviceFake);
 
         expect(authenticate('user', 'password')).resolves.toEqual({token: 123456});
+        restore();
+    });
+
+    it('should set authStatus.loggedIn to true if successful.', async function() {
+        const serviceFake = fake.resolves({token: 123456});
+
+        replace(AuthService, 'get', serviceFake);
+
+        expect.assertions(1)
+
+        await authenticate('user', 'password');
+        expect(authStatus.loggedIn).toEqual(true);
         restore();
     });
 });
