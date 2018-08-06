@@ -11,7 +11,6 @@ import Maybe from 'folktale/maybe';
 import { curry, identity, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
-import getPosition from 'DinDin/UI/Utils/getPosition';
 
 
 const pickErrorLevel = prop('errorLevel');
@@ -99,14 +98,6 @@ class TextInput extends React.Component {
         if (message) {
             this.positionFeedback(message);
         }
-        /*if (message) {
-            if (this.getFeedbackType(message) === 'tooltip') {
-                this.getPositionType(message)
-            } else {
-                const {bottom} = this.input.current.getBoundingClientRect();
-
-            }
-        }*/
     }
 
     onFocus = () => {
@@ -159,8 +150,8 @@ class TextInput extends React.Component {
     positionFeedback = (message) => {
         const PADDING = 5;
         const positionSetting = this.props.feedbackPosition;
-        const messageHeight = this.feedback.current.getBoundingClientRect().height;
-        const inputHeight = this.input.current.getBoundingClientRect().height;
+        const messageHeight = this.feedback.current.offsetHeight;
+        const inputHeight = this.input.current.offsetHeight;
         const inputPosition = this.input.current.offsetTop;
         const inputDistanceFromBottomOfScreen = window.innerHeight - (inputPosition + inputHeight);
 

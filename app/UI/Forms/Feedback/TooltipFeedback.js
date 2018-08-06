@@ -7,7 +7,7 @@ import './TooltipFeedback.sass';
 
 
 function InlineFeedback(props) {
-    return props.active ? <div className={ `tooltipFeedback ${getErrorClassForText(props.errorLevel)}` }>{props.message}</div> : null;
+    return props.active ? <div className={ `tooltipFeedback ${getErrorClassForText(props.errorLevel)} alert alert-danger` } role="alert">{props.message}</div> : null;
 }
 
 InlineFeedback.propTypes = {
