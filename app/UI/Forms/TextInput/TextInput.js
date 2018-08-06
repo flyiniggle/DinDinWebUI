@@ -7,7 +7,6 @@ import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
-import Maybe from 'folktale/maybe';
 import { curry, identity, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
@@ -60,6 +59,7 @@ class TextInput extends React.Component {
                 message: PropTypes.string
             })
         ]),
+        type: PropTypes.string,
         value: PropTypes.string,
         onChange: PropTypes.func,
         feedbackType: PropTypes.oneOf(['inline', 'tooltip', 'auto']),
@@ -69,6 +69,7 @@ class TextInput extends React.Component {
     static defaultProps = {
         placeholder: '',
         message: undefined,
+        type: 'text',
         value: '',
         onChange: identity,
         feedbackType: 'auto',
@@ -96,7 +97,7 @@ class TextInput extends React.Component {
         const message = this.props.message;
 
         if (message) {
-            this.positionFeedback(message);
+            this.positionFeedback();
         }
     }
 
@@ -108,11 +109,6 @@ class TextInput extends React.Component {
 
     onBlur = () => {
         this.setState({focusedAfterError: false});
-    };
-
-    update = (event) => {
-        this.setState({value: event.target.value});
-        this.props.onChange(event);
     };
 
     // (side effects) + InputMessage => feedbackType
@@ -147,7 +143,12 @@ class TextInput extends React.Component {
         return feedback;
     }
 
-    positionFeedback = (message) => {
+    update = (event) => {
+        this.setState({value: event.target.value});
+        this.props.onChange(event);
+    };
+
+    positionFeedback = () => {
         const PADDING = 5;
         const positionSetting = this.props.feedbackPosition;
         const messageHeight = this.feedback.current.offsetHeight;
@@ -164,39 +165,16 @@ class TextInput extends React.Component {
         }
     }
 
-    getFlexColumnOrder = (message) => {
-        let position;
-
-        switch (this.props.feedbackPosition) {
-        case 'top':
-            position = 'flex-column-reverse';
-            break;
-        case 'bottom':
-            position = 'flex-column';
-            break;
-        case 'auto':
-        default:
-            position = 'flex-column-reverse';
-            break;
-        }
-
-        return position;
-    }
-
     render() {
         const { placeholder } = this.props;
         const message = nullableToMaybe(this.props.message);
-        const flexOrder = message
-            .chain((m) => (this.getFeedbackType(m) === 'tooltip' ? Maybe.of(m) : Maybe.empty()))
-            .map(this.getFlexColumnOrder)
-            .getOrElse('flex-column');
 
         return (
-            <div className={ `row d-flex form-group ${flexOrder}` }>
+            <div className="row d-flex flex-column form-group">
                 <div>
                     <input
                         ref={ this.input }
-                        type="text"
+                        type={ this.props.type }
                         value={ this.state.value }
                         placeholder={ placeholder }
                         className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(this.state, message)}` }

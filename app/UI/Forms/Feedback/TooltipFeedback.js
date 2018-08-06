@@ -1,6 +1,5 @@
 import isError from 'Business/Validation/isError';
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import React from 'react';
 import PropTypes from 'prop-types';
 

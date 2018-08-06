@@ -83,6 +83,7 @@ class Login extends React.Component {
                                 placeholder="Password"
                                 message={ this.state.passwordError }
                                 value={ this.state.password }
+                                type="password"
                                 onChange={ (e) => this.updatePassword(e.target.value) }
                             />
                         </div>
