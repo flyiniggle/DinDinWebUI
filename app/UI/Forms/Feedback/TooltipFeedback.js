@@ -1,13 +1,29 @@
 import isError from 'Business/Validation/isError';
+import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import './TooltipFeedback.sass';
 
+function getErrorClassForAlert(error) {
+    let feedbackTextClass;
+
+    if (error === ErrorLevel.error) {
+        feedbackTextClass = 'alert-danger';
+    } else if (error === ErrorLevel.warning) {
+        feedbackTextClass = 'alert-warning';
+    } else if (error === ErrorLevel.info) {
+        feedbackTextClass = 'alert-info';
+    } else {
+        feedbackTextClass = '';
+    }
+
+    return feedbackTextClass;
+}
 
 function InlineFeedback(props) {
-    return props.active ? <div className={ `tooltipFeedback ${getErrorClassForText(props.errorLevel)} alert alert-danger` } role="alert">{props.message}</div> : null;
+    return props.active ? <div className={ `tooltipFeedback alert ${getErrorClassForAlert(props.errorLevel)}` } role="alert">{props.message}</div> : null;
 }
 
 InlineFeedback.propTypes = {

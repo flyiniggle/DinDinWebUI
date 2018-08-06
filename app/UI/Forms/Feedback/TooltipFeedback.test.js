@@ -11,7 +11,7 @@ describe('#UI #Forms #Feedback #TooltipFeedback', function() {
         const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
         const wrapper = shallow(<TooltipFeedback { ...error } active />);
 
-        expect(wrapper.find('.error-text').exists()).toBe(true);
+        expect(wrapper.find('.alert-danger').exists()).toBe(true);
         expect(wrapper.text()).toEqual('wrong!');
     });
 
@@ -19,7 +19,7 @@ describe('#UI #Forms #Feedback #TooltipFeedback', function() {
         const warning = new InputMessage({message: 'watch out', type: ErrorLevel.warning});
         const wrapper = shallow(<TooltipFeedback { ...warning } active />);
 
-        expect(wrapper.find('.warning-text').exists()).toBe(true);
+        expect(wrapper.find('.alert-warning').exists()).toBe(true);
         expect(wrapper.text()).toEqual('watch out');
     });
 
@@ -27,7 +27,7 @@ describe('#UI #Forms #Feedback #TooltipFeedback', function() {
         const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
         const wrapper = shallow(<TooltipFeedback { ...info } active />);
 
-        expect(wrapper.find('.info-text').exists()).toBe(true);
+        expect(wrapper.find('.alert-info').exists()).toBe(true);
         expect(wrapper.text()).toEqual('hey man');
     });
 
