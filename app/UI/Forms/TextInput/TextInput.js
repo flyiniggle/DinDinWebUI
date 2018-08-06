@@ -7,7 +7,7 @@ import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
-import { curry, identity, map, pipe, prop } from 'ramda';
+import { curry, identity, lift, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
 
@@ -24,14 +24,11 @@ const showInputErrorClass = pipe(
 );
 
 // state => Maybe => String
-const showInputTextErrorClass = function(state, message) {
-    return pipe(
-        map(pickErrorLevel),
-        map(getErrorClassForText),
-        map((className) => (state.focusedAfterError ? '' : className)),
-        getValueOrEmptyString
-    )(message);
-};
+const showInputTextErrorClass = pipe(
+    map(pickErrorLevel),
+    map(getErrorClassForText),
+    getValueOrEmptyString
+);
 
 // HTMLInputElement => InputMessage => Boolean
 const messageIsLongerThanInput = curry(function(input, message) {
@@ -80,8 +77,7 @@ class TextInput extends React.Component {
         super(props);
 
         this.state = {
-            value: props.value,
-            focusedAfterError: false
+            value: props.value
         };
         this.input = React.createRef();
         this.feedback = React.createRef();
@@ -94,54 +90,28 @@ class TextInput extends React.Component {
     }
 
     componentDidUpdate = () => {
-        const message = this.props.message;
-
-        if (message) {
+        if (this.props.message) {
             this.positionFeedback();
         }
     }
 
-    onFocus = () => {
-        if (this.props.message) {
-            this.setState({focusedAfterError: true});
-        }
-    };
+    // (side effects) + HTMLElement => InputMessage => feedbackType
+    getFeedbackType = (message, input) => {
+        const fbType = this.props.feedbackType;
 
-    onBlur = () => {
-        this.setState({focusedAfterError: false});
-    };
-
-    // (side effects) + InputMessage => feedbackType
-    getFeedbackType = (message) => {
-        let calculatedFeedbackType;
-
-        switch (this.props.feedbackType) {
-        case 'tooltip':
-            calculatedFeedbackType = 'tooltip';
-            break;
-        case 'inline':
-            calculatedFeedbackType = 'inline';
-            break;
-        case 'auto':
-        default:
-            calculatedFeedbackType = messageIsLongerThanInput(this.input.current, message) ? 'tooltip' : 'inline';
+        if (fbType === 'tooltip' || fbType === 'inline') {
+            return fbType;
         }
 
-        return calculatedFeedbackType;
+        return messageIsLongerThanInput(input, message) ? 'tooltip' : 'inline';
     }
 
     // (side effects) + feedbackType  => Feedback
-    getFeedback = (feedbackType) => {
-        let feedback;
-
-        if (feedbackType === 'inline') {
-            feedback = <InlineFeedback { ...this.props.message } />;
-        } else if (feedbackType === 'tooltip') {
-            feedback = <TooltipFeedback { ...this.props.message } active={ this.input.current === document.activeElement } />;
-        }
-
-        return feedback;
-    }
+    getFeedback = (feedbackType) => (
+        (feedbackType === 'inline')
+            ? <InlineFeedback { ...this.props.message } />
+            : <TooltipFeedback { ...this.props.message } active={ this.input.current === document.activeElement } />
+    )
 
     update = (event) => {
         this.setState({value: event.target.value});
@@ -168,6 +138,8 @@ class TextInput extends React.Component {
     render() {
         const { placeholder } = this.props;
         const message = nullableToMaybe(this.props.message);
+        const input = nullableToMaybe(this.input.current);
+        const feedbackType = lift(this.getFeedbackType)(input, message);
 
         return (
             <div className="row d-flex flex-column form-group">
@@ -177,16 +149,13 @@ class TextInput extends React.Component {
                         type={ this.props.type }
                         value={ this.state.value }
                         placeholder={ placeholder }
-                        className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(this.state, message)}` }
+                        className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}` }
                         onChange={ this.update }
                         onFocus={ this.onFocus }
                         onBlur={ this.onBlur } />
                 </div>
                 <div className="textInputFeedback position-absolute" ref={ this.feedback }>
-                    {message
-                        .map(this.getFeedbackType)
-                        .map(this.getFeedback)
-                        .getOrElse(null)}
+                    {feedbackType.map(this.getFeedback).getOrElse(null)}
                 </div>
             </div>
         );

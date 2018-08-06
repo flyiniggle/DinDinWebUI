@@ -3,7 +3,7 @@
 @each $level in $ErrorLevels
   $color: map-get($ErrorLevelColors, #{$level})
 
-  .#{$level}-text
+  .#{$level}-text:not(:focus)
     color: #{$color} !important
 
   .#{$level}-input
