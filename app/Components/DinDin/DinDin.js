@@ -10,26 +10,36 @@ import 'Styles/core.sass';
 import './DinDin.sass';
 
 class DinDin extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            meals: undefined
+        };
+    }
+
     componentWillMount = () => {
         DinDinService.addNotLoggedInHandler(this.logOut);
     }
 
+    setMeals = (meals) => {
+        this.setState({meals});
+    }
+
     logOut = () => {
         authStatus.loggedIn = false;
-        console.log(this)
         this.forceUpdate();
     }
 
     render() {
         return (
-            <div className="background">
-                <div className="container-fluid">
-                    <Switch>
-                        <ProtectedRoute path="/dashboard" component={ Dashboard } />
-                        <Route path="/" component={ Splash } />
-                    </Switch>
-                </div>
-            </div>
+            <Switch>
+                <ProtectedRoute
+                    path="/dashboard"
+                    component={ Dashboard }
+                    setMeals={ this.setMeals }
+                    meals={ this.state.meals } />
+                <Route path="/" component={ Splash } />
+            </Switch>
         );
     }
 }

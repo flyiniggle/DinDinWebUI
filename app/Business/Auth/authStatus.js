@@ -1,6 +1,3 @@
-import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
-
-
 const KEY = 'DinDinLoggedIn';
 
 const authStatus = {

@@ -54,7 +54,7 @@ describe('#Business #Auth #suthenticate', function() {
 
         replace(AuthService, 'get', serviceFake);
 
-        expect.assertions(1)
+        expect.assertions(1);
 
         await authenticate('user', 'password');
         expect(authStatus.loggedIn).toEqual(true);
