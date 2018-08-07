@@ -96,7 +96,6 @@ class TextInput extends React.Component {
             value: props.value
         };
         this.input = React.createRef();
-        this.feedback = React.createRef();
     }
 
     componentDidMount = () => {
@@ -157,7 +156,7 @@ class TextInput extends React.Component {
                     placeholder={ placeholder }
                     className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}` }
                     onChange={ this.update } />
-                <div className={ `textInputFeedback position-absolute ${feedbackPosition.getOrElse('')}` } ref={ this.feedback }>
+                <div className={ `textInputFeedback position-absolute ${feedbackPosition.getOrElse('')}` }>
                     { feedback.getOrElse(null) }
                 </div>
             </div>
