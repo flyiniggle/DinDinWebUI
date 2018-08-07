@@ -1,4 +1,6 @@
 import MealsService from 'Business/Meals/Service';
+import MealCard from 'Components/Dashboard/MealCard/MealCard';
+import Overview from 'DinDin/Components/Dashboard/Overview/Overview';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -33,10 +35,10 @@ class Dashboard extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-xs-12 col-md-4">
-                            overview
+                            <Overview meals={ this.props.meals }/>
                         </div>
                         <div className="col-xs-12 col-md-8">
-                            {this.props.meals && this.props.meals.map((meal) => <li>{ meal.name }</li>)}
+                            {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } />)}
                         </div>
                     </div>
                 </div>
