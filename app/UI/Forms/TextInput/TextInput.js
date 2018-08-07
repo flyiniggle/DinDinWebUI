@@ -1,9 +1,8 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
+import getErrorClassForAlert from 'UI/Forms/Validation/getErrorClassForAlert';
 import getErrorClassForInput from 'UI/Forms/Validation/getErrorClassForInput';
+import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import InputMessage from 'UI/Forms/Validation/InputMessage';
-import InlineFeedback from 'UI/Forms/Feedback/InlineFeedback';
-import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import PropTypes from 'prop-types';
 import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
@@ -45,6 +44,23 @@ const messageIsLongerThanInput = curry(function(input, message) {
 
     return isLonger;
 });
+
+// HTMLInputElement => InputMessage => Boolean
+const messageIsTallerThanTopSpace = function(input, message) {
+    const testSpan = document.createElement('span');
+
+    testSpan.innerHTML = message.message;
+    testSpan.style.position = 'absolute';
+    testSpan.style.top = '-1000px';
+    testSpan.style.width = `${input.offsetWidth}px`;
+    document.body.appendChild(testSpan);
+
+    const isTaller = testSpan.offsetHeight > input.getBoundingClientRect().top;
+
+    document.body.removeChild(testSpan);
+
+    return isTaller;
+};
 
 class TextInput extends React.Component {
     static propTypes = {
@@ -89,14 +105,8 @@ class TextInput extends React.Component {
         }
     }
 
-    componentDidUpdate = () => {
-        if (this.props.message) {
-            this.positionFeedback();
-        }
-    }
-
     // (side effects) + HTMLElement => InputMessage => feedbackType
-    getFeedbackType = (message, input) => {
+    getFeedbackType = (input, message) => {
         const fbType = this.props.feedbackType;
 
         if (fbType === 'tooltip' || fbType === 'inline') {
@@ -106,56 +116,49 @@ class TextInput extends React.Component {
         return messageIsLongerThanInput(input, message) ? 'tooltip' : 'inline';
     }
 
-    // (side effects) + feedbackType  => Feedback
-    getFeedback = (feedbackType) => (
-        (feedbackType === 'inline')
-            ? <InlineFeedback { ...this.props.message } />
-            : <TooltipFeedback { ...this.props.message } active={ this.input.current === document.activeElement } />
-    )
+    // (side effects) + HTMLElement => InputMessage => feedbackType
+    getFeedbackPosition = (input, message) => {
+        const fbPosition = this.props.feedbackPosition;
+
+        if (fbPosition !== 'auto') {
+            return fbPosition === 'bottom' ? '' : 'top';
+        }
+
+        return messageIsTallerThanTopSpace(input, message) ? '' : 'top';
+    }
+
+    // InputMessage => feedbackType  => HTMLElement
+    getFeedback = (message, feedbackType) => {
+        const errorLevelClass = ((feedbackType === 'inline') ? getErrorClassForText : getErrorClassForAlert)(message.errorLevel);
+        const typeClass = feedbackType === 'inline' ? '' : 'tooltip alert';
+
+        return <span className={ ` ${errorLevelClass} ${typeClass}` }>{this.props.message.message}</span>;
+    }
 
     update = (event) => {
         this.setState({value: event.target.value});
         this.props.onChange(event);
     };
 
-    positionFeedback = () => {
-        const PADDING = 5;
-        const positionSetting = this.props.feedbackPosition;
-        const messageHeight = this.feedback.current.offsetHeight;
-        const inputHeight = this.input.current.offsetHeight;
-        const inputPosition = this.input.current.offsetTop;
-        const inputDistanceFromBottomOfScreen = window.innerHeight - (inputPosition + inputHeight);
-
-        if (positionSetting === 'top'
-            || (positionSetting === 'auto' && (inputDistanceFromBottomOfScreen < (messageHeight + PADDING)))) {
-            // show feedback above input if 1.) feedbackPosition is set to top or 2.) feedbackPosition is set to auto and the input is very close to the bottom of the screen
-            this.feedback.current.style.top = `${inputPosition - (messageHeight + PADDING)}px`;
-        } else {
-            this.feedback.current.style.top = `${inputPosition + inputHeight + PADDING}px`;
-        }
-    }
-
     render() {
         const { placeholder } = this.props;
         const message = nullableToMaybe(this.props.message);
         const input = nullableToMaybe(this.input.current);
         const feedbackType = lift(this.getFeedbackType)(input, message);
+        const feedback = lift(this.getFeedback)(message, feedbackType);
+        const feedbackPosition = lift(this.getFeedbackPosition)(input, message);
 
         return (
-            <div className="row d-flex flex-column form-group">
-                <div>
-                    <input
-                        ref={ this.input }
-                        type={ this.props.type }
-                        value={ this.state.value }
-                        placeholder={ placeholder }
-                        className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}` }
-                        onChange={ this.update }
-                        onFocus={ this.onFocus }
-                        onBlur={ this.onBlur } />
-                </div>
-                <div className="textInputFeedback position-absolute" ref={ this.feedback }>
-                    {feedbackType.map(this.getFeedback).getOrElse(null)}
+            <div className="textInput row d-flex flex-column form-group">
+                <input
+                    ref={ this.input }
+                    type={ this.props.type }
+                    value={ this.state.value }
+                    placeholder={ placeholder }
+                    className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}` }
+                    onChange={ this.update } />
+                <div className={ `textInputFeedback position-absolute ${feedbackPosition.getOrElse('')}` } ref={ this.feedback }>
+                    { feedback.getOrElse(null) }
                 </div>
             </div>
         );

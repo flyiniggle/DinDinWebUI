@@ -1,7 +1,5 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
-import InlineFeedback from 'UI/Forms/Feedback/InlineFeedback';
-import TooltipFeedback from 'UI/Forms/Feedback/TooltipFeedback';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 
@@ -77,7 +75,8 @@ describe('#UI #Form #TextInput', function() {
                     feedbackType="inline"
                 />);
 
-                expect(input.find(InlineFeedback).exists()).toBe(true);
+                expect(input.find('.textInputFeedback > span').exists()).toBe(true);
+                expect(input.find('.tooltip').exists()).toBe(false);
             });
 
             it('should display a tooltip message.', function() {
@@ -88,7 +87,7 @@ describe('#UI #Form #TextInput', function() {
                     feedbackType="tooltip"
                 />);
 
-                expect(input.find(TooltipFeedback).exists()).toBe(true);
+                expect(input.find('.tooltip').exists()).toBe(true);
             });
         });
     });
