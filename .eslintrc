@@ -93,6 +93,7 @@
       }
     ],
     "spaced-comment": 0,
+    "space-in-parens": "warn",
 	"template-curly-spacing": ["warn", "never"]
   }
 }

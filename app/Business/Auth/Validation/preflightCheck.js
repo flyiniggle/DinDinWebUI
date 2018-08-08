@@ -1,20 +1,12 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import Message from 'Business/Validation/Types/Message';
 import AuthValidationMessages from 'Business/Auth/Validation/Messages';
-
-function checkUsername(username) {
-    return (username && username.toString()) ? ErrorLevel.ok : ErrorLevel.error;
-}
-
-function checkPassword(password) {
-    return (password && password.toString()) ? ErrorLevel.ok : ErrorLevel.error;
-
-}
+import checkIsMissing from 'Business/Validation/Lib/checkIsMissing';
 
 function preflightCheck(data = {}) {
     const {username, password} = data;
-    const usernameValidation = checkUsername(username);
-    const passwordValidation = checkPassword(password);
+    const usernameValidation = checkIsMissing(username);
+    const passwordValidation = checkIsMissing(password);
     const result = [];
 
     if (usernameValidation !== ErrorLevel.ok) {
@@ -29,8 +21,3 @@ function preflightCheck(data = {}) {
 }
 
 export default preflightCheck;
-
-export {
-    checkPassword,
-    checkUsername
-};
