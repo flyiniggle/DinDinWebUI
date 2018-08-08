@@ -75,8 +75,6 @@ class Login extends React.Component {
                                 placeholder="Username"
                                 message={ this.state.usernameError }
                                 value={ this.state.username }
-                                feedbackType="tooltip"
-                                feedbackPosition="top"
                                 onChange={ (e) => this.updateUsername(e.target.value) }
                             />
                         </div>
@@ -85,7 +83,7 @@ class Login extends React.Component {
                                 placeholder="Password"
                                 message={ this.state.passwordError }
                                 value={ this.state.password }
-                                feedbackPosition="top"
+                                type="password"
                                 onChange={ (e) => this.updatePassword(e.target.value) }
                             />
                         </div>

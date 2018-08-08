@@ -4,23 +4,22 @@ import preflightCheck from 'Business/Auth/Validation/preflightCheck';
 import responseCheck from 'Business/Auth/Validation/responsesCheck';
 
 // String => String => Promise(Response.json())
-function authenticate(username, password) {
+async function authenticate(username, password) {
     const errors = preflightCheck({username, password});
 
-    if (errors.length === 0) {
-        return AuthService.get(username, password)
-            .then(function(data) {
-                const responseErrors = responseCheck(data);
-
-                if (responseErrors.length === 0) {
-                    authStatus.loggedIn = true;
-                    return data;
-                }
-
-                return Promise.reject(responseErrors);
-            });
+    if (errors.length > 0) {
+        return Promise.reject(errors);
     }
-    return Promise.reject(errors);
+
+    const result = await AuthService.get(username, password);
+    const responseErrors = responseCheck(result);
+
+    if (responseErrors.length > 0) {
+        return Promise.reject(responseErrors);
+    }
+
+    authStatus.loggedIn = true;
+    return result;
 }
 
 export default authenticate;
