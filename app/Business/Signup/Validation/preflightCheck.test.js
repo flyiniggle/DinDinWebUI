@@ -86,4 +86,17 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
         expect(preflightCheck(data).length).toEqual(1);
         expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
     });
+
+    it('should return multiple errors..', function () {
+        const data = {
+            username: '',
+            email: '',
+            password: 'testPassword123',
+            passwordRepeat: 'testPassword123'
+        };
+
+        expect(preflightCheck(data).length).toEqual(2);
+        expect(preflightCheck(data)[0].message).toEqual(AuthValidationMessages.missingUserName);
+        expect(preflightCheck(data)[1].message).toEqual(SignupValidationMessages.missingEmail);
+    });
 });
