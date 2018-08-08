@@ -9,13 +9,14 @@ import 'Styles/theme.sass';
 
 
 class Dashboard extends React.Component {
-    defaultPropTypes = {
-        meals: undefined
+    static defaultPropTypes = {
+        meals: undefined,
+        setMeals: () => undefined
     }
 
-    propTypes = {
+    static propTypes = {
         meals: PropTypes.array,
-        setMeals: PropTypes.func.isRequired
+        setMeals: PropTypes.func
     }
 
     componentDidMount = () => {
