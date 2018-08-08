@@ -43,6 +43,7 @@
     "max-len": 0,
     "no-alert": "off",
     "no-cond-assign": 0,
+    "no-control-regex": "off",
     "no-multi-spaces": 1,
     "no-param-reassign": "error",
     "no-plusplus": 0,
