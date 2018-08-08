@@ -1,5 +1,7 @@
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import React from 'react';
+import { pick } from 'ramda';
+import signup from 'Business/Signup/signup';
 
 
 class SignUp extends React.Component {
@@ -18,7 +20,10 @@ class SignUp extends React.Component {
         };
     }
 
-    signUp = () => {
+    signUp = async () => {
+        const input = pick(['username', 'email', 'password', 'passwordRepeat'], this.state);
+
+        const result = await signup(input);
 
     }
 
