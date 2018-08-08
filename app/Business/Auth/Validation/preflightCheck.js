@@ -1,5 +1,6 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import Message from 'Business/Validation/Types/Message';
+import AuthValidationMessages from 'Business/Auth/Validation/Messages';
 
 function checkUsername(username) {
     return (username && username.toString()) ? ErrorLevel.ok : ErrorLevel.error;
@@ -17,11 +18,11 @@ function preflightCheck(data = {}) {
     const result = [];
 
     if (usernameValidation !== ErrorLevel.ok) {
-        result.push(new Message(usernameValidation, 'username', username, 'required'));
+        result.push(new Message(usernameValidation, 'username', username, AuthValidationMessages.missingUserName));
     }
 
     if (passwordValidation !== ErrorLevel.ok) {
-        result.push(new Message(passwordValidation, 'password', password, 'required'));
+        result.push(new Message(passwordValidation, 'password', password, AuthValidationMessages.missingPassword));
     }
 
     return result;
