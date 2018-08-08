@@ -2,6 +2,8 @@ import { sortMostUsed, sortRecentlyPrepared } from 'Business/Meals/sorting';
 import React from 'react';
 import { slice, map, last, pipe, prop, reverse} from 'ramda';
 
+import './Overview.sass';
+
 const Overview = function(props) {
     const meals = props.meals || [];
     const getFirstThree = slice(0, 3);

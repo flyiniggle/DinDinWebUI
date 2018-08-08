@@ -12,7 +12,7 @@ function Splash() {
         <div className="background">
             <div className="container-fluid">
                 <div className="splash">
-                    <div className="row header d-flex flex-row-reverse">
+                    <div className="row splash-header d-flex flex-row-reverse">
                         <div className="btn-group" role="group">
                             <Link to="/login" className="btn btn-secondary">
                                 Log in
