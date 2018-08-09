@@ -92,6 +92,9 @@ module.exports = {
         minimizer: [
             new UglifyJsPlugin({
                 cache: true,
+                uglifyOptions: {
+                    passes: 3
+                },
                 parallel: true,
                 sourceMap: true
             }),
