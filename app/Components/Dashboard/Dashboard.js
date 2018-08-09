@@ -28,25 +28,23 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="mainBackground">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-12">
-                            <Header />
-                        </div>
+            <div className="mainBackground container-fluid dashboard">
+                <div className="row">
+                    <div className="col-12">
+                        <Header />
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12">
-                            filters
-                        </div>
+                </div>
+                <div className="row">
+                    <div className="col-xs-12">
+                        filters
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12 col-md-4">
-                            <Overview meals={ this.props.meals } />
-                        </div>
-                        <div className="col-xs-12 col-md-8">
-                            {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } />)}
-                        </div>
+                </div>
+                <div className="row d-flex flex-row-reverse justify-content-between">
+                    <div className="meal-card-container col-xs-12 col-md-8 p-5">
+                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } />)}
+                    </div>
+                    <div className="col-xs-12 col-md-4 position-fixed">
+                        <Overview meals={ this.props.meals } />
                     </div>
                 </div>
             </div>
