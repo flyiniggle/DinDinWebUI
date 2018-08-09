@@ -1,4 +1,7 @@
 import MealsService from 'Business/Meals/Service';
+import MealCard from 'Components/Dashboard/MealCard/MealCard';
+import Overview from 'DinDin/Components/Dashboard/Overview/Overview';
+import Header from 'DinDin/Components/Header/Header';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,13 +9,14 @@ import 'Styles/theme.sass';
 
 
 class Dashboard extends React.Component {
-    defaultPropTypes = {
-        meals: undefined
+    static defaultPropTypes = {
+        meals: undefined,
+        setMeals: () => undefined
     }
 
-    propTypes = {
+    static propTypes = {
         meals: PropTypes.array,
-        setMeals: PropTypes.func.isRequired
+        setMeals: PropTypes.func
     }
 
     componentDidMount = () => {
@@ -24,20 +28,23 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="mainBackground">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-xs-12">
-                            filters
-                        </div>
+            <div className="mainBackground container-fluid dashboard">
+                <div className="row">
+                    <div className="col-12">
+                        <Header />
                     </div>
-                    <div className="row">
-                        <div className="col-xs-12 col-md-4">
-                            overview
-                        </div>
-                        <div className="col-xs-12 col-md-8">
-                            {this.props.meals && this.props.meals.map((meal) => <li>{ meal.name }</li>)}
-                        </div>
+                </div>
+                <div className="row">
+                    <div className="col-xs-12">
+                        filters
+                    </div>
+                </div>
+                <div className="row d-flex flex-row-reverse justify-content-between">
+                    <div className="meal-card-container col-xs-12 col-md-8 p-5">
+                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } />)}
+                    </div>
+                    <div className="col-xs-12 col-md-4 position-fixed">
+                        <Overview meals={ this.props.meals } />
                     </div>
                 </div>
             </div>
