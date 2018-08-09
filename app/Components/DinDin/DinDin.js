@@ -6,7 +6,6 @@ import Dashboard from 'Components/Dashboard/Dashboard';
 import Splash from 'Components/Splash/Splash';
 import ProtectedRoute from 'UI/ProtectedRoute';
 
-import 'Styles/core.sass';
 import './DinDin.sass';
 
 class DinDin extends React.Component {
