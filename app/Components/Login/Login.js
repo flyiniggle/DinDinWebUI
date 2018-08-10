@@ -1,22 +1,13 @@
 import authenticate from 'Business/Auth/authenticate';
 import authStatus from 'Business/Auth/authStatus';
-import InputMessage from 'UI/Forms/Validation/InputMessage';
-import { construct, curry, head, isNil, pipe, unless } from 'ramda';
+import getFirstInputMessageForField from "UI/Forms/Validation/getFirstInputMessageForField";
+import TextInput from 'UI/Forms/TextInput/TextInput';
+import { curry } from 'ramda';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import getMessagesForField from 'Business/Validation/getMessagesForField';
-import TextInput from 'UI/Forms/TextInput/TextInput';
 
 import './Login.sass';
 
-
-const getPasswordErrors = getMessagesForField('password');
-const getUsernameErrors = getMessagesForField('username');
-const maybeInputMessage = unless(
-    isNil,
-    construct(InputMessage)
-);
-const getInputMessage = pipe(head, maybeInputMessage);
 
 const updateField = curry(function(field, value) {
     this.setState({
@@ -48,8 +39,8 @@ class Login extends React.Component {
     }
 
     showErrors = (errors) => {
-        const usernameError = pipe(getUsernameErrors, getInputMessage)(errors);
-        const passwordError = pipe(getPasswordErrors, getInputMessage)(errors);
+        const usernameError = getFirstInputMessageForField('username', errors);
+        const passwordError = getFirstInputMessageForField('password', errors);
 
         this.setState({usernameError, passwordError});
     };
