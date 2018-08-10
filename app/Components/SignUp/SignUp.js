@@ -2,6 +2,8 @@ import TextInput from 'UI/Forms/TextInput/TextInput';
 import React from 'react';
 import { pick } from 'ramda';
 import signup from 'Business/Signup/signup';
+import InputMessage from "UI/Forms/Validation/InputMessage";
+import getFirstInputMessageForField from "UI/Forms/Validation/getFirstInputMessageForField";
 
 
 class SignUp extends React.Component {
@@ -24,7 +26,17 @@ class SignUp extends React.Component {
         const input = pick(['username', 'email', 'password', 'passwordRepeat'], this.state);
 
         const result = await signup(input);
+        const usernameError = getFirstInputMessageForField('username', result);
+        const emailError = getFirstInputMessageForField('email', result);
+        const passwordError = getFirstInputMessageForField('password', result);
+        const passwordRepeatError = getFirstInputMessageForField('passwordRepeat', result);
 
+        this.setState({
+            usernameError,
+            emailError,
+            passwordError,
+            passwordRepeatError
+        });
     }
 
     update = (field, value) => {
