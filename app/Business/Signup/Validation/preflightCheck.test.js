@@ -87,7 +87,7 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
         expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
     });
 
-    it('should return multiple errors..', function () {
+    it('should return multiple errors..', function() {
         const data = {
             username: '',
             email: '',

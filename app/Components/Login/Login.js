@@ -1,6 +1,6 @@
 import authenticate from 'Business/Auth/authenticate';
 import authStatus from 'Business/Auth/authStatus';
-import getFirstInputMessageForField from "UI/Forms/Validation/getFirstInputMessageForField";
+import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import { curry } from 'ramda';
 import React from 'react';

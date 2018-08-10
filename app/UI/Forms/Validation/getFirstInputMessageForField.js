@@ -1,6 +1,6 @@
-import getFirstMessageForField from "Business/Validation/getFirstMessageForField";
+import getFirstMessageForField from 'Business/Validation/getFirstMessageForField';
 import { curry } from 'ramda';
-import InputMessage from "UI/Forms/Validation/InputMessage";
+import InputMessage from 'UI/Forms/Validation/InputMessage';
 
 
 // [Message] => InputMessage
