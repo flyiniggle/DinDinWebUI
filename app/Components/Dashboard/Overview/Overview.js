@@ -14,10 +14,10 @@ const Overview = function(props) {
 
     return (
         <div className="overview">
-            <div className="row">
+            <div className="row p-3">
                 <div className="col-xs-4 col-md-12">
                     <h3>Last Meal</h3>
-                    <span>{ lastMeal(meals) }</span>
+                    <p>{ lastMeal(meals) }</p>
                 </div>
 
                 <div className="col-xs-4 col-md-12">
