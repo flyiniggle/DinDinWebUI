@@ -31,7 +31,7 @@ describe('#Business #Validation #Types #ErrorMessage', function() {
         };
 
         expect(ErrorMessage(data).field).toEqual(data.field);
-        expect(ErrorMessage(data).value).toEqual('');
+        expect(ErrorMessage(data).value).toEqual(undefined);
         expect(ErrorMessage(data).message).toEqual('');
     });
 });

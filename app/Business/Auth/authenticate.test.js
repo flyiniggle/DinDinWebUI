@@ -13,7 +13,7 @@ describe('#Business #Auth #suthenticate', function() {
         expect(authenticate(test)).rejects.toMatchSnapshot();
     });
 
-    it('should reject if it recieves a failed credentials validation message from the server', function() {
+    it('should reject if it receives a failed credentials validation message from the server', function() {
         const serviceFake = fake.resolves({non_field_errors: ['Unable to log in with provided credentials.']});
 
         replace(AuthService, 'get', serviceFake);

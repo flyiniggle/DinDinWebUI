@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`#Business #Auth #suthenticate should reject if it receives a failed credentials validation message from the server 1`] = `
+Array [
+  Message {
+    "field": "password",
+    "message": "Username and password did not match.",
+    "type": "Error",
+    "value": "",
+  },
+]
+`;
+
 exports[`#Business #Auth #suthenticate should reject if it receives an unknown validation message from the server 1`] = `
 Array [
   Message {
@@ -16,17 +27,6 @@ Array [
   Message {
     "field": "password",
     "message": "It is not possible to log in right now.",
-    "type": "Error",
-    "value": "",
-  },
-]
-`;
-
-exports[`#Business #Auth #suthenticate should reject if it recieves a failed credentials validation message from the server 1`] = `
-Array [
-  Message {
-    "field": "password",
-    "message": "Username and password did not match.",
     "type": "Error",
     "value": "",
   },

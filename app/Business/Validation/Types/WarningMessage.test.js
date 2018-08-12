@@ -32,7 +32,7 @@ describe('#Business #Validation #Types #WarningMessage', function() {
 
         expect(WarningMessage(data).type).toEqual(ErrorLevel.warning);
         expect(WarningMessage(data).field).toEqual(data.field);
-        expect(WarningMessage(data).value).toEqual('');
+        expect(WarningMessage(data).value).toEqual(undefined);
         expect(WarningMessage(data).message).toEqual('');
     });
 });

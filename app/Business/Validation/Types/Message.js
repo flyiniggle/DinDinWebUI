@@ -1,5 +1,7 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
+
+//Basic object shape for messages
 function Message(type, field, value, message = '') {
     const errorLevels = Object.values(ErrorLevel);
 

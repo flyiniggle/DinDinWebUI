@@ -1,20 +1,25 @@
-import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import Message from 'Business/Validation/Types/Message';
+import ErrorMessage from 'Business/Validation/Types/ErrorMessage';
 import AuthValidationMessages from 'Business/Auth/Validation/Messages';
-import checkIsMissing from 'Business/Validation/Lib/checkIsMissing';
+import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
 
 function preflightCheck(data = {}) {
     const {username, password} = data;
-    const usernameValidation = checkIsMissing(username);
-    const passwordValidation = checkIsMissing(password);
     const result = [];
 
-    if (usernameValidation !== ErrorLevel.ok) {
-        result.push(new Message(usernameValidation, 'username', username, AuthValidationMessages.missingUserName));
+    if (fieldIsEmpty(username) === true) {
+        result.push(ErrorMessage({
+            field: 'username',
+            value: username,
+            message: AuthValidationMessages.missingUserName
+        }));
     }
 
-    if (passwordValidation !== ErrorLevel.ok) {
-        result.push(new Message(passwordValidation, 'password', password, AuthValidationMessages.missingPassword));
+    if (fieldIsEmpty(password) === true) {
+        result.push(ErrorMessage({
+            field: 'password',
+            value: password,
+            message: AuthValidationMessages.missingPassword
+        }));
     }
 
     return result;

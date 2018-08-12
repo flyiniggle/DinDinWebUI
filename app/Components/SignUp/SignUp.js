@@ -2,7 +2,6 @@ import TextInput from 'UI/Forms/TextInput/TextInput';
 import React from 'react';
 import { pick } from 'ramda';
 import signup from 'Business/Signup/signup';
-import InputMessage from 'UI/Forms/Validation/InputMessage';
 import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
 
 
