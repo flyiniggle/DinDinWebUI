@@ -9,7 +9,7 @@
     "lint": "eslint --fix ./",
     "storybook": "start-storybook -p 9001 -c storybook",
     "test": "jest --config test/jest.config.js",
-    "test-ci": "jest --ci --coverage --config test/jest.config.js && cat ./tests/coverage/lcov.info | coveralls",
+    "test-ci": "jest --ci --coverage --config test/jest.config.js && cat ./test/coverage/lcov.info | coveralls",
     "test-dev": "jest --config test/jest.config.js --watch --verbose"
   },
   "author": "Dan Thompson",
