@@ -67,7 +67,19 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name (file) {
+                                if (!IN_PRODUCTION) {
+                                    return '[path][name].[ext]';
+                                }
+
+                                return '[hash].[ext]';
+                            },
+                            publicPath: 'static/'
+                        }
+                    }
                 ]
 
             }
