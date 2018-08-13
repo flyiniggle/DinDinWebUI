@@ -1,6 +1,8 @@
 .idea/
 node_modules/
 build/
+test/coverage
+!test/coverage/coverage.txt
 .env
 *.min.js
 *.map

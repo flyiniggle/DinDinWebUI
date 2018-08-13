@@ -9,6 +9,7 @@
     "lint": "eslint --fix ./",
     "storybook": "start-storybook -p 9001 -c storybook",
     "test": "jest --config test/jest.config.js",
+    "test-ci": "jest --ci --coverage --config test/jest.config.js && cat ./tests/coverage/lcov.info | coveralls",
     "test-dev": "jest --config test/jest.config.js --watch --verbose"
   },
   "author": "Dan Thompson",
@@ -24,6 +25,7 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "coveralls": "3.0.2",
     "cross-env": "5.2.0",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
