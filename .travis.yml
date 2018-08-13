@@ -1,16 +1,14 @@
 language: node_js
-
 node_js:
-  - 8
-
+- 8
 script:
-  - npm run lint
-  - npm run test-ci
-  - npm run build
+- npm run lint
+- npm run test-ci
+- npm run build
 deploy:
   provider: heroku
   api_key:
-    secure: KPAV9XnN8MuwstytStFSLQfAEh3YgzI46uZWdrXWbBBZ8EXj9mku8UNPegFJWYf9qS5WSkCTQ9LhWZ6hG2mzm+PXNbU69BxEXuxqy5mevyx4I/OpPLFcaQyZOEgOXkhfIcS6dW3at3u6udAQfuRupIXYWZuEvzVTx5vOjVToNI9339h4WY8dlb6xUrd4xmDY65jNBKBQ30nRIv0JK/QR8h8A+Jg2Cabz3ejQfOA0cG57cW3JkJY/gZdsCmQSJaSF1sagNAzvA1l83tfBjq0h456ZV0/knDtAS3tM6TJXr6PbHJXNe0HiSd3JuN8iJz4/qkh+sAODrDybGJ6jQzmaGYZ1fMdCpFic9YmQgbdgBOZqypRCvARKuqZHM8JkltN8JQqMxdFuzAcydt8KtA8CC8jGgfSR6SDbOcbqLTNNFATTp+j3gVODA3PhSnx7bTExriwY5GmYkyU256LdT8Pv1T9OVE+WW1+ejk0xwvmsuxK+Zw4zzzpPfHfcNYYnpJiLQaOFMy87tKrId7bHpOoc6ZQiCuZGDgrYOij6LdrOKeo8NuZHmwbP4GDh2QwM/zGGA6u7r5GMz+48ZgB4Qji5ohlEw+VPLRM1WFBct6OOpFNul+lveLq37rF5qjjb3c4tAPlDxshrKm/rYHDXlcaGUY/kVOQJ/CcBvjMkMRH8wpI=
+    secure: HskXykDorKc3BQxzf/ryoERvDSkZS61y9bQYLYqwhgudO8kXPskQsOnVnkm/5N5/9ViL4lJT4QtAx0QQAJwKRoK0XjhrEI/Iol6hxAmcDfqphApePQZnN2ZrnhZc5arA+KwipEP46Vn0vZRNh5kTzyBnSuzYhwisccALbJHN3gEs6zzln31S0maJAM7irReVVPSB/8pzjVzk1ZgDO4bpC7m1/DrE19VtYoWPgovMgS6Vpt1oLt8cSS393ajzGaUi6DeOo8vWsj98OUzPq35QZZqgYqAavSj6dHilZPEv6D62IG2MXQl+ugdiiW8QZtq5bNimGbB9kEb/ccX1mlwgXJt0RBmhQjToGutY6N+IpMk+R45uunWSeX6zh9+/N7tfRhJFLqBL3Hhi1NG3gHemcU09sHXeKIvjcQEhFk9zmpIJ59ZI/hp8bzJ1YtJx+txSIejNh8e9ErcCgZa+AJliBrV6osGp+jOeldOe/nwxEhw/Oof3HdtJ1VnBv8SdyLXu2EIf0woQQu+LtPS/XcBo7EwvR7C3Av38sIhxLhG5jS/pQ18oFsUKCZ/pCLN6v8/KR9uuHCbjKktCaCujsVJFUQbJF79JP7brCCgcNgOzioEefrpYCxsh280g3GfP9T5OGhWaTBe+A8e8nnxDUJwA3hjDuG9M7JxyajMGyZBlQTg=
   app: din-din
   on:
     repo: flyiniggle/DinDinWebUI
