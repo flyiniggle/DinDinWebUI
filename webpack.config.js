@@ -22,7 +22,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'build', 'static'),
-        filename: IN_PRODUCTION ? '[name].[chunkhash].js' : '[name].js'
+        filename: IN_PRODUCTION ? '[name].[chunkhash].js' : '[name].js',
+        publicPath: "/static/"
     },
     resolve: {
         alias: {
@@ -67,19 +68,7 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name (file) {
-                                if (!IN_PRODUCTION) {
-                                    return '[path][name].[ext]';
-                                }
-
-                                return '[hash].[ext]';
-                            },
-                            publicPath: 'static/'
-                        }
-                    }
+                    'file-loader'
                 ]
 
             }
