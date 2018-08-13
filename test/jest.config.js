@@ -2,8 +2,11 @@ const path = require('path');
 
 module.exports = {
     coverageDirectory: path.join('<rootDir>', 'test', 'coverage'),
-    collectCoverageFrom: [
-        path.join('<rootDir>', 'app')
+    coveragePathIgnorePatterns: [
+        '<rootDir>/build/',
+        '<rootDir>/node_modules/',
+        '<rootDir>/storybook/',
+        '<rootDir>/test/'
     ],
     globals: {
         __APIRoot__: 'test'
