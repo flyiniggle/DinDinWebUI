@@ -1,10 +1,16 @@
 language: node_js
 
 node_js:
-  - 9
   - 8
 
 script:
   - npm run lint
   - npm run test-ci
   - npm run build
+deploy:
+  provider: heroku
+  api_key:
+    secure: KPAV9XnN8MuwstytStFSLQfAEh3YgzI46uZWdrXWbBBZ8EXj9mku8UNPegFJWYf9qS5WSkCTQ9LhWZ6hG2mzm+PXNbU69BxEXuxqy5mevyx4I/OpPLFcaQyZOEgOXkhfIcS6dW3at3u6udAQfuRupIXYWZuEvzVTx5vOjVToNI9339h4WY8dlb6xUrd4xmDY65jNBKBQ30nRIv0JK/QR8h8A+Jg2Cabz3ejQfOA0cG57cW3JkJY/gZdsCmQSJaSF1sagNAzvA1l83tfBjq0h456ZV0/knDtAS3tM6TJXr6PbHJXNe0HiSd3JuN8iJz4/qkh+sAODrDybGJ6jQzmaGYZ1fMdCpFic9YmQgbdgBOZqypRCvARKuqZHM8JkltN8JQqMxdFuzAcydt8KtA8CC8jGgfSR6SDbOcbqLTNNFATTp+j3gVODA3PhSnx7bTExriwY5GmYkyU256LdT8Pv1T9OVE+WW1+ejk0xwvmsuxK+Zw4zzzpPfHfcNYYnpJiLQaOFMy87tKrId7bHpOoc6ZQiCuZGDgrYOij6LdrOKeo8NuZHmwbP4GDh2QwM/zGGA6u7r5GMz+48ZgB4Qji5ohlEw+VPLRM1WFBct6OOpFNul+lveLq37rF5qjjb3c4tAPlDxshrKm/rYHDXlcaGUY/kVOQJ/CcBvjMkMRH8wpI=
+  app: din-din
+  on:
+    repo: flyiniggle/DinDinWebUI
