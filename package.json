@@ -7,6 +7,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --colors -p",
     "build-dev": "webpack-dev-server --colors --watch --progress --hot --open",
     "lint": "eslint --fix ./",
+    "serve": "node server/server.js",
+    "start": "npm run build && npm run serve",
     "storybook": "start-storybook -p 9001 -c storybook",
     "test": "jest --config test/jest.config.js",
     "test-ci": "jest --ci --coverage --config test/jest.config.js && cat ./test/coverage/lcov.info | coveralls",
@@ -62,6 +64,7 @@
   "dependencies": {
     "babel-polyfill": "6.26.0",
     "bootstrap": "4.1.1",
+    "express": "4.16.3",
     "folktale": "2.1.0",
     "ramda": "0.25.0",
     "react": "16.4.1",

@@ -21,7 +21,7 @@ module.exports = {
         vendors: ['babel-polyfill', 'react', 'react-dom', 'ramda']
     },
     output: {
-        path: path.join(__dirname, 'build'),
+        path: path.join(__dirname, 'build', 'static'),
         filename: IN_PRODUCTION ? '[name].[chunkhash].js' : '[name].js'
     },
     resolve: {
@@ -80,7 +80,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             hash: true,
             template: './index.html',
-            filename: 'index.html'
+            filename: '../index.html'
         }),
         new WebpackMd5Hash(),
         new webpack.DefinePlugin({

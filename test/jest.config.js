@@ -5,6 +5,7 @@ module.exports = {
     coveragePathIgnorePatterns: [
         '<rootDir>/build/',
         '<rootDir>/node_modules/',
+        '<rootDir>/server/',
         '<rootDir>/storybook/',
         '<rootDir>/test/'
     ],
