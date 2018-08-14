@@ -23,7 +23,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'build', 'static'),
         filename: IN_PRODUCTION ? '[name].[chunkhash].js' : '[name].js',
-        publicPath: '/static/'
+        publicPath: IN_PRODUCTION ? '/static/' : ''
     },
     resolve: {
         alias: {
@@ -81,7 +81,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             hash: true,
             template: './index.html',
-            filename: '../index.html'
+            filename: IN_PRODUCTION ? '../index.html' : 'index.html'
         }),
         new WebpackMd5Hash(),
         new webpack.DefinePlugin({
