@@ -2,7 +2,7 @@ import ErrorMessage from 'Business/Validation/Types/ErrorMessage';
 import AuthValidationMessages from 'Business/Auth/Validation/Messages';
 import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
 
-function preflightCheck(data = {}) {
+function preflightCheck(data: { username?: string, password?: string } = {}): Array<any> {
     const {username, password} = data;
     const result = [];
 

@@ -13,6 +13,11 @@ module.exports = {
         __APIRoot__: 'test'
     },
     moduleDirectories: ['node_modules'],
+    moduleFileExtensions: [
+        'ts',
+        'tsx',
+        'js'
+    ],
     moduleNameMapper: {
         '^.+\\.(css|scss|sass)$': path.join('<rootDir>', 'test', 'mocks', 'styles.js'),
         '^Business(.*)$': path.join('<rootDir>', 'app', 'Business', '$1'),
@@ -26,6 +31,7 @@ module.exports = {
     setupFiles: [path.join('<rootDir>', 'test', 'jestsetup.js'), 'jest-localstorage-mock'],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     transform: {
+        '\\.(ts|tsx)$': 'ts-jest',
         '^.+\\.js$': 'babel-jest'
     }
 };
