@@ -1,6 +1,14 @@
 import { pipe, reverse } from 'ramda';
 
-function returnMoreUsed(mealA, mealB) {
+interface UsedCount {
+    usedCount: number
+}
+
+interface LastUsed {
+    lastUsed: number
+}
+
+function returnMoreUsed(mealA: UsedCount, mealB: UsedCount): number {
     const mealAUses = mealA.usedCount || 0;
     const mealBUses = mealB.usedCount || 0;
 
@@ -11,7 +19,7 @@ function sortMostUsed(meals) {
     return Array.from(meals).sort(returnMoreUsed);
 }
 
-function compareLastUsed(mealA, mealB) {
+function compareLastUsed(mealA: LastUsed, mealB: LastUsed): number {
     const mealADate = mealA.lastUsed || 0;
     const mealBDate = mealB.lastUsed || 0;
 

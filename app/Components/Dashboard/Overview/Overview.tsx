@@ -1,8 +1,13 @@
 import { sortMostUsed, sortRecentlyPrepared } from 'Business/Meals/sorting';
-import React from 'react';
+import Meal from "Business/Meals/Types/Meal";
+import * as React from 'react';
 import { slice, map, last, pipe, prop, reverse} from 'ramda';
 
 import './Overview.sass';
+
+interface OverviewProps {
+    meals?: Array<Meal>
+}
 
 const Overview = function(props) {
     const meals = props.meals || [];
