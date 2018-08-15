@@ -71,6 +71,7 @@ class SignUp extends React.Component {
                         <div className="mb-4">
                             <TextInput
                                 placeholder="Password"
+                                type="password"
                                 message={ this.state.passwordError }
                                 value={ this.state.password }
                                 onChange={ (e) => this.update('password', e.target.value) }
@@ -80,6 +81,7 @@ class SignUp extends React.Component {
                         <div className="mb-4">
                             <TextInput
                                 placeholder="Re-enter password"
+                                type="password"
                                 message={ this.state.passwordRepeatError }
                                 value={ this.state.passwordRepeat }
                                 onChange={ (e) => this.update('passwordRepeat', e.target.value) }
