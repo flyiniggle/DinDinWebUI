@@ -1,7 +1,8 @@
 import { curry, filter } from 'ramda';
+import Message from "Business/Validation/Types/Message";
 
-// String => Business.Auth.Validation.Types.Message => Boolean
-function getMessagesForField(field, messages) {
+// String => [Message] => [Message]
+function getMessagesForField(field: string, messages: Array<Message>): Array<Message> {
     const testMessage = message => message.field === field;
 
     return filter(testMessage, messages);
