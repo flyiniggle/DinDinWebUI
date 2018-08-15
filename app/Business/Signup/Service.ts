@@ -2,9 +2,9 @@ import DinDinService from 'Business/Services/DinDinService';
 
 
 const SignupService = {
-    post: function(u, p, e) {
+    create: function(u: string, p: string, e: string): Promise<any> {
         return DinDinService.send('/users/create', {
-            method: 'POST',
+            method: 'CREATE',
             body: JSON.stringify({username: u, password: p, email: e})
         }).then(body => body.json());
     }

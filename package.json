@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --colors -p",
-    "build-dev": "webpack-dev-server --colors --watch --progress --hot --open",
+    "build-dev": "webpack-dev-server --colors --watch --errors-only --hot --open",
     "lint": "eslint --fix ./",
     "serve": "node server/server.js",
     "start": "npm run build && npm run serve",
