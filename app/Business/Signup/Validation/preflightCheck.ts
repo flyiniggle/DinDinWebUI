@@ -3,8 +3,16 @@ import AuthValidationMessages from 'Business/Auth/Validation/Messages';
 import SignupValidationMessages from 'Business/Signup/Validation/Messages';
 import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
 import regexp from 'Business/Lib/regexp';
+import Message from "Business/Validation/Types/Message";
 
-function preflightCheck({ password, username, email, passwordRepeat }) {
+interface SignupParams {
+    username: string,
+    email: string,
+    password: string,
+    passwordRepeat: string
+}
+
+function preflightCheck({ password, username, email, passwordRepeat }: SignupParams): Array<Message> {
     const errors = [];
 
     if (fieldIsEmpty(username) === true) {
