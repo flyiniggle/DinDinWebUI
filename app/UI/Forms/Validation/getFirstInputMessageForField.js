@@ -7,7 +7,7 @@ import InputMessage from 'UI/Forms/Validation/InputMessage';
 const getFirstInputMessageForField = curry(function(field, messages) {
     return getFirstMessageForField(field, messages)
         .map(message => new InputMessage(message))
-        .getOrElse(undefined);
+        .unwrapOr(undefined);
 });
 
 export default getFirstInputMessageForField;

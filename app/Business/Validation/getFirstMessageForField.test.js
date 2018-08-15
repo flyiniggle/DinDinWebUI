@@ -1,7 +1,7 @@
 import {createMessage} from 'Business/Validation/Types/Message';
 import getFirstMessageForField from 'Business/Validation/getFirstMessageForField';
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import Maybe from 'folktale/maybe';
+import { Maybe } from 'true-myth';
 
 describe('#Business #Validation #getFirstMessageForField', function() {
     it('should return the first message for the specified field.', function() {
@@ -16,7 +16,7 @@ describe('#Business #Validation #getFirstMessageForField', function() {
             createMessage(ErrorLevel.error, { field: 'field4' }),
             createMessage(ErrorLevel.error, { field: 'field4' })
         ];
-        const result = getFirstMessageForField('field5', messages).getOrElse('');
+        const result = getFirstMessageForField('field5', messages).unwrapOr('');
 
         expect(result).toBe(expected);
     });
@@ -33,7 +33,7 @@ describe('#Business #Validation #getFirstMessageForField', function() {
         ];
         const result = getFirstMessageForField('no', messages);
 
-        expect(result).toEqual(Maybe.Nothing());
+        expect(result).toEqual(Maybe.nothing());
     });
 
     it('should be curried.', function() {
@@ -52,7 +52,7 @@ describe('#Business #Validation #getFirstMessageForField', function() {
 
         expect(curried).toBeInstanceOf(Function);
 
-        const result = curried(messages).getOrElse('');
+        const result = curried(messages).unwrapOr('');
 
         expect(result).toBe(expected);
     });

@@ -5,14 +5,14 @@ import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import InputMessage from 'UI/Forms/Validation/InputMessage';
 import React from 'react';
 import PropTypes from 'prop-types';
-import nullableToMaybe from 'folktale/conversions/nullable-to-maybe';
+import { Maybe } from 'true-myth';
 import { curry, identity, lift, map, pipe, prop } from 'ramda';
 
 import 'UI/Forms/TextInput/TextInput.sass';
 
 
 const pickErrorLevel = prop('errorLevel');
-const getValueOrEmptyString = maybe => maybe.getOrElse('');
+const getValueOrEmptyString = maybe => maybe.unwrapOr('');
 
 
 // Maybe => String
@@ -141,8 +141,8 @@ class TextInput extends React.Component {
 
     render() {
         const { placeholder } = this.props;
-        const message = nullableToMaybe(this.props.message);
-        const input = nullableToMaybe(this.input.current);
+        const message = Maybe.of(this.props.message);
+        const input = Maybe.of(this.input.current);
         const feedbackType = lift(this.getFeedbackType)(input, message);
         const feedback = lift(this.getFeedback)(message, feedbackType);
         const feedbackPosition = lift(this.getFeedbackPosition)(input, message);
@@ -156,8 +156,8 @@ class TextInput extends React.Component {
                     placeholder={ placeholder }
                     className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}` }
                     onChange={ this.update } />
-                <div className={ `textInputFeedback position-absolute ${feedbackPosition.getOrElse('')}` }>
-                    { feedback.getOrElse(null) }
+                <div className={ `textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}` }>
+                    { feedback.unwrapOr(null) }
                 </div>
             </div>
         );
