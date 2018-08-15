@@ -1,6 +1,6 @@
 import { isNil } from 'ramda';
 
-function fieldIsEmpty(value) {
+function fieldIsEmpty(value: any): boolean {
     return (isNil(value) || value === '');
 }
 

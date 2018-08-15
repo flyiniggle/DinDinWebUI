@@ -1,5 +1,5 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import Message from 'Business/Validation/Types/Message';
+import {createMessage} from 'Business/Validation/Types/Message';
 import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
 
 
@@ -15,13 +15,13 @@ describe('#UI #Forms #Validation #InputMessage', function() {
     });
 
     it('should accept a Business.Validation.Types.Message.', function() {
-        const messsage = new Message(ErrorLevel.error, 'some field', 5, 'You messed up!');
+        const message = createMessage(ErrorLevel.error, { field: 'some field', value: 5, message: 'You messed up!' });
         const expected = {
             message: 'You messed up!',
             errorLevel: ErrorLevel.error
         };
 
-        expect(new InputMessage(messsage)).toEqual(expected);
+        expect(new InputMessage(message)).toEqual(expected);
     });
 
     it('should throw a type error if no argument is provided.', function() {

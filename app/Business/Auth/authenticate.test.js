@@ -4,7 +4,7 @@ import { fake, replace, restore } from 'sinon';
 import AuthService from 'Business/Auth/Service';
 
 
-describe('#Business #Auth #suthenticate', function() {
+describe('#Business #Auth #authenticate', function() {
     it('should reject if no username is provided.', function() {
         expect(authenticate()).rejects.toMatchSnapshot();
     });

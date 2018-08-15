@@ -1,5 +1,7 @@
 const path = require('path');
 
+const { defaults } = require('jest-config');
+
 module.exports = {
     coverageDirectory: path.join('<rootDir>', 'test', 'coverage'),
     coveragePathIgnorePatterns: [
@@ -13,11 +15,7 @@ module.exports = {
         __APIRoot__: 'test'
     },
     moduleDirectories: ['node_modules'],
-    moduleFileExtensions: [
-        'ts',
-        'tsx',
-        'js'
-    ],
+    moduleFileExtensions: [...defaults.moduleFileExtensions, 'ts', 'tsx'],
     moduleNameMapper: {
         '^.+\\.(css|scss|sass)$': path.join('<rootDir>', 'test', 'mocks', 'styles.js'),
         '^Business(.*)$': path.join('<rootDir>', 'app', 'Business', '$1'),
@@ -30,6 +28,7 @@ module.exports = {
     roots: ['<rootDir>/app'],
     setupFiles: [path.join('<rootDir>', 'test', 'jestsetup.js'), 'jest-localstorage-mock'],
     snapshotSerializers: ['enzyme-to-json/serializer'],
+    testMatch: ['**/?(*.)+(spec|test).(j|t)s?(x)'],
     transform: {
         '\\.(ts|tsx)$': 'ts-jest',
         '^.+\\.js$': 'babel-jest'

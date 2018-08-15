@@ -1,13 +1,19 @@
-import ErrorMessage from 'Business/Validation/Types/ErrorMessage';
+import { createErrorMessage } from 'Business/Validation/Types/ErrorMessage';
 import AuthValidationMessages from 'Business/Auth/Validation/Messages';
 import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
+import Message from "Business/Validation/Types/Message";
 
-function preflightCheck(data: { username?: string, password?: string } = {}): Array<any> {
+interface paramTypes {
+    username?: string;
+    password?: string;
+}
+
+function preflightCheck(data: paramTypes = {}): Array<Message> {
     const {username, password} = data;
     const result = [];
 
     if (fieldIsEmpty(username) === true) {
-        result.push(ErrorMessage({
+        result.push(createErrorMessage({
             field: 'username',
             value: username,
             message: AuthValidationMessages.missingUserName
@@ -15,7 +21,7 @@ function preflightCheck(data: { username?: string, password?: string } = {}): Ar
     }
 
     if (fieldIsEmpty(password) === true) {
-        result.push(ErrorMessage({
+        result.push(createErrorMessage({
             field: 'password',
             value: password,
             message: AuthValidationMessages.missingPassword

@@ -1,5 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`#Business #Auth #authenticate should reject if it receives a failed credentials validation message from the server 1`] = `
+Array [
+  Object {
+    "field": "password",
+    "message": "Username and password did not match.",
+    "type": "Error",
+    "value": "",
+  },
+]
+`;
+
+exports[`#Business #Auth #authenticate should reject if it receives an unknown validation message from the server 1`] = `
+Array [
+  Object {
+    "field": "password",
+    "message": "It is not possible to log in right now.",
+    "type": "Error",
+    "value": "",
+  },
+]
+`;
+
+exports[`#Business #Auth #authenticate should reject if it receives no token 1`] = `
+Array [
+  Object {
+    "field": "password",
+    "message": "It is not possible to log in right now.",
+    "type": "Error",
+    "value": "",
+  },
+]
+`;
+
+exports[`#Business #Auth #authenticate should reject if no password is provided. 1`] = `
+Array [
+  Object {
+    "field": "password",
+    "message": "required",
+    "type": "Error",
+    "value": undefined,
+  },
+]
+`;
+
+exports[`#Business #Auth #authenticate should reject if no username is provided. 1`] = `
+Array [
+  Object {
+    "field": "username",
+    "message": "required",
+    "type": "Error",
+    "value": undefined,
+  },
+  Object {
+    "field": "password",
+    "message": "required",
+    "type": "Error",
+    "value": undefined,
+  },
+]
+`;
+
 exports[`#Business #Auth #suthenticate should reject if it receives a failed credentials validation message from the server 1`] = `
 Array [
   Message {
