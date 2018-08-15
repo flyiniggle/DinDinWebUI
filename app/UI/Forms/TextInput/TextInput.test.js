@@ -1,5 +1,5 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import InputMessage from 'DinDin/UI/Forms/Validation/InputMessage';
+import { createInputMessage } from 'DinDin/UI/Forms/Validation/InputMessage';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 
@@ -30,7 +30,7 @@ describe('#UI #Form #TextInput', function() {
 
         describe('#Errors', function() {
             it('should display an error state.', function() {
-                const error = new InputMessage({message: 'wrong!', type: ErrorLevel.error});
+                const error = createInputMessage({message: 'wrong!', type: ErrorLevel.error});
                 const input = mount(<TextInput value="bad input" message={ error } feedbackType="inline" />);
 
                 expect(input.find('input[type="text"]').hasClass('error-input')).toBe(true);
@@ -39,7 +39,7 @@ describe('#UI #Form #TextInput', function() {
             });
 
             it('should display a warning state.', function() {
-                const warning = new InputMessage({message: 'watch out', type: ErrorLevel.warning});
+                const warning = createInputMessage({message: 'watch out', type: ErrorLevel.warning});
                 const input = mount(<TextInput value="weird input" message={ warning } feedbackType="inline" />);
 
                 expect(input.find('input[type="text"]').hasClass('warning-input')).toBe(true);
@@ -48,7 +48,7 @@ describe('#UI #Form #TextInput', function() {
             });
 
             it('should display an info state.', function() {
-                const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
+                const info = createInputMessage({message: 'hey man', type: ErrorLevel.info});
                 const input = mount(<TextInput value="just some input" message={ info } feedbackType="inline" />);
 
                 expect(input.find('input[type="text"]').hasClass('info-input')).toBe(true);
@@ -68,7 +68,7 @@ describe('#UI #Form #TextInput', function() {
 
         describe('feedback', function() {
             it('should display an inline message.', function() {
-                const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
+                const info = createInputMessage({message: 'hey man', type: ErrorLevel.info});
                 const input = mount(<TextInput
                     value="just some input"
                     message={ info }
@@ -80,7 +80,7 @@ describe('#UI #Form #TextInput', function() {
             });
 
             it('should display a tooltip message.', function() {
-                const info = new InputMessage({message: 'hey man', type: ErrorLevel.info});
+                const info = createInputMessage({message: 'hey man', type: ErrorLevel.info});
                 const input = mount(<TextInput
                     value="just some input"
                     message={ info }

@@ -1,6 +1,6 @@
 import { createMessage } from 'Business/Validation/Types/Message';
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import InputMessage from 'UI/Forms/Validation/InputMessage';
+import { createInputMessage } from 'UI/Forms/Validation/InputMessage';
 
 import getFirstInputMessageForField from './getFirstInputMessageForField';
 
@@ -19,7 +19,7 @@ describe('#UI #Forms #Validation #getFirstInputMessageForField', function() {
         ];
         const result = getFirstInputMessageForField('field5', messages);
 
-        expect(result).toEqual(new InputMessage(expected));
+        expect(result).toEqual(createInputMessage(expected));
     });
 
     it('should return undefined list if there are no messages with a matching field.', function() {
@@ -55,6 +55,6 @@ describe('#UI #Forms #Validation #getFirstInputMessageForField', function() {
 
         const result = curried(messages);
 
-        expect(result).toEqual(new InputMessage(expected));
+        expect(result).toEqual(createInputMessage(expected));
     });
 });
