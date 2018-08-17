@@ -1,4 +1,4 @@
-import responseCheck from 'Business/Auth/Validation/responsesCheck';
+import responseCheck from 'Business/Auth/Validation/responseCheck';
 import ErrorType from 'Business/Validation/Types/ErrorLevel';
 
 
