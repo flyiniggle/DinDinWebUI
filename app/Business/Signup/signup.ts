@@ -1,6 +1,7 @@
 import SignupService from 'Business/Signup/Service';
 import preflightCheck from 'Business/Signup/Validation/preflightCheck';
 import Message from "Business/Validation/Types/Message";
+import responseCheck from "Business/Signup/Validation/responseCheck";
 
 interface SignupData {
     username: string,
@@ -17,6 +18,12 @@ async function signup(data: SignupData): Promise<Message[]> {
     }
     const {username, password, email} = data;
     const signupResult = await SignupService.post(username, password, email);
+    console.log(signupResult)
+    const responseErrors = responseCheck(signupResult);
+
+    if(responseErrors.length) {
+        return responseErrors;
+    }
 
     return signupResult;
 }

@@ -12,7 +12,7 @@ describe('#Business #Signup #Service', function() {
             const e = 'email@email.com';
 
             expect.assertions(3);
-            await SignupService.create(u, p, e);
+            await SignupService.post(u, p, e);
 
             const { username, password, email } = JSON.parse(fetch.mock.calls[0][1].body);
 

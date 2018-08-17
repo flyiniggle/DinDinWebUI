@@ -1,7 +1,7 @@
 import authStatus from 'Business/Auth/authStatus';
 import AuthService from 'Business/Auth/Service';
 import preflightCheck from 'Business/Auth/Validation/preflightCheck';
-import responseCheck from 'Business/Auth/Validation/responsesCheck';
+import responseCheck from 'Business/Auth/Validation/responseCheck';
 
 // String => String => Promise(Response.json())
 async function authenticate(username, password) {
