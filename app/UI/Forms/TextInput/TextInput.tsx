@@ -3,8 +3,7 @@ import getErrorClassForAlert from 'UI/Forms/Validation/getErrorClassForAlert';
 import getErrorClassForInput from 'UI/Forms/Validation/getErrorClassForInput';
 import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
 import InputMessage from 'UI/Forms/Validation/InputMessage';
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { Maybe } from 'true-myth';
 import { curry, identity, lift, map, pipe, prop } from 'ramda';
 
@@ -62,22 +61,21 @@ const messageIsTallerThanTopSpace = function(input, message) {
     return isTaller;
 };
 
-class TextInput extends React.Component {
-    static propTypes = {
-        placeholder: PropTypes.string,
-        message: PropTypes.oneOfType([
-            PropTypes.instanceOf(InputMessage),
-            PropTypes.shape({
-                errorLevel: PropTypes.oneOf(Object.values(ErrorLevel)),
-                message: PropTypes.string
-            })
-        ]),
-        type: PropTypes.string,
-        value: PropTypes.string,
-        onChange: PropTypes.func,
-        feedbackType: PropTypes.oneOf(['inline', 'tooltip', 'auto']),
-        feedbackPosition: PropTypes.oneOf(['top', 'bottom', 'auto'])
-    };
+interface TextInputProps {
+        placeholder?: string;
+        message?: InputMessage;
+        type?: string;
+        value: string;
+        onChange?: (e: React.FormEvent<HTMLInputElement>) => void,
+        feedbackType?: 'inline' | 'tooltip' | 'auto';
+        feedbackPosition?: 'top' | 'bottom' | 'auto';
+}
+
+interface TextInputState {
+    value: string
+}
+
+class TextInput extends React.Component<TextInputProps, TextInputState> {
 
     static defaultProps = {
         placeholder: '',
@@ -89,13 +87,14 @@ class TextInput extends React.Component {
         feedbackPosition: 'auto'
     };
 
+    private input = React.createRef<HTMLInputElement>();
+
     constructor(props) {
         super(props);
 
         this.state = {
             value: props.value
         };
-        this.input = React.createRef();
     }
 
     componentDidMount = () => {
