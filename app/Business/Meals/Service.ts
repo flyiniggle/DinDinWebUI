@@ -27,3 +27,4 @@ function formatMeal({pk: id, name, owner, taste, difficulty, last_used: lastUsed
 }
 
 export default MealsService;
+export { formatMeal }
