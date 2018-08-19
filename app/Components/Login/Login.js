@@ -45,11 +45,14 @@ class Login extends React.Component {
         this.setState({usernameError, passwordError});
     };
 
-    login = () => {
+    login = async () => {
         const { username, password } = this.state;
+        const result = await authenticate(username, password);
 
-        return authenticate(username, password)
-            .then(this.redirect, this.showErrors);
+        result.match({
+            Ok: this.redirect,
+            Err: this.showErrors
+        });
     };
 
     render() {

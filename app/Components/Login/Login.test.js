@@ -2,6 +2,7 @@ import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { fake, replace, restore, createSandbox, stub } from 'sinon';
+import { Result } from 'true-myth';
 import Service from 'Business/Auth/Service';
 import authStatus from 'Business/Auth/authStatus';
 
@@ -49,7 +50,7 @@ describe('#Components #Login #Login', function() {
 
     it('should have an error message if it receives a server message rejecting the credentials.', function() {
         const wrapper = shallow(<Login />);
-        const serviceFake = fake.resolves({non_field_errors: ['Unable to log in with provided credentials.']});
+        const serviceFake = fake.resolves(Result.err({non_field_errors: ['Unable to log in with provided credentials.']}));
 
         replace(Service, 'get', serviceFake);
 

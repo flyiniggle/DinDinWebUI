@@ -14,7 +14,7 @@ interface SignupData {
 }
 // SignupData => Promise(Result<User, Message[]>)
 async function signup(data: SignupData): Promise<Result<User, Message[]>> {
-    const errors = preflightCheck(data);
+    const errors: Message[] = preflightCheck(data);
 
     if (errors.length > 0) {
         return Result.err(errors);

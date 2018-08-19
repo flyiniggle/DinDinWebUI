@@ -42,12 +42,19 @@ class SignUp extends React.Component {
         });
     }
 
-    login = (user) => {
-        const { username, password } = user;
+    login = async () => {
+        const { username, password } = this.state;
+        const result = await authenticate(username, password);
 
-        return authenticate(username, password)
-            .then(this.redirect, this.showErrors);
+        result.match({
+            Ok: this.redirect,
+            Err: this.showErrors
+        });
     };
+
+    redirect = () => {
+        this.forceUpdate();
+    }
 
     showErrors = (errors) => {
         const usernameError = getFirstInputMessageForField('username', errors);

@@ -14,12 +14,12 @@ async function authenticate(username, password) {
 
     const result = await AuthService.get(username, password);
 
-    if (result.isErr()) {
-        result.mapErr(responseCheck);
-    } else {
-        authStatus.loggedIn = true;
-        return result;
+    if (Result.isErr(result)) {
+        return result.mapErr(responseCheck);
     }
+    authStatus.loggedIn = true;
+    return result;
+
 }
 
 export default authenticate;
