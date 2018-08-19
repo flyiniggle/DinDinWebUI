@@ -1,6 +1,14 @@
 import { createErrorMessage } from "Business/Validation/Types/ErrorMessage";
+import Message from "Business/Validation/Types/Message";
+import {create} from "domain";
 
-function responseCheck(responseData) {
+interface ErrorResponseProps {
+    username?: Array<string>;
+    password?: Array<string>;
+    email?: Array<string>;
+}
+
+function responseCheck(responseData: ErrorResponseProps): Message[] {
     const errors = [];
 
     if(responseData.password) {
@@ -24,6 +32,13 @@ function responseCheck(responseData) {
                 message: responseData.username.pop()
             }));
         }
+    }
+
+    if(responseData.email) {
+        errors.push(createErrorMessage({
+            field: 'email',
+            message: responseData.email.pop()
+        }))
     }
 
     return errors
