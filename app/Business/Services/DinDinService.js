@@ -18,12 +18,12 @@ function DinDinService() {
                 if (response.status === 401) {
                     if (this.handlerNotLoggedIn) {
                         this.handlerNotLoggedIn();
-                        Promise.reject();
+                        Promise.reject(response);
                     }
                 } else if (!response.ok) {
                     if (this.handleNotOkResponse) {
                         this.handleNotOkResponse();
-                        Promise.reject();
+                        Promise.reject(response);
                     }
                 }
 

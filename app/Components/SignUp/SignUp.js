@@ -1,8 +1,11 @@
+import authenticate from 'Business/Auth/authenticate';
+import authStatus from 'Business/Auth/authStatus';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import React from 'react';
 import { pick } from 'ramda';
 import signup from 'Business/Signup/signup';
 import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
+import { Redirect } from 'react-router-dom';
 
 
 class SignUp extends React.Component {
@@ -25,16 +28,10 @@ class SignUp extends React.Component {
         const input = pick(['username', 'email', 'password', 'passwordRepeat'], this.state);
 
         const result = await signup(input);
-        const usernameError = getFirstInputMessageForField('username', result);
-        const emailError = getFirstInputMessageForField('email', result);
-        const passwordError = getFirstInputMessageForField('password', result);
-        const passwordRepeatError = getFirstInputMessageForField('passwordRepeat', result);
 
-        this.setState({
-            usernameError,
-            emailError,
-            passwordError,
-            passwordRepeatError
+        result.match({
+            Ok: this.login,
+            Err: this.showErrors
         });
     }
 
@@ -45,7 +42,32 @@ class SignUp extends React.Component {
         });
     }
 
+    login = (user) => {
+        const { username, password } = user;
+
+        return authenticate(username, password)
+            .then(this.redirect, this.showErrors);
+    };
+
+    showErrors = (errors) => {
+        const usernameError = getFirstInputMessageForField('username', errors);
+        const emailError = getFirstInputMessageForField('email', errors);
+        const passwordError = getFirstInputMessageForField('password', errors);
+        const passwordRepeatError = getFirstInputMessageForField('passwordRepeat', errors);
+
+        this.setState({
+            usernameError,
+            emailError,
+            passwordError,
+            passwordRepeatError
+        });
+    }
+
     render() {
+        if (authStatus.loggedIn) {
+            return <Redirect to="/dashboard" />;
+        }
+
         return (
             <div className="row d-flex justify-content-center">
                 <form className="login col-xl-3 col-lg-4 col-md-6 col-8 p-5">
