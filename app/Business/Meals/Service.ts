@@ -8,7 +8,6 @@ const MealsService = {
         return DinDinService.send('/meals/', {
             method: 'GET'
         })
-            .then(body => body.json())
             .then(map(formatMeal));
     }
 };

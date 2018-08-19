@@ -1,6 +1,7 @@
+import authenticate from 'Business/Auth/authenticate';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import React from 'react';
-import { pick } from 'ramda';
+import { identity, pick } from 'ramda';
 import signup from 'Business/Signup/signup';
 import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
 
@@ -25,17 +26,25 @@ class SignUp extends React.Component {
         const input = pick(['username', 'email', 'password', 'passwordRepeat'], this.state);
 
         const result = await signup(input);
-        const usernameError = getFirstInputMessageForField('username', result);
-        const emailError = getFirstInputMessageForField('email', result);
-        const passwordError = getFirstInputMessageForField('password', result);
-        const passwordRepeatError = getFirstInputMessageForField('passwordRepeat', result);
+        const resultData = result.unwrapOrElse(identity);
 
-        this.setState({
-            usernameError,
-            emailError,
-            passwordError,
-            passwordRepeatError
-        });
+        if (result.isOk()) {
+            const { username, password } = resultData;
+            authenticate(username, password)
+                .then(console.log);
+        } else {
+            const usernameError = getFirstInputMessageForField('username', resultData);
+            const emailError = getFirstInputMessageForField('email', resultData);
+            const passwordError = getFirstInputMessageForField('password', resultData);
+            const passwordRepeatError = getFirstInputMessageForField('passwordRepeat', resultData);
+
+            this.setState({
+                usernameError,
+                emailError,
+                passwordError,
+                passwordRepeatError
+            });
+        }
     }
 
     update = (field, value) => {

@@ -6,7 +6,7 @@ const AuthService = {
         return DinDinService.send('/api-token-auth/', {
             method: 'POST',
             body: JSON.stringify({username: u, password: p})
-        }).then(body => body.json());
+        });
     }
 };
 
