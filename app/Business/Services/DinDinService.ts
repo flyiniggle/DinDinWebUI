@@ -1,3 +1,4 @@
+import { createDinDinResponse } from 'Business/Services/types/DinDinResponse';
 import { mergeDeepRight } from 'ramda';
 
 const DinDinAPI = __APIRoot__;
@@ -15,19 +16,18 @@ function DinDinService() {
 
         return fetch(`${DinDinAPI}${url}`, requestOptions)
             .then(function(response) {
-                if (response.status === 401) {
-                    if (this.handlerNotLoggedIn) {
-                        this.handlerNotLoggedIn();
-                        Promise.reject();
-                    }
-                } else if (!response.ok) {
-                    if (this.handleNotOkResponse) {
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        if(this.handlerNotLoggedIn) {
+                            this.handlerNotLoggedIn();
+                        }
+                    } else if (this.handleNotOkResponse) {
                         this.handleNotOkResponse();
-                        Promise.reject();
                     }
+                    Promise.reject(createDinDinResponse(response.status, response.json()));
                 }
 
-                return response;
+                return createDinDinResponse(response.status, response.json());
             }.bind(this));
     };
 
