@@ -11,7 +11,7 @@ describe('#Business #Auth #Service', function() {
             const p = 'passwordTest';
 
             expect.assertions(2);
-            await AuthService.get(u, p);
+            await AuthService.get({username: u, password: p});
 
             const { username, password } = JSON.parse(fetch.mock.calls[0][1].body);
 

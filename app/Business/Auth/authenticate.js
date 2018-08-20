@@ -2,24 +2,25 @@ import authStatus from 'Business/Auth/authStatus';
 import AuthService from 'Business/Auth/Service';
 import preflightCheck from 'Business/Auth/Validation/preflightCheck';
 import responseCheck from 'Business/Auth/Validation/responseCheck';
+import { chain, pipe, pipeP } from 'ramda';
 import { Result } from 'true-myth';
 
-// String => String => Promise(Response.json())
+// String => String => Promise(Response<Result<User, Message[]>>)
 async function authenticate(username, password) {
-    const errors = preflightCheck({username, password});
+    const authenticateUser = pipeP(
+        AuthService.get,
+        Result.mapErr(responseCheck)
+    );
+    const result = await pipe(
+        preflightCheck,
+        chain(authenticateUser)
+    )({username, password});
 
-    if (errors.length > 0) {
-        return Result.err(errors);
+    if (result.isOk()) {
+        authStatus.loggedIn = true;
     }
 
-    const result = await AuthService.get(username, password);
-
-    if (Result.isErr(result)) {
-        return result.mapErr(responseCheck);
-    }
-    authStatus.loggedIn = true;
     return result;
-
 }
 
 export default authenticate;

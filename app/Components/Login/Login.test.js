@@ -66,11 +66,12 @@ describe('#Components #Login #Login', function() {
 
     it('should request an auth token.', function() {
         const wrapper = shallow(<Login />);
+        const data = {username: 'testUsername', password: 'testPassword'};
 
-        wrapper.setState({username: 'testUsername', password: 'testPassword'});
+        wrapper.setState(data);
         wrapper.find('input[type="button"]').simulate('click');
 
-        expect(authServiceSpy.calledWith('testUsername', 'testPassword')).toBe(true);
+        expect(authServiceSpy.calledWith(data)).toBe(true);
     });
 
     describe('#Auth redirect', function() {

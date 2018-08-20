@@ -4,16 +4,21 @@ import getMessagesForField from 'Business/Validation/getMessagesForField';
 import preflightCheck from './preflightCheck';
 
 describe('#Business #Auth #Validation #preflightCheck', function() {
-    it('should return an empty array', function() {
+    it('should return an OK result with the input data', function() {
         const input = {username: 'test', password: 'test'};
+        const result = preflightCheck(input);
 
-        expect(preflightCheck(input)).toEqual([]);
+        expect(result.isOk()).toBe(true);
+        expect(result.unwrapOr('uh oh')).toEqual(input);
     });
 
-    it('should return an error if no password is provided.', function() {
+    it('should return an error result if no password is provided.', function() {
         const input = {username: 'test', password: ''};
         const result = preflightCheck(input);
-        const passwordError = getMessagesForField('password', result)[0];
+
+        expect(result.isErr()).toBe(true);
+
+        const passwordError = getMessagesForField('password', result.unsafelyUnwrapErr())[0];
 
         expect(passwordError).toHaveProperty('type', ErrorType.error);
         expect(passwordError).toHaveProperty('message', 'required');
@@ -22,7 +27,10 @@ describe('#Business #Auth #Validation #preflightCheck', function() {
     it('should return an error if no username is provided.', function() {
         const input = {username: '', password: 'test'};
         const result = preflightCheck(input);
-        const usernameError = getMessagesForField('username', result)[0];
+
+        expect(result.isErr()).toBe(true);
+
+        const usernameError = getMessagesForField('username', result.unsafelyUnwrapErr())[0];
 
         expect(usernameError).toHaveProperty('type', ErrorType.error);
         expect(usernameError).toHaveProperty('message', 'required');
@@ -30,8 +38,11 @@ describe('#Business #Auth #Validation #preflightCheck', function() {
 
     it('should return multiple errors if neither username nor password are provided.', function() {
         const result = preflightCheck();
-        const usernameError = getMessagesForField('username', result)[0];
-        const passwordError = getMessagesForField('password', result)[0];
+
+        expect(result.isErr()).toBe(true);
+
+        const usernameError = getMessagesForField('username', result.unsafelyUnwrapErr())[0];
+        const passwordError = getMessagesForField('password', result.unsafelyUnwrapErr())[0];
 
         expect(usernameError).toHaveProperty('type', ErrorType.error);
         expect(usernameError).toHaveProperty('message', 'required');
