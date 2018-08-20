@@ -4,6 +4,7 @@ import Overview from 'DinDin/Components/Dashboard/Overview/Overview';
 import Header from 'DinDin/Components/Header/Header';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Result } from 'true-myth';
 
 import 'Styles/theme.sass';
 
@@ -22,6 +23,7 @@ class Dashboard extends React.Component {
     componentDidMount = () => {
         if (!this.props.meals) {
             MealsService.get()
+                .then(Result.unwrapOr([]))
                 .then(this.props.setMeals);
         }
     }

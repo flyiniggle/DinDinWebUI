@@ -15,8 +15,8 @@ function MealCard({ meal }: MealCardProps) {
                 <h4>Last Used: { meal.lastUsed }</h4>
             </div>
             <div className="col-4">
-                <p><h4 className="d-inline">Taste: </h4>{ meal.taste }</p>
-                <p><h4 className="d-inline">Difficulty: </h4>{ meal.difficulty }</p>
+                <div><h4 className="d-inline">Taste: </h4>{ meal.taste }</div>
+                <div><h4 className="d-inline">Difficulty: </h4>{ meal.difficulty }</div>
             </div>
             <div className="col-4">
                 <button className="btn btn-primary" type="button">Use it!</button>
