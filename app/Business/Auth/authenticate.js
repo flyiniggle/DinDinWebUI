@@ -20,7 +20,7 @@ async function authenticate(username, password) {
         authStatus.loggedIn = true;
     }
 
-    return result;
+    return result.map(data => ({username, ...data}));
 }
 
 export default authenticate;

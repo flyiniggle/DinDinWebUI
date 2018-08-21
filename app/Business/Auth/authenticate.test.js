@@ -11,7 +11,7 @@ describe('#Business #Auth #authenticate', function() {
     });
 
     it('should reject if no password is provided.', function() {
-        expect(authenticate(test)).rejects.toMatchSnapshot();
+        expect(authenticate('test')).rejects.toMatchSnapshot();
     });
 
     it('should return an error result if it receives a failed credentials validation message from the server', async function() {
@@ -50,12 +50,12 @@ describe('#Business #Auth #authenticate', function() {
         restore();
     });
 
-    it('should resolve to the token if successful', function() {
+    it('should resolve to the token and username if successful', function() {
         const serviceFake = fake.resolves({token: 123456});
 
         replace(AuthService, 'get', serviceFake);
 
-        expect(authenticate('user', 'password')).resolves.toEqual({token: 123456});
+        expect(authenticate('user', 'password')).resolves.toEqual({token: 123456, username: 'user'});
         restore();
     });
 
