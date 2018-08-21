@@ -2,15 +2,14 @@ import DinDinService from 'Business/Services/DinDinService';
 import Meal from 'Business/Meals/Types/Meal';
 import { map } from 'ramda';
 import { Result } from "true-myth";
+import Message from "Business/Validation/Types/Message";
 
 
 const MealsService = {
-    get: function(): Promise<Meal[]> {
+    get: function(): Promise<Result<Meal[], Message[]>> {
         return DinDinService.send('/meals/', {
             method: 'GET'
-        }).then(function(result) {
-            return result.map(map(formatMeal));
-        });
+        }).then(map(map(formatMeal)));
     }
 };
 
