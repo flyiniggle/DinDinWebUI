@@ -4,15 +4,24 @@ import SignupValidationMessages from 'Business/Signup/Validation/Messages';
 import preflightCheck from './preflightCheck';
 
 describe('#Business #Signup #Validation ##preflightCheck', function() {
-    it('should return no errors if given valid data.', function() {
+    it('should return an ok result if given valid data.', function() {
         const data = {
             username: 'new guy',
             email: 'free@last.com',
             password: 'testPassword123',
             passwordRepeat: 'testPassword123'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data)).toEqual([]);
+        expect(result.isOk()).toBe(true);
+
+        const resultData = result.unwrapOr('uh oh');
+
+        expect(resultData).toEqual({
+            username: 'new guy',
+            email: 'free@last.com',
+            password: 'testPassword123'
+        });
     });
 
     it('should return an error if no user name is given.', function() {
@@ -22,9 +31,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: 'testPassword123',
             passwordRepeat: 'testPassword123'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(1);
-        expect(preflightCheck(data)[0].message).toEqual(AuthValidationMessages.missingUserName);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(1);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(AuthValidationMessages.missingUserName);
     });
 
     it('should return an error if no email is given.', function() {
@@ -34,9 +45,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: 'testPassword123',
             passwordRepeat: 'testPassword123'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(1);
-        expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.missingEmail);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(1);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(SignupValidationMessages.missingEmail);
     });
 
     it('should return an error if an improperly formatted email address is given.', function() {
@@ -46,9 +59,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: 'testPassword123',
             passwordRepeat: 'testPassword123'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(1);
-        expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.invalidEmail);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(1);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(SignupValidationMessages.invalidEmail);
     });
 
     it('should return an error if password is missing.', function() {
@@ -58,9 +73,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: '',
             passwordRepeat: 'testPassword123'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(1);
-        expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(1);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
     });
 
     it('should return an error if re-entered password is missing.', function() {
@@ -70,9 +87,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: 'testPassword123',
             passwordRepeat: ''
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(1);
-        expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(1);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
     });
 
     it('should return an error if re-entered password does not match password.', function() {
@@ -82,9 +101,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: 'testPassword123',
             passwordRepeat: 'asdfasdf'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(1);
-        expect(preflightCheck(data)[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(1);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(SignupValidationMessages.passwordsDoNotMatch);
     });
 
     it('should return multiple errors..', function() {
@@ -94,9 +115,11 @@ describe('#Business #Signup #Validation ##preflightCheck', function() {
             password: 'testPassword123',
             passwordRepeat: 'testPassword123'
         };
+        const result = preflightCheck(data);
 
-        expect(preflightCheck(data).length).toEqual(2);
-        expect(preflightCheck(data)[0].message).toEqual(AuthValidationMessages.missingUserName);
-        expect(preflightCheck(data)[1].message).toEqual(SignupValidationMessages.missingEmail);
+        expect(result.isErr()).toBe(true);
+        expect(result.unsafelyUnwrapErr().length).toEqual(2);
+        expect(result.unsafelyUnwrapErr()[0].message).toEqual(AuthValidationMessages.missingUserName);
+        expect(result.unsafelyUnwrapErr()[1].message).toEqual(SignupValidationMessages.missingEmail);
     });
 });

@@ -1,9 +1,12 @@
 import { createErrorMessage } from 'Business/Validation/Types/ErrorMessage';
 import AuthValidationMessages from 'Business/Auth/Validation/Messages';
 import SignupValidationMessages from 'Business/Signup/Validation/Messages';
+import { SignupProps } from "Business/Signup/Service";
 import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
 import regexp from 'Business/Lib/regexp';
 import Message from "Business/Validation/Types/Message";
+import { Result } from 'true-myth';
+
 
 interface SignupParams {
     username: string,
@@ -12,7 +15,7 @@ interface SignupParams {
     passwordRepeat: string
 }
 
-function preflightCheck({ password, username, email, passwordRepeat }: SignupParams): Array<Message> {
+function preflightCheck({ password, username, email, passwordRepeat }: SignupParams): Result<SignupProps, Message[]> {
     const errors = [];
 
     if (fieldIsEmpty(username) === true) {
@@ -55,7 +58,8 @@ function preflightCheck({ password, username, email, passwordRepeat }: SignupPar
             message: SignupValidationMessages.invalidEmail
         }));
     }
-    return errors;
+
+    return errors.length ? Result.err(errors) : Result.ok({username, email, password});
 }
 
 export default preflightCheck;

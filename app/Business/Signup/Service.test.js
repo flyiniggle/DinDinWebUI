@@ -7,18 +7,18 @@ describe('#Business #Signup #Service', function() {
 
     describe('#post', function() {
         it('should send a username, password, and email to a server.', async function() {
-            const u = 'username test';
-            const p = 'passwordTest';
-            const e = 'email@email.com';
+            const data = {
+                username: 'username test',
+                password: 'passwordTest',
+                email: 'email@email.com'
+            };
 
-            expect.assertions(3);
-            await SignupService.post(u, p, e);
+            expect.assertions(1);
+            await SignupService.post(data);
 
-            const { username, password, email } = JSON.parse(fetch.mock.calls[0][1].body);
+            const postParams = JSON.parse(fetch.mock.calls[0][1].body);
 
-            expect(username).toEqual(u);
-            expect(password).toEqual(p);
-            expect(email).toEqual(e);
+            expect(postParams).toEqual(data);
         });
     });
 });

@@ -3,8 +3,8 @@ import preflightCheck from 'Business/Signup/Validation/preflightCheck';
 import Message from "Business/Validation/Types/Message";
 import responseCheck from "Business/Signup/Validation/responseCheck";
 import { Result } from "true-myth";
+import { pipe, pipeP } from 'ramda';
 import User, { createUser } from "Business/Auth/Types/User";
-import {create} from "domain";
 
 interface SignupData {
     username: string,
@@ -14,18 +14,16 @@ interface SignupData {
 }
 // SignupData => Promise(Result<User, Message[]>)
 async function signup(data: SignupData): Promise<Result<User, Message[]>> {
-    const errors: Message[] = preflightCheck(data);
+    const trySignup = pipeP(
+        SignupService.post,
+        Result.mapErr(responseCheck)
+    );
+    const result = await pipe(
+        preflightCheck,
+        Result.andThen(trySignup)
+    )(data);
 
-    if (errors.length > 0) {
-        return Result.err(errors);
-    }
-    const {username, password, email} = data;
-    const signupResult: Result<User, any> = await SignupService.post(username, password, email);
-
-    if(Result.isErr(signupResult)) {
-        return signupResult.mapErr(responseCheck);
-    }
-    return signupResult.map((user) => createUser(user.username, user.email));
+    return result.map((user) => createUser(user.username, user.email));
 }
 
 export default signup;
