@@ -1,5 +1,5 @@
 import authenticate from 'Business/Auth/authenticate';
-import authStatus from 'Business/Auth/authStatus';
+import authStatus, { USERNAME_KEY } from 'Business/Auth/authStatus';
 import { fake, replace, restore } from 'sinon';
 import { Result } from 'true-myth';
 import AuthService from 'Business/Auth/Service';
@@ -69,5 +69,18 @@ describe('#Business #Auth #authenticate', function() {
         await authenticate('user', 'password');
         expect(authStatus.loggedIn).toEqual(true);
         restore();
+    });
+
+    it('should set authStatus.username to the username if successful.', async function() {
+        const serviceFake = fake.resolves(Result.ok({token: 123456}));
+
+        replace(AuthService, 'get', serviceFake);
+
+        expect.assertions(1);
+
+        await authenticate('user', 'password');
+        expect(authStatus.username).toEqual('user');
+        restore();
+        localStorage.removeItem(USERNAME_KEY);
     });
 });

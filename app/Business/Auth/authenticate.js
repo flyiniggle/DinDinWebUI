@@ -18,6 +18,7 @@ async function authenticate(username, password) {
 
     if (result.isOk()) {
         authStatus.loggedIn = true;
+        authStatus.username = username;
     }
 
     return result.map(data => ({username, ...data}));
