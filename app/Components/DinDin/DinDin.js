@@ -1,4 +1,5 @@
 import authStatus from 'Business/Auth/authStatus';
+import UserContext from 'Business/Auth/UserContext';
 import DinDinService from 'Business/Services/DinDinService';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
@@ -12,7 +13,7 @@ class DinDin extends React.Component {
     constructor() {
         super();
         this.state = {
-            meals: undefined
+            meals: undefined,
         };
     }
 
@@ -26,19 +27,22 @@ class DinDin extends React.Component {
 
     logOut = () => {
         authStatus.loggedIn = false;
+        authStatus.username = null;
         this.forceUpdate();
     }
 
     render() {
         return (
-            <Switch>
-                <ProtectedRoute
-                    path="/dashboard"
-                    component={ Dashboard }
-                    setMeals={ this.setMeals }
-                    meals={ this.state.meals } />
-                <Route path="/" component={ Splash } />
-            </Switch>
+            <UserContext.Provider value={ authStatus.username }>
+                <Switch>
+                    <ProtectedRoute
+                        path="/dashboard"
+                        component={ Dashboard }
+                        setMeals={ this.setMeals }
+                        meals={ this.state.meals } />
+                    <Route path="/" component={ Splash } />
+                </Switch>
+            </UserContext.Provider>
         );
     }
 }

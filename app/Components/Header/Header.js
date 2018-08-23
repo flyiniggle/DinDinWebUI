@@ -1,4 +1,6 @@
 import React from 'react';
+import Ionicon from 'react-ionicons'
+import UserContext from 'Business/Auth/UserContext';
 
 import './Header.sass';
 
@@ -10,7 +12,9 @@ function Header(props) {
                     <h2>Din Din</h2>
                 </div>
                 <div className="col-2">
-                    <h2>This is me</h2>
+                    <UserContext.Consumer>
+                        { username => <div><i className="far fa-user-circle"></i><h2>{username}</h2></div> }
+                    </UserContext.Consumer>
                 </div>
             </div>
         </div>
