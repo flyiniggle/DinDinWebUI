@@ -17,9 +17,9 @@
   "author": "Dan Thompson",
   "license": "ISC",
   "devDependencies": {
-    "@storybook/react": "^4.0.0-alpha.3",
-    "autoprefixer": "^8.6.5",
-    "awesome-typescript-loader": "^5.2.0",
+    "@storybook/react": "4.0.0-alpha.3",
+    "autoprefixer": "8.6.5",
+    "awesome-typescript-loader": "5.2.0",
     "babel": "6.23.0",
     "babel-eslint": "8.2.5",
     "babel-jest": "23.2.0",
@@ -66,20 +66,19 @@
     "webpack-md5-hash": "0.0.6"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.2.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.2",
-    "@fortawesome/free-regular-svg-icons": "^5.2.0",
-    "@fortawesome/free-solid-svg-icons": "^5.2.0",
+    "@fortawesome/fontawesome-free": "5.2.0",
+    "@fortawesome/fontawesome-svg-core": "1.2.2",
+    "@fortawesome/free-regular-svg-icons": "5.2.0",
+    "@fortawesome/free-solid-svg-icons": "5.2.0",
+    "@fortawesome/react-fontawesome": "0.1.2",
     "@types/react": "16.4.10",
     "@types/react-dom": "16.0.7",
     "babel-polyfill": "6.26.0",
     "bootstrap": "4.1.1",
     "express": "4.16.3",
-    "ionicons": "4.3.0",
     "ramda": "0.25.0",
     "react": "16.4.1",
     "react-dom": "16.4.1",
-    "react-ionicons": "2.1.6",
     "react-router-dom": "4.3.1",
     "true-myth": "2.0.0"
   }

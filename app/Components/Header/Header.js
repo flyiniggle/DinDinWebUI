@@ -1,6 +1,7 @@
 import React from 'react';
-import Ionicon from 'react-ionicons'
 import UserContext from 'Business/Auth/UserContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import './Header.sass';
 
@@ -13,7 +14,7 @@ function Header(props) {
                 </div>
                 <div className="col-2">
                     <UserContext.Consumer>
-                        { username => <div><i className="far fa-user-circle"></i><h2>{username}</h2></div> }
+                        {username => <div><h2><FontAwesomeIcon icon={ faUserCircle } /> {username}</h2></div>}
                     </UserContext.Consumer>
                 </div>
             </div>
