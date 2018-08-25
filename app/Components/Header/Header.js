@@ -1,7 +1,5 @@
 import React from 'react';
-import UserContext from 'Business/Auth/UserContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import UserMenu from 'Components/Header/UserMenu';
 
 import './Header.sass';
 
@@ -13,9 +11,7 @@ function Header() {
                     <h2>Din Din</h2>
                 </div>
                 <div className="col-2">
-                    <UserContext.Consumer>
-                        {username => <h2><FontAwesomeIcon icon={ faUserCircle } /> {username}</h2>}
-                    </UserContext.Consumer>
+                    <UserMenu />
                 </div>
             </div>
         </div>
