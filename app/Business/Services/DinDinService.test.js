@@ -3,7 +3,7 @@ import { spy } from 'sinon';
 import DinDinService from './DinDinService';
 
 describe('#Business #Services #DinDinService', function() {
-    beforeEach(() => { fetch.mockResponse(JSON.stringify({token: '1234'})); });
+    beforeEach(() => { fetch.mockResponse(JSON.stringify({ token: '1234' })); });
     afterEach(fetch.resetMocks);
 
     describe('#send', function() {
@@ -32,7 +32,7 @@ describe('#Business #Services #DinDinService', function() {
         it('should merge options with the default options.', async function() {
             const options = {
                 method: 'POST',
-                body: {data: 'yay!'}
+                body: { data: 'yay!' }
             };
 
             expect.assertions(4);
@@ -41,7 +41,7 @@ describe('#Business #Services #DinDinService', function() {
             const { method, body, headers, credentials } = fetch.mock.calls[0][1];
 
             expect(method).toEqual('POST');
-            expect(body).toEqual({data: 'yay!'});
+            expect(body).toEqual({ data: 'yay!' });
             expect(credentials).toEqual('include');
             expect(headers).toEqual({
                 'Content-Type': 'application/json; charset=utf-8',
@@ -53,7 +53,7 @@ describe('#Business #Services #DinDinService', function() {
             const options = {
                 method: 'POST',
                 credentials: 'same-origin',
-                body: {data: 'yay!'}
+                body: { data: 'yay!' }
             };
 
             expect.assertions(4);
@@ -62,7 +62,7 @@ describe('#Business #Services #DinDinService', function() {
             const { method, body, headers, credentials } = fetch.mock.calls[0][1];
 
             expect(method).toEqual('POST');
-            expect(body).toEqual({data: 'yay!'});
+            expect(body).toEqual({ data: 'yay!' });
             expect(credentials).toEqual('same-origin');
             expect(headers).toEqual({
                 'Content-Type': 'application/json; charset=utf-8',
@@ -88,6 +88,19 @@ describe('#Business #Services #DinDinService', function() {
                 Connection: 'keep-alive',
                 'Accept-Encoding': 'gzip, deflate'
             });
+        });
+
+        it('should return an ok result containing the data if the fetch succeeds.', async function() {
+            expect.assertions(2);
+
+            const result = await DinDinService.send('/test/');
+
+            try {
+                expect(result.isOk()).toBe(true);
+                expect(result.unwrapOr({})).toEqual({ token: '1234' });
+            } catch (e) {
+                expect(e).not.toBe(expect.anything(e));
+            }
         });
     });
 

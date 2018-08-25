@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`#Business #Auth #authenticate should reject if no password is provided. 1`] = `
+Err {
+  "error": Array [
+    Object {
+      "field": "password",
+      "message": "required",
+      "type": "Error",
+      "value": undefined,
+    },
+  ],
+  "variant": "Err",
+}
+`;
+
+exports[`#Business #Auth #authenticate should reject if no username is provided. 1`] = `
+Err {
+  "error": Array [
+    Object {
+      "field": "username",
+      "message": "required",
+      "type": "Error",
+      "value": undefined,
+    },
+    Object {
+      "field": "password",
+      "message": "required",
+      "type": "Error",
+      "value": undefined,
+    },
+  ],
+  "variant": "Err",
+}
+`;
+
 exports[`#Business #Auth #authenticate should return a generic error result if it receives no token. 1`] = `
 Array [
   Object {
