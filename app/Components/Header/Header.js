@@ -5,7 +5,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import './Header.sass';
 
-function Header(props) {
+function Header() {
     return (
         <div className="headerContainer ">
             <div className="header position-fixed row d-flex justify-content-between">
@@ -14,7 +14,7 @@ function Header(props) {
                 </div>
                 <div className="col-2">
                     <UserContext.Consumer>
-                        {username => <div><h2><FontAwesomeIcon icon={ faUserCircle } /> {username}</h2></div>}
+                        {username => <h2><FontAwesomeIcon icon={ faUserCircle } /> {username}</h2>}
                     </UserContext.Consumer>
                 </div>
             </div>
