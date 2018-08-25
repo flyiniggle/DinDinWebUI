@@ -9,18 +9,21 @@ import authStatus from 'Business/Auth/authStatus';
 import Login from './Login';
 
 describe('#Components #Login #Login', function() {
-    const authServiceSpy = fake.resolves('12345');
-    const sandbox = createSandbox();
-
-    beforeAll(function() {
-        stub(Service, 'get').callsFake(authServiceSpy);
-    });
+    let authServiceSpy;
+    let sandbox;
 
     beforeEach(function() {
+        authServiceSpy = fake.resolves(Result.ok({ token: '12345' }));
+        replace(Service, 'get', authServiceSpy);
+
+        sandbox = createSandbox();
         sandbox.replaceGetter(authStatus, 'loggedIn', () => false);
     });
 
-    afterEach(() => { sandbox.restore(); });
+    afterEach(function() {
+        sandbox.restore();
+        restore();
+    });
 
     it('should render.', function() {
         expect(() => shallow(<Login />)).not.toThrow();
@@ -29,9 +32,9 @@ describe('#Components #Login #Login', function() {
     it('should have an error message if the user tries to login without a username.', function() {
         const wrapper = shallow(<Login />);
 
-        wrapper.setState({password: 'test'});
+        wrapper.setState({ password: 'test' });
         expect.assertions(2);
-        wrapper.instance().login().then(function() {
+        return wrapper.instance().login().then(function() {
             expect(wrapper.state()).toHaveProperty('usernameError.errorLevel', ErrorLevel.error);
             expect(wrapper.state()).toHaveProperty('usernameError.message', 'required');
         });
@@ -40,9 +43,9 @@ describe('#Components #Login #Login', function() {
     it('should have an error message if the user tries to login without a password.', function() {
         const wrapper = shallow(<Login />);
 
-        wrapper.setState({username: 'test'});
+        wrapper.setState({ username: 'test' });
         expect.assertions(2);
-        wrapper.instance().login().then(function() {
+        return wrapper.instance().login().then(function() {
             expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
             expect(wrapper.state()).toHaveProperty('passwordError.message', 'required');
         });
@@ -50,23 +53,22 @@ describe('#Components #Login #Login', function() {
 
     it('should have an error message if it receives a server message rejecting the credentials.', function() {
         const wrapper = shallow(<Login />);
-        const serviceFake = fake.resolves(Result.err({non_field_errors: ['Unable to log in with provided credentials.']}));
+        const serviceFake = fake.resolves(Result.err({ non_field_errors: ['Unable to log in with provided credentials.'] }));
 
+        restore();
         replace(Service, 'get', serviceFake);
 
-        wrapper.setState({username: 'testUsername', password: 'testPassword'});
+        wrapper.setState({ username: 'testUsername', password: 'testPassword' });
         expect.assertions(2);
-        wrapper.instance().login().then(function() {
+        return wrapper.instance().login().then(function() {
             expect(wrapper.state()).toHaveProperty('passwordError.errorLevel', ErrorLevel.error);
             expect(wrapper.state()).toHaveProperty('passwordError.message', 'Username and password did not match.');
         });
-
-        restore();
     });
 
     it('should request an auth token.', function() {
         const wrapper = shallow(<Login />);
-        const data = {username: 'testUsername', password: 'testPassword'};
+        const data = { username: 'testUsername', password: 'testPassword' };
 
         wrapper.setState(data);
         wrapper.find('input[type="button"]').simulate('click');
