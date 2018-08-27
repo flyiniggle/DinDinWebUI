@@ -2,16 +2,30 @@
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": false,
-    "lib": ["ES2015", "es6", "dom"],
+    "lib": [
+      "es2015",
+      "es6",
+      "dom"
+    ],
     "module": "commonjs",
     "baseUrl": ".",
     "paths": {
-          "Business/*": ["./app/Business/*"],
-          "DinDin/*": ["./app/*"],
-          "Components/*": ["./app/Components/*"],
-          "UI/*": ["./app/UI/*"],
-          "Styles/*": ["./app/Styles/*"]
-      },
+      "Business/*": [
+        "./app/Business/*"
+      ],
+      "DinDin/*": [
+        "./app/*"
+      ],
+      "Components/*": [
+        "./app/Components/*"
+      ],
+      "UI/*": [
+        "./app/UI/*"
+      ],
+      "Styles/*": [
+        "./app/Styles/*"
+      ]
+    },
     "target": "es5",
     "jsx": "react"
   },

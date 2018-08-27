@@ -1,18 +1,20 @@
 import UserContext from 'Business/Auth/UserContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import * as React from 'react';
 
-
-function UserMenu(props) {
+interface UserMenuProps {
+    logoutHandler: () => void
+}
+function UserMenu(props: UserMenuProps) {
     return (
         <UserContext.Consumer>
             {username => (
                 <div className="d-flex align-items-baseline">
-                    <h2 className="d-inline"><FontAwesomeIcon icon={ faUserCircle } /> {username}</h2>
+                    <h2 className="d-inline"><FontAwesomeIcon icon={faUserCircle} /> {username}</h2>
                     <button
                         type="button"
-                        onClick={ props.logoutHandler }
+                        onClick={props.logoutHandler}
                         className="btn btn-sm btn-outline-primary">
                         Log out
                     </button>

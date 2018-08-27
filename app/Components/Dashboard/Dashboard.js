@@ -23,7 +23,6 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount = () => {
-        console.log(this.props.meals);
         if (!this.props.meals) {
             MealsService.get()
                 .then(Result.unwrapOr([]))
