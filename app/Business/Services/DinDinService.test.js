@@ -92,15 +92,32 @@ describe('#Business #Services #DinDinService', function() {
 
         it('should return an ok result containing the data if the fetch succeeds.', async function() {
             expect.assertions(2);
+            const result = await DinDinService.send('/test/');
+
+            expect(result.isOk()).toBe(true);
+            expect(result.unwrapOr({})).toEqual({ token: '1234' });
+        });
+
+        it('should return an error result if fetch fails.', async function() {
+            fetch.resetMocks();
+            fetch.mockReject('this is bad');
+            expect.assertions(2);
 
             const result = await DinDinService.send('/test/');
 
-            try {
-                expect(result.isOk()).toBe(true);
-                expect(result.unwrapOr({})).toEqual({ token: '1234' });
-            } catch (e) {
-                expect(e).not.toBe(expect.anything(e));
-            }
+            expect(result.isErr()).toBe(true);
+            expect(result.unsafelyUnwrapErr()).toEqual('this is bad');
+        });
+
+        it('should return an error result if fetch returns a non-200 status.', async function() {
+            const handler = spy();
+
+            expect.assertions(1);
+            fetch.mockResponseOnce(JSON.stringify({}), { status: 401 });
+            DinDinService.addNotLoggedInHandler(handler);
+            const result = await DinDinService.send('/test/');
+
+            expect(result.isErr()).toBe(true);
         });
     });
 
