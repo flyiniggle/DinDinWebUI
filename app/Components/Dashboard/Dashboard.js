@@ -12,15 +12,18 @@ import 'Styles/theme.sass';
 class Dashboard extends React.Component {
     static defaultPropTypes = {
         meals: undefined,
-        setMeals: () => undefined
+        setMeals: () => undefined,
+        logoutHandler: () => undefined
     }
 
     static propTypes = {
         meals: PropTypes.array,
-        setMeals: PropTypes.func
+        setMeals: PropTypes.func,
+        logoutHandler: PropTypes.func
     }
 
     componentDidMount = () => {
+        console.log(this.props.meals);
         if (!this.props.meals) {
             MealsService.get()
                 .then(Result.unwrapOr([]))
@@ -33,7 +36,7 @@ class Dashboard extends React.Component {
             <div className="mainBackground container-fluid dashboard">
                 <div className="row">
                     <div className="col-12">
-                        <Header />
+                        <Header logoutHandler={ this.props.logoutHandler } />
                     </div>
                 </div>
                 <div className="row">
@@ -43,7 +46,7 @@ class Dashboard extends React.Component {
                 </div>
                 <div className="row d-flex flex-row-reverse justify-content-between">
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
-                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } />)}
+                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } key={ meal.id } />)}
                     </div>
                     <div className="col-xs-12 col-md-4 position-fixed">
                         <Overview meals={ this.props.meals } />

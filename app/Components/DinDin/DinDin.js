@@ -13,7 +13,7 @@ class DinDin extends React.Component {
     constructor() {
         super();
         this.state = {
-            meals: undefined,
+            meals: null
         };
     }
 
@@ -22,12 +22,11 @@ class DinDin extends React.Component {
     }
 
     setMeals = (meals) => {
-        this.setState({meals});
+        this.setState({ meals });
     }
 
     logOut = () => {
-        authStatus.loggedIn = false;
-        authStatus.username = null;
+        authStatus.logOut();
         this.forceUpdate();
     }
 
@@ -39,6 +38,7 @@ class DinDin extends React.Component {
                         path="/dashboard"
                         component={ Dashboard }
                         setMeals={ this.setMeals }
+                        logoutHandler={ this.logOut }
                         meals={ this.state.meals } />
                     <Route path="/" component={ Splash } />
                 </Switch>

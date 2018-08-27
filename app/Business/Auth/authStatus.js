@@ -19,5 +19,10 @@ const authStatus = {
     }
 };
 
-export default authStatus;
+authStatus.logOut = function() {
+    this.loggedIn = false;
+    this.username = '';
+}.bind(authStatus);
+
+export default Object.seal(authStatus);
 export { KEY, USERNAME_KEY };

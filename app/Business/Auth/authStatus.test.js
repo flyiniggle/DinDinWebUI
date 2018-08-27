@@ -59,4 +59,15 @@ describe('#Business #Auth #authStatus', function() {
             });
         });
     });
+
+    describe('#logOut', function() {
+        it('should set auth status settings to logged out.', function() {
+            authStatus.username = 'this guy';
+            authStatus.loggedIn = true;
+            authStatus.logOut();
+
+            expect(authStatus.username).toEqual('not logged in');
+            expect(authStatus.loggedIn).toBe(false);
+        });
+    });
 });

@@ -1,7 +1,7 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { fake, replace, restore, createSandbox, stub } from 'sinon';
+import { fake, replace, restore, createSandbox } from 'sinon';
 import { Result } from 'true-myth';
 import Service from 'Business/Auth/Service';
 import authStatus from 'Business/Auth/authStatus';
@@ -17,7 +17,7 @@ describe('#Components #Login #Login', function() {
         replace(Service, 'get', authServiceSpy);
 
         sandbox = createSandbox();
-        sandbox.replaceGetter(authStatus, 'loggedIn', () => false);
+        authStatus.loggedIn = false;
     });
 
     afterEach(function() {
@@ -79,7 +79,7 @@ describe('#Components #Login #Login', function() {
     describe('#Auth redirect', function() {
         it('should redirect to the dashboard if the user is logged in.', function() {
             sandbox.restore();
-            sandbox.replaceGetter(authStatus, 'loggedIn', () => true);
+            authStatus.loggedIn = true;
 
             const wrapper = shallow(<Login />);
 
