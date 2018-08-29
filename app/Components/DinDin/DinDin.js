@@ -5,6 +5,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Splash from 'Components/Splash/Splash';
+import Meal from 'Components/Meal/Meal';
 import ProtectedRoute from 'UI/ProtectedRoute';
 
 import './DinDin.sass';
@@ -40,6 +41,12 @@ class DinDin extends React.Component {
                         setMeals={ this.setMeals }
                         logoutHandler={ this.logOut }
                         meals={ this.state.meals } />
+                    <ProtectedRoute
+                        path="/meals/:id"
+                        component={ Meal }
+                        meals={ this.state.meals }
+                        logoutHandler={ this.logOut }
+                    />
                     <Route path="/" component={ Splash } />
                 </Switch>
             </UserContext.Provider>
