@@ -1,11 +1,26 @@
 @import "~Styles/theme.sass"
 
 .mealCard
-  border-bottom: 2px solid $secondary
+  border-bottom: 4px solid $secondary
   box-shadow: 7px 7px 5px -4px rgba(0,0,0,0.75)
+  transition: 0.5s
+
+  &:hover
+    text-decoration: none
+    color: initial
+    border-bottom: 4px solid $quaternary
 
   h2
     color: $primary
 
   h4
+    color: $tertiary
+
+  span
     color: $quaternary
+
+  button
+    color: $brand-base
+
+    &hover
+      background-color: $quaternary
