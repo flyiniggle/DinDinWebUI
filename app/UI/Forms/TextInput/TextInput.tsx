@@ -1,4 +1,3 @@
-import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import getErrorClassForAlert from 'UI/Forms/Validation/getErrorClassForAlert';
 import getErrorClassForInput from 'UI/Forms/Validation/getErrorClassForInput';
 import getErrorClassForText from 'UI/Forms/Validation/getErrorClassForText';
@@ -29,7 +28,7 @@ const showInputTextErrorClass = pipe(
 );
 
 // HTMLInputElement => InputMessage => Boolean
-const messageIsLongerThanInput = curry(function(input, message) {
+const messageIsLongerThanInput = curry(function (input, message) {
     const testSpan = document.createElement('span');
 
     testSpan.innerHTML = message.message;
@@ -45,7 +44,7 @@ const messageIsLongerThanInput = curry(function(input, message) {
 });
 
 // HTMLInputElement => InputMessage => Boolean
-const messageIsTallerThanTopSpace = function(input, message) {
+const messageIsTallerThanTopSpace = function (input, message) {
     const testSpan = document.createElement('span');
 
     testSpan.innerHTML = message.message;
@@ -62,13 +61,13 @@ const messageIsTallerThanTopSpace = function(input, message) {
 };
 
 interface TextInputProps {
-        placeholder?: string;
-        message?: InputMessage;
-        type?: string;
-        value: string;
-        onChange?: (e: React.FormEvent<HTMLInputElement>) => void,
-        feedbackType?: 'inline' | 'tooltip' | 'auto';
-        feedbackPosition?: 'top' | 'bottom' | 'auto';
+    placeholder?: string;
+    message?: InputMessage;
+    type?: string;
+    value: string;
+    onChange?: (e: React.FormEvent<HTMLInputElement>) => void,
+    feedbackType?: 'inline' | 'tooltip' | 'auto';
+    feedbackPosition?: 'top' | 'bottom' | 'auto';
 }
 
 interface TextInputState {
@@ -130,11 +129,11 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         const errorLevelClass = ((feedbackType === 'inline') ? getErrorClassForText : getErrorClassForAlert)(message.errorLevel);
         const typeClass = feedbackType === 'inline' ? '' : 'tooltip alert';
 
-        return <span className={ ` ${errorLevelClass} ${typeClass}` }>{this.props.message.message}</span>;
+        return <span className={` ${errorLevelClass} ${typeClass}`}>{this.props.message.message}</span>;
     }
 
     update = (event) => {
-        this.setState({value: event.target.value});
+        this.setState({ value: event.target.value });
         this.props.onChange(event);
     };
 
@@ -149,14 +148,14 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         return (
             <div className="textInput row d-flex flex-column form-group">
                 <input
-                    ref={ this.input }
-                    type={ this.props.type }
-                    value={ this.state.value }
-                    placeholder={ placeholder }
-                    className={ `form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}` }
-                    onChange={ this.update } />
-                <div className={ `textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}` }>
-                    { feedback.unwrapOr(null) }
+                    ref={this.input}
+                    type={this.props.type}
+                    value={this.state.value}
+                    placeholder={placeholder}
+                    className={`form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
+                    onChange={this.update} />
+                <div className={`textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}`}>
+                    {feedback.unwrapOr(null)}
                 </div>
             </div>
         );
