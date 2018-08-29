@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { Result } from 'true-myth';
 
 import 'Styles/theme.sass';
+import './Dashboard.sass';
 
 
 class Dashboard extends React.Component {
@@ -43,7 +44,7 @@ class Dashboard extends React.Component {
                         filters
                     </div>
                 </div>
-                <div className="row d-flex flex-row-reverse justify-content-between">
+                <div className="main-container row d-flex flex-row-reverse justify-content-between">
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
                         {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } key={ meal.id } />)}
                     </div>
