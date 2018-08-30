@@ -17,9 +17,9 @@ const dateString = {
             throw new TypeError('Parameter \'date\' must be a valid Date or datestring.');
         }
 
-        const month = dateNames[d.getMonth()];
+        const month = dateNames[d.getUTCMonth()];
 
-        return `${month} ${d.getDate()}, ${d.getFullYear()}`;
+        return `${month} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
     },
 
     store(date: string | Date): string {
@@ -35,10 +35,10 @@ const dateString = {
             throw new TypeError('Parameter \'date\' must be a valid Date or datestring.');
         }
 
-        const month = zeroPad(d.getMonth() + 1);
-        const day = zeroPad(d.getDate());
+        const month = zeroPad(d.getUTCMonth() + 1);
+        const day = zeroPad(d.getUTCDate());
 
-        return `${d.getFullYear()}-${month}-${day}`;
+        return `${d.getUTCFullYear()}-${month}-${day}`;
     }
 }
 

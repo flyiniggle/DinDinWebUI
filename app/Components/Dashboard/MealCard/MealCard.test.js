@@ -28,7 +28,7 @@ describe('#Components #Dashboard #MealCard', function() {
     it('should show the date the meal was last used.', function() {
         const wrapper = shallow(<MealCard meal={ meal } />);
 
-        expect(wrapper.find('.lastUsed').text()).toEqual('May 11, 2018');
+        expect(wrapper.find('.lastUsed').text()).toEqual('May 12, 2018');
     });
 
     it('should show the meal taste rating.', function() {

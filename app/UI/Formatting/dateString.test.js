@@ -3,7 +3,7 @@ import dateString from './dateString';
 describe('#UI #Formatting #dateString', function() {
     describe('#display', function() {
         it('should return a display-formatted date string when given a datestring.', function() {
-            expect(dateString.display('2018-05-11')).toEqual('May 10, 2018');
+            expect(dateString.display('2018-05-11')).toEqual('May 11, 2018');
             expect(dateString.display('August 19, 1975')).toEqual('Aug 19, 1975');
         });
 

@@ -18,7 +18,7 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
     <span
       className="lastUsed"
     >
-      May 11, 2018
+      May 12, 2018
     </span>
   </div>
   <div
