@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#Components #Dashboard #MealCard should render. 1`] = `
+<Link
+  className="mealCard row p-lg-4 p-2 mb-2"
+  replace={false}
+  to="/meals/1"
+>
+  <div
+    className="col-4"
+  >
+    <h2>
+      Delicious Meal
+    </h2>
+    <h4>
+      Last Used: 
+    </h4>
+    <span
+      className="lastUsed"
+    >
+      May 11, 2018
+    </span>
+  </div>
+  <div
+    className="col-4"
+  >
+    <div>
+      <h4
+        className="d-inline"
+      >
+        Taste: 
+      </h4>
+      <span
+        className="taste"
+      >
+        5
+      </span>
+    </div>
+    <div>
+      <h4
+        className="d-inline"
+      >
+        Difficulty: 
+      </h4>
+      <span
+        className="difficulty"
+      >
+        3
+      </span>
+    </div>
+  </div>
+  <div
+    className="col-4"
+  >
+    <button
+      className="btn btn-primary"
+      type="button"
+    >
+      Use it!
+    </button>
+    <h4
+      className="usedCount"
+    >
+      Used 
+      3
+       
+      times
+    </h4>
+  </div>
+</Link>
+`;
