@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Meal from 'Business/Meals/Types/Meal';
+import dateString from 'UI/Formatting/dateString';
 
 import './MealCard.sass';
 
@@ -13,7 +14,7 @@ function MealCard({ meal }: MealCardProps) {
         <Link to={`/meals/${meal.id}`} className="mealCard row p-lg-4 p-2 mb-2">
             <div className="col-4">
                 <h2>{meal.name}</h2>
-                <h4>Last Used: </h4><span>{meal.lastUsed}</span>
+                <h4>Last Used: </h4><span>{dateString.display(meal.lastUsed)}</span>
             </div>
             <div className="col-4">
                 <div><h4 className="d-inline">Taste: </h4><span>{meal.taste}</span></div>
