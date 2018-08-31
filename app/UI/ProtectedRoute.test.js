@@ -28,6 +28,7 @@ describe('#UI #ProtectedRoute', function() {
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meh"><ProtectedRoute path="/meh" component={ TextInput } meals={ [] } /></StaticRouter>);
 
         expect(wrapper.find('Redirect').exists()).toBe(true);
+        expect(wrapper.find('Redirect').props().to.pathname).toEqual('/login');
         expect(wrapper.find('TextInput').exists()).toBe(false);
     });
 });
