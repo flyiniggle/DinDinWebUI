@@ -3,13 +3,8 @@ import Header from 'Components/Header/Header';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 
 function Meal(props) {
-    console.log(props.match.params.id);
-    const meal = props.meals.find(m => {
-        console.log(m);
-        return m.id === parseInt(props.match.params.id);
-    });
+    const meal = props.meals.find(m => m.id === parseInt(props.match.params.id));
 
-    console.log(meal);
     return (
         <div className="mainBackground container-fluid dashboard">
             <div className="row">
