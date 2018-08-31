@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "sourceMap": true,
     "noImplicitAny": false,
     "lib": [
@@ -13,9 +14,6 @@
       "Business/*": [
         "./app/Business/*"
       ],
-      "DinDin/*": [
-        "./app/*"
-      ],
       "Components/*": [
         "./app/Components/*"
       ],
@@ -24,6 +22,9 @@
       ],
       "Styles/*": [
         "./app/Styles/*"
+      ],
+      "DinDin/*": [
+        "./app/*"
       ]
     },
     "target": "es5",
