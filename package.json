@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --colors -p",
-    "build-dev": "webpack-dev-server --colors --watch --errors-only --hot --open",
+    "build-dev": "webpack --colors --watch --errors-only --open",
     "lint": "eslint --fix ./",
     "serve": "node server/server.js",
     "start": "npm run build && npm run serve",
+    "start-dev": "npm run build-dev && npm run serve",
     "storybook": "start-storybook -p 9001 -c storybook",
     "test": "jest --config test/jest.config.js",
     "test-ci": "jest --ci --coverage --config test/jest.config.js && cat ./test/coverage/lcov.info | coveralls",
