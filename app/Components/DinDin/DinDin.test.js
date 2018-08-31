@@ -4,8 +4,10 @@ import { mount } from 'enzyme';
 import Splash from 'Components/Splash/Splash';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import authStatus from 'Business/Auth/authStatus';
+import getMealById from 'Business/Meals/getMealById';
 
 import DinDin from './DinDin';
+import fixtures from './DinDin.fixtures';
 
 describe('#Components #DinDin #DinDin', function() {
     it('should render the splash page if not logged in.', function() {
@@ -66,11 +68,70 @@ describe('#Components #DinDin #DinDin', function() {
     describe('#setMeals', function() {
         it('should set meals.', function() {
             const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
-            const meals = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
-            wrapper.find(DinDin).instance().setMeals(meals);
+            wrapper.find(DinDin).instance().setMeals(fixtures.meals);
 
-            expect(wrapper.find(DinDin).instance().state.meals).toEqual(meals);
+            expect(wrapper.find(DinDin).instance().state.meals).toEqual(fixtures.meals);
+        });
+    });
+
+    describe('#updateMeal', function() {
+        it('should update the meal with the matching id.', function() {
+            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
+            const dinDinInstance = wrapper.find(DinDin).instance();
+            const updateData = { id: 10, usedCount: 2, difficulty: 8 };
+
+            dinDinInstance.setMeals(fixtures.meals);
+            dinDinInstance.updateMeal(updateData);
+
+            const result = getMealById(10, dinDinInstance.state.meals);
+            const expected = { id: 10, name: 'Gnocchi', owner: 'admin', collaborators: [2], taste: 5, difficulty: 8, lastUsed: '2018-05-22', usedCount: 2, ingredients: [], notes: 'Don\'t knead too much; cut them small so they cook fast' };
+
+            expect(result).toEqual(expected);
+        });
+
+        it('should do nothing if there are no meals.', function() {
+            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
+            const dinDinInstance = wrapper.find(DinDin).instance();
+            const updateData = { id: 10, usedCount: 2, difficulty: 8 };
+            const updater = () => { dinDinInstance.updateMeal(updateData); };
+
+            expect(updater).not.toThrow();
+            expect(dinDinInstance.state.meals).toBeNull();
+        });
+
+        it('should do nothing if there is no matching meal.', function() {
+            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
+            const dinDinInstance = wrapper.find(DinDin).instance();
+            const updateData = { id: 100, usedCount: 2, difficulty: 8 };
+            const updater = () => { dinDinInstance.updateMeal(updateData); };
+
+            dinDinInstance.setMeals(fixtures.meals);
+
+            expect(updater).not.toThrow();
+            expect(dinDinInstance.state.meals).toEqual(fixtures.meals);
+        });
+    });
+
+    describe('#useMeal', function() {
+        it('should increment the state meal usedCount property.', async function() {
+            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
+            const dinDinInstance = wrapper.find(DinDin).instance();
+            const originalMeal = fixtures.meals[0];
+            const responseData = Object.assign(fixtures.APIMeals[0], { used_count: (originalMeal.usedCount + 1) });
+
+            console.log(originalMeal.usedCount);
+            console.log(responseData);
+
+            fetch.mockResponseOnce(JSON.stringify(responseData));
+
+            expect.assertions(1);
+            dinDinInstance.setMeals(fixtures.meals);
+            await dinDinInstance.useMeal(originalMeal);
+
+            const updatedMeal = getMealById(originalMeal.id, dinDinInstance.state.meals);
+
+            expect(updatedMeal.usedCount).toEqual(originalMeal.usedCount + 1);
         });
     });
 });

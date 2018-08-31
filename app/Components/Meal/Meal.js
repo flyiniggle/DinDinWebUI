@@ -1,9 +1,10 @@
 import React from 'react';
+import getMealById from 'Business/Meals/getMealById';
 import Header from 'Components/Header/Header';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 
 function Meal(props) {
-    const meal = props.meals.find(m => m.id === parseInt(props.match.params.id));
+    const meal = getMealById(props.match.params.id, props.meals);
 
     return (
         <div className="mainBackground container-fluid dashboard">

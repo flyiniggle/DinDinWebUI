@@ -1,6 +1,8 @@
 import authStatus from 'Business/Auth/authStatus';
 import UserContext from 'Business/Auth/UserContext';
+import useMeal from 'Business/Meals/useMeal';
 import DinDinService from 'Business/Services/DinDinService';
+import { eqProps, map, mergeDeepLeft, pipe, when } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Dashboard from 'Components/Dashboard/Dashboard';
@@ -25,6 +27,22 @@ class DinDin extends React.Component {
     setMeals = (meals) => {
         this.setState({ meals });
     }
+
+    updateMeal = (meal) => {
+        console.log(meal);
+        const isMatchingMeal = eqProps('id', meal);
+        const replaceMatchingMeal = when(isMatchingMeal, mergeDeepLeft(meal));
+        const setMeals = this.setMeals;
+
+        if (this.state.meals) {
+            pipe(
+                map(replaceMatchingMeal),
+                setMeals
+            )(this.state.meals);
+        }
+    }
+
+    useMeal = (meal) => useMeal(meal).then(map(this.updateMeal))
 
     logOut = () => {
         authStatus.logOut();
