@@ -34,7 +34,6 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        console.log(this.props.useMeal);
         return (
             <div className="mainBackground container-fluid dashboard">
                 <div className="row">

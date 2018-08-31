@@ -54,6 +54,7 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
   >
     <button
       className="btn btn-primary"
+      onClick={[Function]}
       type="button"
     >
       Use it!
