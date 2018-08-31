@@ -10,17 +10,17 @@ interface ErrorResponseProps {
 function responseCheck(responseData: ErrorResponseProps): Message[] {
     const errors = [];
 
-    if(responseData.password) {
+    if (responseData.password) {
         errors.push(createErrorMessage({
             field: 'password',
-            message: responseData.password.pop()
+            message: responseData.password.shift()
         }));
     }
 
-    if(responseData.username) {
+    if (responseData.username) {
         const firstError = responseData.username[0];
 
-        if(firstError === "This field must be unique.") {
+        if (firstError === "This field must be unique.") {
             errors.push(createErrorMessage({
                 field: 'username',
                 message: 'Oops, that username is already in use. Pick another!'
@@ -28,15 +28,15 @@ function responseCheck(responseData: ErrorResponseProps): Message[] {
         } else {
             errors.push(createErrorMessage({
                 field: 'username',
-                message: responseData.username.pop()
+                message: responseData.username.shift()
             }));
         }
     }
 
-    if(responseData.email) {
+    if (responseData.email) {
         errors.push(createErrorMessage({
             field: 'email',
-            message: responseData.email.pop()
+            message: responseData.email.shift()
         }))
     }
 
@@ -44,3 +44,4 @@ function responseCheck(responseData: ErrorResponseProps): Message[] {
 }
 
 export default responseCheck;
+export { ErrorResponseProps };
