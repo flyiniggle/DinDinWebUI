@@ -120,9 +120,6 @@ describe('#Components #DinDin #DinDin', function() {
             const originalMeal = fixtures.meals[0];
             const responseData = Object.assign(fixtures.APIMeals[0], { used_count: (originalMeal.usedCount + 1) });
 
-            console.log(originalMeal.usedCount);
-            console.log(responseData);
-
             fetch.mockResponseOnce(JSON.stringify(responseData));
 
             expect.assertions(1);

@@ -14,12 +14,14 @@ class Dashboard extends React.Component {
     static defaultPropTypes = {
         meals: undefined,
         setMeals: () => undefined,
+        useMeal: () => undefined,
         logoutHandler: () => undefined
     }
 
     static propTypes = {
         meals: PropTypes.array,
         setMeals: PropTypes.func,
+        useMeal: PropTypes.func,
         logoutHandler: PropTypes.func
     }
 
@@ -32,6 +34,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        console.log(this.props.useMeal);
         return (
             <div className="mainBackground container-fluid dashboard">
                 <div className="row">
@@ -46,7 +49,7 @@ class Dashboard extends React.Component {
                 </div>
                 <div className="main-container row d-flex flex-row-reverse justify-content-between">
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
-                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } key={ meal.id } />)}
+                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } useMeal={ this.props.useMeal } key={ meal.id } />)}
                     </div>
                     <div className="col-xs-12 col-md-4 position-fixed">
                         <Overview meals={ this.props.meals } />

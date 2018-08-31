@@ -29,7 +29,6 @@ class DinDin extends React.Component {
     }
 
     updateMeal = (meal) => {
-        console.log(meal);
         const isMatchingMeal = eqProps('id', meal);
         const replaceMatchingMeal = when(isMatchingMeal, mergeDeepLeft(meal));
         const setMeals = this.setMeals;
@@ -58,7 +57,9 @@ class DinDin extends React.Component {
                         component={ Dashboard }
                         setMeals={ this.setMeals }
                         logoutHandler={ this.logOut }
-                        meals={ this.state.meals } />
+                        meals={ this.state.meals }
+                        useMeal={ this.useMeal }
+                    />
                     <ProtectedRoute
                         path="/meals/:id"
                         component={ Meal }

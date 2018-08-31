@@ -7,9 +7,12 @@ import './MealCard.sass';
 
 interface MealCardProps {
     meal: Meal
+    useMeal: (meal: Meal) => Promise<void>
 }
 
-function MealCard({ meal }: MealCardProps) {
+function MealCard(props: MealCardProps) {
+    const { meal, useMeal } = props;
+
     return (
         <Link to={`/meals/${meal.id}`} className="mealCard row p-lg-4 p-2 mb-2">
             <div className="col-4">
@@ -21,7 +24,14 @@ function MealCard({ meal }: MealCardProps) {
                 <div><h4 className="d-inline">Difficulty: </h4><span className="difficulty">{meal.difficulty}</span></div>
             </div>
             <div className="col-4">
-                <button className="btn btn-primary" type="button">Use it!</button>
+                <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={function (event) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        return useMeal(meal);
+                    }}>Use it!</button>
                 <h4 className="usedCount">Used {meal.usedCount} {(meal.usedCount === 1) ? 'time' : 'times'}</h4>
             </div>
 
