@@ -4,7 +4,6 @@ describe('#Business #Meals #Service', function() {
     beforeEach(() => fetch.mockResponse(JSON.stringify([])));
     afterEach(fetch.resetMocks);
 
-
     describe('#get', function() {
         it('should send a username and password to a server.', async function() {
             expect.assertions(2);
@@ -41,6 +40,36 @@ describe('#Business #Meals #Service', function() {
 
         });
 
+        it('should return a formatted meal.', async function() {
+            const expected = {
+                id: 23,
+                name: 'yummy tasty food',
+                owner: 'admin',
+                taste: 3,
+                difficulty: 5,
+                lastUsed: '2013-04-12',
+                usedCount: 5,
+                notes: ''
+            };
+
+            fetch.resetMocks();
+            fetch.mockResponse(JSON.stringify({
+                pk: 23,
+                name: 'yummy tasty food',
+                owner: 'admin',
+                taste: 3,
+                difficulty: 5,
+                last_used: '2013-04-12',
+                used_count: 5,
+                notes: ''
+            }));
+
+            expect.assertions(1);
+            const result = await MealsService.patch(5, {});
+
+            expect(result.unwrapOrElse('uh oh')).toEqual(expected);
+        });
+
     });
 
     describe('#formatMeal', function() {
@@ -67,7 +96,6 @@ describe('#Business #Meals #Service', function() {
             };
 
             expect(formatMeal(data)).toEqual(expected);
-
         });
     });
 

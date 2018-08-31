@@ -12,11 +12,11 @@ const MealsService = {
             method: 'GET'
         }).then(map(map(formatMeal)));
     },
-    patch: function (mealID: number, data: object) {
+    patch: function (mealID: number, data: object): Promise<Result<Meal, Message[]>> {
         return DinDinService.send(`/meals/${mealID}/`, {
             method: 'PATCH',
             body: pipe(formatMealToAPI, JSON.stringify)(data)
-        })
+        }).then(map(formatMeal));
     }
 };
 
