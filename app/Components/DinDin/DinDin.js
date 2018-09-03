@@ -1,10 +1,12 @@
 import authStatus from 'Business/Auth/authStatus';
 import UserContext from 'Business/Auth/UserContext';
 import useMeal from 'Business/Meals/useMeal';
+import MealsService from 'Business/Meals/Service';
 import DinDinService from 'Business/Services/DinDinService';
 import { eqProps, map, mergeDeepLeft, pipe, when } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { Result } from 'true-myth';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Splash from 'Components/Splash/Splash';
 import Meal from 'Components/Meal/Meal';
@@ -22,6 +24,17 @@ class DinDin extends React.Component {
 
     componentWillMount = () => {
         DinDinService.addNotLoggedInHandler(this.logOut);
+        this.getMeals();
+    }
+
+    componentDidUpdate = this.getMeals;
+
+    getMeals = () => {
+        if (authStatus.loggedIn && !this.state.meals) {
+            MealsService.get()
+                .then(Result.unwrapOr([]))
+                .then(this.setMeals);
+        }
     }
 
     setMeals = (meals) => {
@@ -31,13 +44,12 @@ class DinDin extends React.Component {
     updateMeal = (meal) => {
         const isMatchingMeal = eqProps('id', meal);
         const replaceMatchingMeal = when(isMatchingMeal, mergeDeepLeft(meal));
-        const setMeals = this.setMeals;
 
         if (this.state.meals) {
-            pipe(
-                map(replaceMatchingMeal),
-                setMeals
-            )(this.state.meals);
+            const meals = map(replaceMatchingMeal, this.state.meals);
+
+
+            this.setMeals(meals);
         }
     }
 
@@ -56,7 +68,6 @@ class DinDin extends React.Component {
                         exact
                         path="/dashboard"
                         component={ Dashboard }
-                        setMeals={ this.setMeals }
                         logoutHandler={ this.logOut }
                         meals={ this.state.meals }
                         useMeal={ this.useMeal }

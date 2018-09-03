@@ -97,7 +97,7 @@ describe('#Components #DinDin #DinDin', function() {
             const updater = () => { dinDinInstance.updateMeal(updateData); };
 
             expect(updater).not.toThrow();
-            expect(dinDinInstance.state.meals).toBeNull();
+            expect(dinDinInstance.state.meals).toBeUndefined();
         });
 
         it('should do nothing if there is no matching meal.', function() {

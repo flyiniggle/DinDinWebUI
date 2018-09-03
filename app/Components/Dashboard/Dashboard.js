@@ -1,10 +1,8 @@
-import MealsService from 'Business/Meals/Service';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
 import Overview from 'DinDin/Components/Dashboard/Overview/Overview';
 import Header from 'DinDin/Components/Header/Header';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Result } from 'true-myth';
 
 import 'Styles/theme.sass';
 import './Dashboard.sass';
@@ -13,24 +11,14 @@ import './Dashboard.sass';
 class Dashboard extends React.Component {
     static defaultPropTypes = {
         meals: undefined,
-        setMeals: () => undefined,
         useMeal: () => undefined,
         logoutHandler: () => undefined
     }
 
     static propTypes = {
         meals: PropTypes.array,
-        setMeals: PropTypes.func,
         useMeal: PropTypes.func,
         logoutHandler: PropTypes.func
-    }
-
-    componentDidMount = () => {
-        if (!this.props.meals) {
-            MealsService.get()
-                .then(Result.unwrapOr([]))
-                .then(this.props.setMeals);
-        }
     }
 
     render() {

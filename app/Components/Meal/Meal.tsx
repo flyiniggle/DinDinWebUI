@@ -7,13 +7,16 @@ import dateString from 'UI/Formatting/dateString';
 import Meal from 'Business/Meals/Types/Meal';
 
 interface MealProps {
-    meals: Meal[],
+    meals?: Meal[],
     logoutHandler: () => void,
     match: ReactComponentProps,
     useMeal: (Meal) => Promise<void>
 }
 
 function Meal(props: MealProps) {
+    if (!props.meals) {
+        return <p>Loading...</p>
+    }
     const meal = getMealById(props.match.params.id, props.meals);
 
     return (
