@@ -35,8 +35,8 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="mainBackground container-fluid dashboard">
-                <div className="row">
+            <div className="mainBackground container-fluid dashboard d-flex flex-column justify-content-end">
+                <div className="row d-block">
                     <div className="col-12">
                         <Header logoutHandler={ this.props.logoutHandler } />
                     </div>
@@ -46,12 +46,14 @@ class Dashboard extends React.Component {
                         filters
                     </div>
                 </div>
-                <div className="main-container row d-flex flex-row-reverse justify-content-between">
+                <div className="main-container row flex-grow-1">
+                    <div className="col-xs-12 col-md-4">
+                        <div className="position-fixed">
+                            <Overview meals={ this.props.meals } />
+                        </div>
+                    </div>
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
                         {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } useMeal={ this.props.useMeal } key={ meal.id } />)}
-                    </div>
-                    <div className="col-xs-12 col-md-4 position-fixed">
-                        <Overview meals={ this.props.meals } />
                     </div>
                 </div>
             </div>

@@ -53,6 +53,7 @@ class DinDin extends React.Component {
             <UserContext.Provider value={ authStatus.username }>
                 <Switch>
                     <ProtectedRoute
+                        exact
                         path="/dashboard"
                         component={ Dashboard }
                         setMeals={ this.setMeals }
@@ -61,10 +62,12 @@ class DinDin extends React.Component {
                         useMeal={ this.useMeal }
                     />
                     <ProtectedRoute
+                        exact
                         path="/meals/:id"
                         component={ Meal }
                         meals={ this.state.meals }
                         logoutHandler={ this.logOut }
+                        useMeal={ this.useMeal }
                     />
                     <Route path="/" component={ Splash } />
                 </Switch>
