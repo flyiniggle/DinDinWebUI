@@ -28,7 +28,8 @@ function Meal(props: MealProps) {
             </div>
             <div className="row">
                 <div className="col-12 col-lg-6">
-                    <h2>om nom nomm nom {meal.name}</h2>
+                    <h2>
+                        {meal.name}</h2>
                     <div><h4 className="d-inline">Taste: </h4><span className="taste">{meal.taste}</span></div>
                     <div><h4 className="d-inline">Difficulty: </h4><span className="difficulty">{meal.difficulty}</span></div>
                 </div>

@@ -10,6 +10,8 @@ import DinDin from './DinDin';
 import fixtures from './DinDin.fixtures';
 
 describe('#Components #DinDin #DinDin', function() {
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
+
     it('should render the splash page if not logged in.', function() {
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
 
@@ -26,7 +28,7 @@ describe('#Components #DinDin #DinDin', function() {
     });
 
     it('should render the Dashboard page if logged in.', function() {
-        authStatus.loggedIn = true;
+        authStatus.authToken = token;
         authStatus.username = 'me';
 
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/dashboard"><DinDin /></StaticRouter>);
@@ -37,7 +39,7 @@ describe('#Components #DinDin #DinDin', function() {
     });
 
     it('should render the Dashboard page if logged in.', function() {
-        authStatus.loggedIn = true;
+        authStatus.authToken = token;
         authStatus.username = 'me';
 
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/login"><DinDin /></StaticRouter>);
@@ -49,7 +51,7 @@ describe('#Components #DinDin #DinDin', function() {
 
     describe('#logOut', function() {
         it('should redirect to the login when a user logs out.', function() {
-            authStatus.loggedIn = true;
+            authStatus.authToken = token;
             authStatus.username = 'me';
 
             const wrapper = mount(<StaticRouter basename="" context={ {} } location="/dashboard"><DinDin /></StaticRouter>);
@@ -97,7 +99,7 @@ describe('#Components #DinDin #DinDin', function() {
             const updater = () => { dinDinInstance.updateMeal(updateData); };
 
             expect(updater).not.toThrow();
-            expect(dinDinInstance.state.meals).toBeUndefined();
+            expect(dinDinInstance.state.meals).toBeNull();
         });
 
         it('should do nothing if there is no matching meal.', function() {

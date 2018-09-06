@@ -1,3 +1,4 @@
+import authStatus from 'Business/Auth/authStatus';
 import { spy } from 'sinon';
 
 import DinDinService from './DinDinService';
@@ -27,6 +28,23 @@ describe('#Business #Services #DinDinService', function() {
                 'Content-Type': 'application/json; charset=utf-8',
                 Accept: 'application/json'
             });
+        });
+
+        it('should include auth headers if an auth token is set.', async function() {
+            authStatus.authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
+
+            expect.assertions(1);
+            await DinDinService.send('/test/');
+
+            const { headers } = fetch.mock.calls[0][1];
+
+            expect(headers).toEqual({
+                'Content-Type': 'application/json; charset=utf-8',
+                Accept: 'application/json',
+                Authorization: `JWT ${authStatus.authToken}`
+            });
+
+            authStatus.logOut();
         });
 
         it('should merge options with the default options.', async function() {

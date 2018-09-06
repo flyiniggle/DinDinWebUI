@@ -3,7 +3,7 @@ import UserContext from 'Business/Auth/UserContext';
 import useMeal from 'Business/Meals/useMeal';
 import MealsService from 'Business/Meals/Service';
 import DinDinService from 'Business/Services/DinDinService';
-import { eqProps, map, mergeDeepLeft, pipe, when } from 'ramda';
+import { eqProps, map, mergeDeepLeft, when } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Result } from 'true-myth';
@@ -30,7 +30,7 @@ class DinDin extends React.Component {
     componentDidUpdate = this.getMeals;
 
     getMeals = () => {
-        if (authStatus.loggedIn && !this.state.meals) {
+        if (authStatus.authToken && !this.state.meals) {
             MealsService.get()
                 .then(Result.unwrapOr([]))
                 .then(this.setMeals);
