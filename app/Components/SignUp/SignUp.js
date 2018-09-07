@@ -71,7 +71,7 @@ class SignUp extends React.Component {
     }
 
     render() {
-        if (authStatus.loggedIn) {
+        if (authStatus.authToken) {
             return <Redirect to="/dashboard" />;
         }
 

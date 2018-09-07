@@ -9,6 +9,7 @@ import authStatus from 'Business/Auth/authStatus';
 import Login from './Login';
 
 describe('#Components #Login #Login', function() {
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
     let authServiceSpy;
     let sandbox;
 
@@ -17,7 +18,7 @@ describe('#Components #Login #Login', function() {
         replace(Service, 'get', authServiceSpy);
 
         sandbox = createSandbox();
-        authStatus.loggedIn = false;
+        authStatus.authToken = false;
     });
 
     afterEach(function() {
@@ -69,6 +70,7 @@ describe('#Components #Login #Login', function() {
     it('should request an auth token.', function() {
         const wrapper = shallow(<Login />);
         const data = { username: 'testUsername', password: 'testPassword' };
+        authStatus.logOut();
 
         wrapper.setState(data);
         wrapper.find('input[type="button"]').simulate('click');
@@ -79,7 +81,7 @@ describe('#Components #Login #Login', function() {
     describe('#Auth redirect', function() {
         it('should redirect to the dashboard if the user is logged in.', function() {
             sandbox.restore();
-            authStatus.loggedIn = true;
+            authStatus.authToken = token;
 
             const wrapper = shallow(<Login />);
 
@@ -87,6 +89,7 @@ describe('#Components #Login #Login', function() {
         });
 
         it('should not redirect if the user is not logged in.', function() {
+            authStatus.logOut();
             const wrapper = shallow(<Login />);
 
             expect(wrapper.find('Redirect').exists()).toBe(false);

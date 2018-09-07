@@ -42,7 +42,7 @@ class Login extends React.Component {
         const usernameError = getFirstInputMessageForField('username', errors);
         const passwordError = getFirstInputMessageForField('password', errors);
 
-        this.setState({usernameError, passwordError});
+        this.setState({ usernameError, passwordError });
     };
 
     login = async () => {
@@ -56,7 +56,7 @@ class Login extends React.Component {
     };
 
     render() {
-        if (authStatus.loggedIn) {
+        if (authStatus.authToken) {
             return <Redirect to="/dashboard" />;
         }
 

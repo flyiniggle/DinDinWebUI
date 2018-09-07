@@ -6,6 +6,8 @@ import AuthService from 'Business/Auth/Service';
 
 
 describe('#Business #Auth #authenticate', function() {
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
+
     afterEach(restore);
     it('should reject if no username is provided.', function() {
         expect(authenticate()).resolves.toMatchSnapshot();
@@ -52,31 +54,31 @@ describe('#Business #Auth #authenticate', function() {
     });
 
     it('should resolve to the token and username if successful', async function() {
-        const serviceFake = fake.resolves(Result.ok({ token: 123456 }));
+        const serviceFake = fake.resolves(Result.ok({ token }));
 
         replace(AuthService, 'get', serviceFake);
 
         expect.assertions(2);
         const result = await authenticate('user', 'password');
         expect(result.isOk()).toBe(true);
-        expect(result.unwrapOr({})).toEqual({ token: 123456, username: 'user' });
+        expect(result.unwrapOr({})).toEqual({ token, username: 'user' });
 
     });
 
     it('should set authStatus.loggedIn to true if successful.', async function() {
-        const serviceFake = fake.resolves(Result.ok({ token: 123456 }));
+        const serviceFake = fake.resolves(Result.ok({ token }));
 
         replace(AuthService, 'get', serviceFake);
 
         expect.assertions(1);
 
         await authenticate('user', 'password');
-        expect(authStatus.loggedIn).toEqual(true);
+        expect(authStatus.authToken).toEqual(token);
 
     });
 
     it('should set authStatus.username to the username if successful.', async function() {
-        const serviceFake = fake.resolves(Result.ok({ token: 123456 }));
+        const serviceFake = fake.resolves(Result.ok({ token }));
 
         replace(AuthService, 'get', serviceFake);
 
