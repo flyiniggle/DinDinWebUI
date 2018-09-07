@@ -22,7 +22,7 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'build', 'static'),
-        filename: IN_PRODUCTION ? '[name].[chunkhash].js' : '[name].js',
+        filename: IN_PRODUCTION ? '[name].[hash].js' : '[name].js',
         publicPath: IN_PRODUCTION ? '/static/' : ''
     },
     resolve: {
