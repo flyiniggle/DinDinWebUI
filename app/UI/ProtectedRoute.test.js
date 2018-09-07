@@ -9,12 +9,13 @@ import ProtectedRoute from './ProtectedRoute';
 
 
 describe('#UI #ProtectedRoute', function() {
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
     const sandbox = createSandbox();
 
     afterEach(sandbox.restore);
 
     it('should render the component if the user is logged in.', function() {
-        authStatus.loggedIn = true;
+        authStatus.authToken = token;
 
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meh"><ProtectedRoute path="/meh" component={ TextInput } meals={ [] } /></StaticRouter>);
 
@@ -23,7 +24,7 @@ describe('#UI #ProtectedRoute', function() {
     });
 
     it('should redirect if the user is not logged in.', function() {
-        authStatus.loggedIn = false;
+        authStatus.authToken = '';
 
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meh"><ProtectedRoute path="/meh" component={ TextInput } meals={ [] } /></StaticRouter>);
 

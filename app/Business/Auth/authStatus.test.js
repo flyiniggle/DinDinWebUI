@@ -1,36 +1,37 @@
-import authStatus, { KEY, USERNAME_KEY } from './authStatus';
+import authStatus, { TOKEN_KEY, USERNAME_KEY } from './authStatus';
 
 describe('#Business #Auth #authStatus', function() {
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
+
     describe('#loggedIn', function() {
 
-        afterEach(() => { localStorage.removeItem(KEY); });
+        afterEach(() => { localStorage.removeItem(TOKEN_KEY); });
 
         describe('#get', function() {
-            it('should return true if the authenticated key is set to true in local storage.', function() {
-                localStorage.setItem(KEY, 'true');
-                expect(authStatus.loggedIn).toEqual(true);
+            it('should return the token if the authenticated key is set in local storage.', function() {
+                localStorage.setItem(TOKEN_KEY, token);
+                expect(authStatus.authToken).toEqual(token);
             });
 
             it('should return false if the authenticated key is set to false in local storage.', function() {
-                localStorage.setItem(KEY, 'false');
-                expect(authStatus.loggedIn).toEqual(false);
+                expect(authStatus.authToken).toBeNull();
             });
 
-            it('should return false by default.', function() {
+            it('should return undefined by default.', function() {
                 localStorage.clear();
-                expect(authStatus.loggedIn).toEqual(false);
+                expect(authStatus.authToken).toBeNull();
             });
         });
 
         describe('#set', function() {
-            it('should set the authenticated key in local storage to true', function() {
-                authStatus.loggedIn = true;
-                expect(localStorage.getItem(KEY)).toEqual('true');
+            it('should set the authenticated key in local storage.', function() {
+                authStatus.authToken = token;
+                expect(localStorage.getItem(TOKEN_KEY)).toEqual(token);
             });
 
-            it('should set the authenticated key in local storage to false', function() {
-                authStatus.loggedIn = false;
-                expect(localStorage.getItem(KEY)).toEqual('false');
+            it('should remove the authenticated key in local storage.', function() {
+                authStatus.authToken = '';
+                expect(localStorage.getItem(TOKEN_KEY)).toBeNull();
             });
         });
     });
@@ -63,11 +64,11 @@ describe('#Business #Auth #authStatus', function() {
     describe('#logOut', function() {
         it('should set auth status settings to logged out.', function() {
             authStatus.username = 'this guy';
-            authStatus.loggedIn = true;
+            authStatus.authToken = token;
             authStatus.logOut();
 
             expect(authStatus.username).toEqual('not logged in');
-            expect(authStatus.loggedIn).toBe(false);
+            expect(authStatus.authToken).toBeNull();
         });
     });
 });

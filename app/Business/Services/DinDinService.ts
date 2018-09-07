@@ -1,15 +1,18 @@
 import { mergeDeepRight } from 'ramda';
 import { Result } from 'true-myth';
+import authStatus from 'Business/Auth/authStatus';
 
 const DinDinAPI = __APIRoot__;
 
 function DinDinService() {
     this.send = async function (url: string, options: object = {}): Promise<Result<any, any>> {
+        const authHeader = authStatus.authToken ? { Authorization: `JWT ${authStatus.authToken}` } : {};
         const defaultOptions = {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                Accept: 'application/json'
+                Accept: 'application/json',
+                ...authHeader
             }
         };
         const requestOptions = mergeDeepRight(defaultOptions, options);

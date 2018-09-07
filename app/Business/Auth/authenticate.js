@@ -17,7 +17,7 @@ async function authenticate(username, password) {
     )({ username, password });
 
     if (result.isOk()) {
-        authStatus.loggedIn = true;
+        authStatus.authToken = result.unsafelyUnwrap().token;
         authStatus.username = username;
     }
 
