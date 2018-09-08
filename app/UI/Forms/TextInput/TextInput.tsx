@@ -146,7 +146,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         const feedbackPosition = lift(this.getFeedbackPosition)(input, message);
 
         return (
-            <div className="textInput row d-flex flex-column form-group">
+            <div className="textInput row d-flex flex-column">
                 <input
                     ref={this.input}
                     type={this.props.type}
