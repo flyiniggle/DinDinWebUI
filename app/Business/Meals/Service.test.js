@@ -49,7 +49,8 @@ describe('#Business #Meals #Service', function() {
                 difficulty: 5,
                 lastUsed: '2013-04-12',
                 usedCount: 5,
-                notes: ''
+                notes: '',
+                ingredients: ['goodness', 'and', 'stuff']
             };
 
             fetch.resetMocks();
@@ -61,7 +62,8 @@ describe('#Business #Meals #Service', function() {
                 difficulty: 5,
                 last_used: '2013-04-12',
                 used_count: 5,
-                notes: ''
+                notes: '',
+                ingredients: ['goodness', 'and', 'stuff']
             }));
 
             expect.assertions(1);
@@ -82,7 +84,8 @@ describe('#Business #Meals #Service', function() {
                 difficulty: 3,
                 last_used: '10-21-2018',
                 used_count: 5,
-                notes: 'Test. Meal. Ever.'
+                notes: 'Test. Meal. Ever.',
+                ingredients: ['goodness', 'and', 'stuff']
             };
             const expected = {
                 id: 1,
@@ -92,7 +95,8 @@ describe('#Business #Meals #Service', function() {
                 difficulty: 3,
                 lastUsed: '10-21-2018',
                 usedCount: 5,
-                notes: 'Test. Meal. Ever.'
+                notes: 'Test. Meal. Ever.',
+                ingredients: ['goodness', 'and', 'stuff']
             };
 
             expect(formatMeal(data)).toEqual(expected);

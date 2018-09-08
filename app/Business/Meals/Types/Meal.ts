@@ -6,7 +6,8 @@ interface Meal {
     difficulty: number,
     lastUsed: string,
     usedCount: number,
-    notes: string
+    notes: string,
+    ingredients: Array<string>
 }
 
 export default Meal;

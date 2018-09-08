@@ -6,7 +6,8 @@ interface APIMeal {
     difficulty?: number,
     last_used?: string,
     used_count?: number,
-    notes?: string
+    notes?: string,
+    ingredients?: Array<string>
 }
 
 export default APIMeal;

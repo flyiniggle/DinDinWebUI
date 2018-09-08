@@ -35,6 +35,7 @@ function Meal(props: MealProps) {
             <div className="row m-2">
                 <div className="col-12 col-lg-2">
                     <h4>Ingredients</h4>
+                    {meal.ingredients.map(ingredient => <span>{ingredient}</span>)}
                 </div>
                 <div className="col-12 col-lg-5">
                     <div><h4 className="d-inline">Taste: </h4><span className="taste">{meal.taste}</span></div>
@@ -52,7 +53,7 @@ function Meal(props: MealProps) {
                     <span>{meal.notes}</span>
                 </div>
             </div>
-            <div className="row m2">
+            <div className="row m2 d-flex justify-content-end">
                 <div className="col-2 d-flex justify-content-between">
                     <button
                         className="btn btn-primary"

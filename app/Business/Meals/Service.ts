@@ -20,7 +20,7 @@ const MealsService = {
     }
 };
 
-function formatMealToAPI({ id: pk, name, owner, taste, difficulty, lastUsed: last_used, usedCount: used_count, notes }: Meal): APIMeal {
+function formatMealToAPI({ id: pk, name, owner, taste, difficulty, lastUsed: last_used, usedCount: used_count, notes, ingredients }: Meal): APIMeal {
     return filter(pipe(isNil, not), {
         pk,
         name,
@@ -29,11 +29,12 @@ function formatMealToAPI({ id: pk, name, owner, taste, difficulty, lastUsed: las
         difficulty,
         last_used,
         used_count,
-        notes
+        notes,
+        ingredients
     })
 }
 
-function formatMeal({ pk: id, name, owner, taste, difficulty, last_used: lastUsed, used_count: usedCount, notes }: APIMeal): Meal {
+function formatMeal({ pk: id, name, owner, taste, difficulty, last_used: lastUsed, used_count: usedCount, notes, ingredients }: APIMeal): Meal {
     return {
         id,
         name,
@@ -42,7 +43,8 @@ function formatMeal({ pk: id, name, owner, taste, difficulty, last_used: lastUse
         difficulty,
         lastUsed,
         usedCount,
-        notes
+        notes,
+        ingredients
     }
 }
 

@@ -20,7 +20,7 @@ describe('#Business #Auth #authenticate', function() {
     it('should return an error result if it receives a failed credentials validation message from the server', async function() {
         const serviceFake = fake.resolves(Result.err({ non_field_errors: ['Unable to log in with provided credentials.'] }));
 
-        replace(AuthService, 'get', serviceFake);
+        replace(AuthService, 'post', serviceFake);
         expect.assertions(1);
 
         const result = await authenticate('user', 'password');
@@ -32,7 +32,7 @@ describe('#Business #Auth #authenticate', function() {
     it('should return an error result if it receives an unknown validation message from the server', async function() {
         const serviceFake = fake.resolves(Result.err({ someError: ['this is an error.'] }));
 
-        replace(AuthService, 'get', serviceFake);
+        replace(AuthService, 'post', serviceFake);
         expect.assertions(1);
 
         const result = await authenticate('user', 'password');
@@ -44,7 +44,7 @@ describe('#Business #Auth #authenticate', function() {
     it('should return a generic error result if it receives no token.', async function() {
         const serviceFake = fake.resolves(Result.err({}));
 
-        replace(AuthService, 'get', serviceFake);
+        replace(AuthService, 'post', serviceFake);
         expect.assertions(1);
 
         const result = await authenticate('user', 'password');
@@ -56,7 +56,7 @@ describe('#Business #Auth #authenticate', function() {
     it('should resolve to the token and username if successful', async function() {
         const serviceFake = fake.resolves(Result.ok({ token }));
 
-        replace(AuthService, 'get', serviceFake);
+        replace(AuthService, 'post', serviceFake);
 
         expect.assertions(2);
         const result = await authenticate('user', 'password');
@@ -68,7 +68,7 @@ describe('#Business #Auth #authenticate', function() {
     it('should set authStatus.loggedIn to true if successful.', async function() {
         const serviceFake = fake.resolves(Result.ok({ token }));
 
-        replace(AuthService, 'get', serviceFake);
+        replace(AuthService, 'post', serviceFake);
 
         expect.assertions(1);
 
@@ -80,7 +80,7 @@ describe('#Business #Auth #authenticate', function() {
     it('should set authStatus.username to the username if successful.', async function() {
         const serviceFake = fake.resolves(Result.ok({ token }));
 
-        replace(AuthService, 'get', serviceFake);
+        replace(AuthService, 'post', serviceFake);
 
         expect.assertions(1);
 

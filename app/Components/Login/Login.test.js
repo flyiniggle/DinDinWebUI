@@ -15,7 +15,7 @@ describe('#Components #Login #Login', function() {
 
     beforeEach(function() {
         authServiceSpy = fake.resolves(Result.ok({ token: '12345' }));
-        replace(Service, 'get', authServiceSpy);
+        replace(Service, 'post', authServiceSpy);
 
         sandbox = createSandbox();
         authStatus.authToken = false;
@@ -57,7 +57,7 @@ describe('#Components #Login #Login', function() {
         const serviceFake = fake.resolves(Result.err({ non_field_errors: ['Unable to log in with provided credentials.'] }));
 
         restore();
-        replace(Service, 'get', serviceFake);
+        replace(Service, 'post', serviceFake);
 
         wrapper.setState({ username: 'testUsername', password: 'testPassword' });
         expect.assertions(2);
