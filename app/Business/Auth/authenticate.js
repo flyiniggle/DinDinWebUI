@@ -8,7 +8,7 @@ import { Result } from 'true-myth';
 // String => String => Promise(Response<Result<User, Message[]>>)
 async function authenticate(username, password) {
     const authenticateUser = pipeP(
-        AuthService.get,
+        AuthService.post,
         Result.mapErr(responseCheck)
     );
     const result = await pipe(
