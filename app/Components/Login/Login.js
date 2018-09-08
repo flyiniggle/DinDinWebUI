@@ -1,6 +1,7 @@
 import authenticate from 'Business/Auth/authenticate';
 import authStatus from 'Business/Auth/authStatus';
 import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
+import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import { curry } from 'ramda';
 import React from 'react';
@@ -81,7 +82,7 @@ class Login extends React.Component {
                                 onChange={ (e) => this.updatePassword(e.target.value) }
                             />
                         </div>
-                        <input className="btn btn-secondary" type="button" value="log in" onClick={ this.login } />
+                        <AsyncButton className="btn btn-secondary" onClick={ this.login }>log in</AsyncButton>
                     </div>
                 </form>
             </div>

@@ -6,6 +6,7 @@ import { pick } from 'ramda';
 import signup from 'Business/Signup/signup';
 import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
 import { Redirect } from 'react-router-dom';
+import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 
 class SignUp extends React.Component {
@@ -116,7 +117,7 @@ class SignUp extends React.Component {
                                 onChange={ (e) => this.update('passwordRepeat', e.target.value) }
                             />
                         </div>
-                        <input className="btn btn-secondary" type="button" value="Sign up!" onClick={ this.signUp } />
+                        <AsyncButton className="btn btn-secondary" onClick={ this.signUp }>Sign Up!</AsyncButton>
                     </div>
                 </form>
             </div>

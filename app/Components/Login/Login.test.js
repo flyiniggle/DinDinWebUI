@@ -5,6 +5,7 @@ import { fake, replace, restore, createSandbox } from 'sinon';
 import { Result } from 'true-myth';
 import Service from 'Business/Auth/Service';
 import authStatus from 'Business/Auth/authStatus';
+import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 import Login from './Login';
 
@@ -73,7 +74,7 @@ describe('#Components #Login #Login', function() {
         authStatus.logOut();
 
         wrapper.setState(data);
-        wrapper.find('input[type="button"]').simulate('click');
+        wrapper.find(AsyncButton).simulate('click');
 
         expect(authServiceSpy.calledWith(data)).toBe(true);
     });
