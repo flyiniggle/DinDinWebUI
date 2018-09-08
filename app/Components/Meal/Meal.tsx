@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponentProps } from 'react-router-dom';
 import getMealById from 'Business/Meals/getMealById';
+import Message from 'Business/Validation/Types/Message';
+import updateMeal from 'Business/Meals/updateMeal';
 import Header from 'Components/Header/Header';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
@@ -17,13 +19,17 @@ interface State {
     editingTaste: boolean,
     editingDifficulty: boolean,
     editingNotes: boolean,
+    message?: Message
+    submitting: boolean,
+    activeFieldValue?: any
 }
 
 interface MealProps {
     meals?: IMeal[],
     logoutHandler: () => void,
     match: ReactComponentProps,
-    useMeal: (Meal) => Promise<void>
+    useMeal: (IMeal) => Promise<void>,
+    updateMeal: (IMeal) => void
 }
 
 
@@ -32,8 +38,32 @@ class Meal extends React.Component<MealProps, State> {
         editingName: false,
         editingTaste: false,
         editingDifficulty: false,
-        editingNotes: false
+        editingNotes: false,
+        message: null,
+        submitting: false,
+        activeFieldValue: null
     }
+
+    save = async (mealProp: string, val, meal: IMeal): Promise<boolean> => {
+        this.setState({ submitting: true });
+
+        const result = await updateMeal(meal, { [mealProp]: val });
+
+        this.setState({ submitting: false });
+
+        result.match({
+            Ok: this.props.updateMeal,
+            Err: console.log //use a generic error messager, just as soon as I build it
+        });
+
+        this.setState({
+            activeFieldValue: null
+        });
+
+        return result.isOk();
+    }
+
+    updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
     render() {
         if (!this.props.meals) {
@@ -49,15 +79,26 @@ class Meal extends React.Component<MealProps, State> {
                     </div>
                 </div>
                 <div className="row m-2" onClick={() => {
-                    this.setState({ editingName: true })
+                    this.setState({ editingName: true, activeFieldValue: meal.name })
                 }}>
                     <div className="editable">
                         {this.state.editingName ?
                             (<div className="input-group">
-                                <TextInput value={meal.name} />
+                                <TextInput value={meal.name} onChange={this.updateCurrentValue} />
                                 <div className="input-group-append">
-                                    <AsyncButton className="btn btn-sm btn-primary" ><FontAwesomeIcon icon={faCheck} /></AsyncButton>
-                                    <AsyncButton className="btn btn-sm btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
+                                    <AsyncButton onClick={async () => {
+                                        const success = await this.save("name", this.state.activeFieldValue, meal);
+
+                                        if (success) {
+                                            this.setState({ editingName: false })
+                                        }
+                                    }}
+                                        className="btn btn-sm btn-primary" > <FontAwesomeIcon icon={faCheck} /></AsyncButton>
+                                    <AsyncButton onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        this.setState({ editingName: false, activeFieldValue: null })
+                                    }} className="btn btn-sm btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
                                 </div>
                             </div>)
                             : <h1>{meal.name}</h1>}
@@ -86,8 +127,6 @@ class Meal extends React.Component<MealProps, State> {
                 </div>
                 <div className="row m2 d-flex justify-content-end">
                     <div className="col-2 d-flex justify-content-between">
-                        <AsyncButton className="btn btn-primary">save</AsyncButton>
-
                         <button
                             className="btn btn-primary"
                             type="button"

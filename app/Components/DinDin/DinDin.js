@@ -79,6 +79,7 @@ class DinDin extends React.Component {
                         meals={ this.state.meals }
                         logoutHandler={ this.logOut }
                         useMeal={ this.useMeal }
+                        updateMeal={ this.updateMeal }
                     />
                     <Route path="/" component={ Splash } />
                 </Switch>
