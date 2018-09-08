@@ -65,7 +65,6 @@ class SignUp extends React.Component {
     };
 
     handleKeydown = (e) => {
-        console.log(this.submitButton);
         if (e.key === 'Enter') {
             this.submitButton.current.clickHandler(e);
         }
