@@ -1,6 +1,7 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { StaticRouter, Route } from 'react-router-dom';
+import { mount, shallow } from 'enzyme';
 import { fake, replace, restore, createSandbox } from 'sinon';
 import { Result } from 'true-myth';
 import Service from 'Business/Auth/Service';
@@ -68,7 +69,7 @@ describe('#Components #Login #Login', function() {
         });
     });
 
-    it('should request an auth token.', function() {
+    it('should request an auth token when the user clicks the login button.', function() {
         const wrapper = shallow(<Login />);
         const data = { username: 'testUsername', password: 'testPassword' };
         authStatus.logOut();

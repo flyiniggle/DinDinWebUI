@@ -33,6 +33,23 @@ class Login extends React.Component {
 
         this.updateUsername.bind(this);
         this.updatePassword.bind(this);
+
+        this.submitButton = React.createRef();
+    }
+
+    componentWillMount = function() {
+        document.addEventListener('keydown', this.handleKeydown, false);
+    }
+
+
+    componentWillUnmount = function() {
+        document.removeEventListener('keydown', this.handleKeydown, false);
+    }
+
+    handleKeydown = (e) => {
+        if (e.key === 'Enter') {
+            this.submitButton.current.clickHandler(e);
+        }
     }
 
     redirect = () => {
@@ -82,7 +99,7 @@ class Login extends React.Component {
                                 onChange={ (e) => this.updatePassword(e.target.value) }
                             />
                         </div>
-                        <AsyncButton className="btn btn-secondary" onClick={ this.login }>log in</AsyncButton>
+                        <AsyncButton ref={ this.submitButton } className="btn btn-secondary" onClick={ this.login }>log in</AsyncButton>
                     </div>
                 </form>
             </div>

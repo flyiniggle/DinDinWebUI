@@ -23,6 +23,17 @@ class SignUp extends React.Component {
             passwordError: undefined,
             passwordRepeatError: undefined
         };
+
+        this.submitButton = React.createRef();
+    }
+
+    componentWillMount = function() {
+        document.addEventListener('keydown', this.handleKeydown, false);
+    }
+
+
+    componentWillUnmount = function() {
+        document.removeEventListener('keydown', this.handleKeydown, false);
     }
 
     signUp = async () => {
@@ -52,6 +63,13 @@ class SignUp extends React.Component {
             Err: this.showErrors
         });
     };
+
+    handleKeydown = (e) => {
+        console.log(this.submitButton);
+        if (e.key === 'Enter') {
+            this.submitButton.current.clickHandler(e);
+        }
+    }
 
     redirect = () => {
         this.forceUpdate();
@@ -117,7 +135,7 @@ class SignUp extends React.Component {
                                 onChange={ (e) => this.update('passwordRepeat', e.target.value) }
                             />
                         </div>
-                        <AsyncButton className="btn btn-secondary" onClick={ this.signUp }>Sign Up!</AsyncButton>
+                        <AsyncButton ref={ this.submitButton } className="btn btn-secondary" onClick={ this.signUp }>Sign Up!</AsyncButton>
                     </div>
                 </form>
             </div>
