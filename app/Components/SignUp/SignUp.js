@@ -21,10 +21,9 @@ class SignUp extends React.Component {
             usernameError: undefined,
             emailError: undefined,
             passwordError: undefined,
-            passwordRepeatError: undefined
+            passwordRepeatError: undefined,
+            sendingRequest: false
         };
-
-        this.submitButton = React.createRef();
     }
 
     componentWillMount = function() {
@@ -37,10 +36,14 @@ class SignUp extends React.Component {
     }
 
     signUp = async () => {
+        this.setState({ sendingRequest: true });
         const input = pick(['username', 'email', 'password', 'passwordRepeat'], this.state);
 
         const result = await signup(input);
 
+        if (result.isErr()) {
+            this.setState({ sendingRequest: false });
+        }
         result.match({
             Ok: this.login,
             Err: this.showErrors
@@ -58,15 +61,17 @@ class SignUp extends React.Component {
         const { username, password } = this.state;
         const result = await authenticate(username, password);
 
-        result.match({
-            Ok: this.redirect,
-            Err: this.showErrors
+        this.setState({ sendingRequest: false }, function() {
+            result.match({
+                Ok: this.redirect,
+                Err: this.showErrors
+            });
         });
     };
 
     handleKeydown = (e) => {
         if (e.key === 'Enter') {
-            this.submitButton.current.clickHandler(e);
+            this.signUp(e);
         }
     }
 
@@ -134,7 +139,7 @@ class SignUp extends React.Component {
                                 onChange={ (e) => this.update('passwordRepeat', e.target.value) }
                             />
                         </div>
-                        <AsyncButton ref={ this.submitButton } className="btn btn-secondary" onClick={ this.signUp }>Sign Up!</AsyncButton>
+                        <AsyncButton className="btn btn-secondary" onClick={ this.signUp } working={ this.state.sendingRequest }>Sign Up!</AsyncButton>
                     </div>
                 </form>
             </div>

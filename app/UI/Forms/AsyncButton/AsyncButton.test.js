@@ -11,9 +11,8 @@ describe('#UI #Forms #AsyncButton', function() {
     });
 
     it('should render a loading icon when active.', function() {
-        const wrapper = shallow(<AsyncButton>HOOOOO DOGGY</AsyncButton>);
+        const wrapper = shallow(<AsyncButton working>HOOOOO DOGGY</AsyncButton>);
 
-        wrapper.setState({ working: true });
         expect(wrapper.find(FontAwesomeIcon).exists()).toBe(true);
     });
 

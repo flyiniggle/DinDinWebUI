@@ -28,13 +28,12 @@ class Login extends React.Component {
             username: '',
             password: '',
             usernameError: undefined,
-            passwordError: undefined
+            passwordError: undefined,
+            sendingRequest: false
         };
 
         this.updateUsername.bind(this);
         this.updatePassword.bind(this);
-
-        this.submitButton = React.createRef();
     }
 
     componentWillMount = function() {
@@ -48,7 +47,7 @@ class Login extends React.Component {
 
     handleKeydown = (e) => {
         if (e.key === 'Enter') {
-            this.submitButton.current.clickHandler(e);
+            this.login(e);
         }
     }
 
@@ -64,9 +63,12 @@ class Login extends React.Component {
     };
 
     login = async () => {
+        this.setState({ sendingRequest: true });
         const { username, password } = this.state;
         const result = await authenticate(username, password);
 
+
+        this.setState({ sendingRequest: false });
         result.match({
             Ok: this.redirect,
             Err: this.showErrors
@@ -99,7 +101,12 @@ class Login extends React.Component {
                                 onChange={ (e) => this.updatePassword(e.target.value) }
                             />
                         </div>
-                        <AsyncButton ref={ this.submitButton } className="btn btn-secondary" onClick={ this.login }>log in</AsyncButton>
+                        <AsyncButton
+                            className="btn btn-secondary"
+                            onClick={ this.login }
+                            working={ this.state.sendingRequest }>
+                            log in
+                        </AsyncButton>
                     </div>
                 </form>
             </div>
