@@ -122,7 +122,32 @@ class Meal extends React.Component<MealProps, State> {
                 <div className="row m-2">
                     <div className="col-12">
                         <h4>Notes:</h4>
-                        <span>{meal.notes}</span>
+                        {
+                            this.state.editingNotes ?
+                                (
+                                    <>
+                                        <textarea className="form-control d-block mb-2" onChange={this.updateCurrentValue} value={this.state.activeFieldValue} />
+                                        <div className="float-right">
+                                            <AsyncButton className="btn btn-primary m-2" working={this.state.submitting}>
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </AsyncButton>
+                                            <AsyncButton className="btn btn-outline-primary"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    this.setState({ editingNotes: false, activeFieldValue: null })
+                                                }}>
+                                                <FontAwesomeIcon icon={faBan} />
+                                            </AsyncButton>
+                                        </div>
+                                    </>
+                                ) :
+                                <span className="editable"
+                                    onClick={() => {
+                                        this.setState({ editingNotes: true, activeFieldValue: meal.notes })
+                                    }}
+                                >{meal.notes}</span>
+                        }
                     </div>
                 </div>
                 <div className="row m2 d-flex justify-content-end">
