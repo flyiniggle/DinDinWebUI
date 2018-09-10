@@ -14,13 +14,17 @@ import { faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
 
 import './Meal.sass';
 
+enum editableFields {
+    name = 'name',
+    notes = 'notes',
+    taste = 'taste',
+    difficulty = 'difficulty'
+}
+
 interface State {
-    editingName: boolean,
-    editingTaste: boolean,
-    editingDifficulty: boolean,
-    editingNotes: boolean,
+    activeField?: editableFields
     message?: Message
-    submitting: boolean,
+    submitting: boolean
     activeFieldValue?: any
 }
 
@@ -35,10 +39,7 @@ interface MealProps {
 
 class Meal extends React.Component<MealProps, State> {
     readonly state: State = {
-        editingName: false,
-        editingTaste: false,
-        editingDifficulty: false,
-        editingNotes: false,
+        activeField: null,
         message: null,
         submitting: false,
         activeFieldValue: null
@@ -63,6 +64,12 @@ class Meal extends React.Component<MealProps, State> {
         return result.isOk();
     }
 
+    cancelEditing = (e: Event): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.setState({ activeField: null, activeFieldValue: null });
+    }
+
     updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
     render() {
@@ -79,26 +86,22 @@ class Meal extends React.Component<MealProps, State> {
                     </div>
                 </div>
                 <div className="row m-2" onClick={() => {
-                    this.setState({ editingName: true, activeFieldValue: meal.name })
+                    this.setState({ activeField: editableFields.name, activeFieldValue: meal.name })
                 }}>
                     <div className="editable">
-                        {this.state.editingName ?
+                        {this.state.activeField === editableFields.name ?
                             (<div className="input-group">
                                 <TextInput value={meal.name} className="form-control-lg" onChange={this.updateCurrentValue} />
                                 <div className="input-group-append">
                                     <AsyncButton onClick={async () => {
-                                        const success = await this.save("name", this.state.activeFieldValue, meal);
+                                        const success = await this.save(editableFields.name, this.state.activeFieldValue, meal);
 
                                         if (success) {
-                                            this.setState({ editingName: false })
+                                            this.setState({ activeField: null })
                                         }
                                     }}
                                         className="btn btn-lg btn-primary" > <FontAwesomeIcon icon={faCheck} /></AsyncButton>
-                                    <AsyncButton onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        this.setState({ editingName: false, activeFieldValue: null })
-                                    }} className="btn btn-lg btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
+                                    <AsyncButton onClick={this.cancelEditing} className="btn btn-lg btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
                                 </div>
                             </div>)
                             : <h1>{meal.name}</h1>}
@@ -123,7 +126,7 @@ class Meal extends React.Component<MealProps, State> {
                     <div className="col-12">
                         <h4>Notes:</h4>
                         {
-                            this.state.editingNotes ?
+                            this.state.activeField === editableFields.notes ?
                                 (
                                     <>
                                         <textarea className="form-control d-block mb-2" onChange={this.updateCurrentValue} value={this.state.activeFieldValue} />
@@ -132,11 +135,7 @@ class Meal extends React.Component<MealProps, State> {
                                                 <FontAwesomeIcon icon={faCheck} />
                                             </AsyncButton>
                                             <AsyncButton className="btn btn-outline-primary"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                    this.setState({ editingNotes: false, activeFieldValue: null })
-                                                }}>
+                                                onClick={this.cancelEditing}>
                                                 <FontAwesomeIcon icon={faBan} />
                                             </AsyncButton>
                                         </div>
@@ -144,7 +143,7 @@ class Meal extends React.Component<MealProps, State> {
                                 ) :
                                 <span className="editable"
                                     onClick={() => {
-                                        this.setState({ editingNotes: true, activeFieldValue: meal.notes })
+                                        this.setState({ activeField: editableFields.notes, activeFieldValue: meal.notes })
                                     }}
                                 >{meal.notes}</span>
                         }
