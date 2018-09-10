@@ -13,22 +13,20 @@ const pickErrorLevel = prop('errorLevel');
 const getValueOrEmptyString = maybe => maybe.unwrapOr('');
 
 
-// Maybe => String
-const showInputErrorClass = pipe(
+type TShowInputErrorClass = (Maybe) => string
+const showInputErrorClass: TShowInputErrorClass = pipe(
     map(pickErrorLevel),
     map(getErrorClassForInput),
     getValueOrEmptyString
 );
 
-// state => Maybe => String
-const showInputTextErrorClass = pipe(
+const showInputTextErrorClass: (TextInputState) => Maybe<string> = pipe(
     map(pickErrorLevel),
     map(getErrorClassForText),
     getValueOrEmptyString
 );
 
-// HTMLInputElement => InputMessage => Boolean
-const messageIsLongerThanInput = curry(function (input, message) {
+const messageIsLongerThanInput = curry(function (input: HTMLInputElement, message: InputMessage): boolean {
     const testSpan = document.createElement('span');
 
     testSpan.innerHTML = message.message;
@@ -43,8 +41,7 @@ const messageIsLongerThanInput = curry(function (input, message) {
     return isLonger;
 });
 
-// HTMLInputElement => InputMessage => Boolean
-const messageIsTallerThanTopSpace = function (input, message) {
+const messageIsTallerThanTopSpace = function (input: HTMLInputElement, message: InputMessage): boolean {
     const testSpan = document.createElement('span');
 
     testSpan.innerHTML = message.message;
@@ -102,8 +99,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         }
     }
 
-    // (side effects) + HTMLElement => InputMessage => feedbackType
-    getFeedbackType = (input, message) => {
+    getFeedbackType = (input: HTMLInputElement, message: InputMessage): string => {
         const fbType = this.props.feedbackType;
 
         if (fbType === 'tooltip' || fbType === 'inline') {
@@ -113,8 +109,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         return messageIsLongerThanInput(input, message) ? 'tooltip' : 'inline';
     }
 
-    // (side effects) + HTMLElement => InputMessage => feedbackType
-    getFeedbackPosition = (input, message) => {
+    getFeedbackPosition = (input: HTMLInputElement, message: InputMessage): string => {
         const fbPosition = this.props.feedbackPosition;
 
         if (fbPosition !== 'auto') {
@@ -124,8 +119,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         return messageIsTallerThanTopSpace(input, message) ? '' : 'top';
     }
 
-    // InputMessage => feedbackType  => HTMLElement
-    getFeedback = (message, feedbackType) => {
+    getFeedback = (message: InputMessage, feedbackType: string): JSX.Element => {
         const errorLevelClass = ((feedbackType === 'inline') ? getErrorClassForText : getErrorClassForAlert)(message.errorLevel);
         const typeClass = feedbackType === 'inline' ? '' : 'tooltip alert';
 
