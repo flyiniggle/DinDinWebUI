@@ -93,12 +93,12 @@ class Meal extends React.Component<MealProps, State> {
                                             this.setState({ editingName: false })
                                         }
                                     }}
-                                        className="btn btn-sm btn-primary" > <FontAwesomeIcon icon={faCheck} /></AsyncButton>
+                                        className="btn btn-lg btn-primary" > <FontAwesomeIcon icon={faCheck} /></AsyncButton>
                                     <AsyncButton onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
                                         this.setState({ editingName: false, activeFieldValue: null })
-                                    }} className="btn btn-sm btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
+                                    }} className="btn btn-lg btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
                                 </div>
                             </div>)
                             : <h1>{meal.name}</h1>}
@@ -127,8 +127,8 @@ class Meal extends React.Component<MealProps, State> {
                                 (
                                     <>
                                         <textarea className="form-control d-block mb-2" onChange={this.updateCurrentValue} value={this.state.activeFieldValue} />
-                                        <div className="float-right">
-                                            <AsyncButton className="btn btn-primary m-2" working={this.state.submitting}>
+                                        <div className="float-right btn-group" role="group">
+                                            <AsyncButton className="btn btn-primary" working={this.state.submitting}>
                                                 <FontAwesomeIcon icon={faCheck} />
                                             </AsyncButton>
                                             <AsyncButton className="btn btn-outline-primary"

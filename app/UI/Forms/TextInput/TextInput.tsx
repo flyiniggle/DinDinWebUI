@@ -140,13 +140,13 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         const feedbackPosition = lift(this.getFeedbackPosition)(input, message);
 
         return (
-            <div className="textInput row d-flex flex-column">
+            <div className="textInput d-flex flex-column">
                 <input
                     ref={this.input}
                     type={this.props.type}
                     value={this.state.value}
                     placeholder={placeholder}
-                    className={`form-control ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
+                    className={`form-control form-control-lg ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
                     onChange={this.update} />
                 <div className={`textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}`}>
                     {feedback.unwrapOr(null)}
