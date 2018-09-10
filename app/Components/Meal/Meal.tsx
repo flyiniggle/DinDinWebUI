@@ -84,7 +84,7 @@ class Meal extends React.Component<MealProps, State> {
                     <div className="editable">
                         {this.state.editingName ?
                             (<div className="input-group">
-                                <TextInput value={meal.name} onChange={this.updateCurrentValue} />
+                                <TextInput value={meal.name} className="form-control-lg" onChange={this.updateCurrentValue} />
                                 <div className="input-group-append">
                                     <AsyncButton onClick={async () => {
                                         const success = await this.save("name", this.state.activeFieldValue, meal);

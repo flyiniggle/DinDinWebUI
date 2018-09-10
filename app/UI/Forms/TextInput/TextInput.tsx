@@ -58,13 +58,14 @@ const messageIsTallerThanTopSpace = function (input: HTMLInputElement, message: 
 };
 
 interface TextInputProps {
-    placeholder?: string;
-    message?: InputMessage;
-    type?: string;
-    value: string;
-    onChange?: (e: React.FormEvent<HTMLInputElement>) => void,
-    feedbackType?: 'inline' | 'tooltip' | 'auto';
-    feedbackPosition?: 'top' | 'bottom' | 'auto';
+    placeholder?: string
+    message?: InputMessage
+    type?: string
+    value: string
+    className?: string
+    onChange?: (e: React.FormEvent<HTMLInputElement>) => void
+    feedbackType?: 'inline' | 'tooltip' | 'auto'
+    feedbackPosition?: 'top' | 'bottom' | 'auto'
 }
 
 interface TextInputState {
@@ -146,7 +147,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
                     type={this.props.type}
                     value={this.state.value}
                     placeholder={placeholder}
-                    className={`form-control form-control-lg ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
+                    className={`form-control ${this.props.className} ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
                     onChange={this.update} />
                 <div className={`textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}`}>
                     {feedback.unwrapOr(null)}
