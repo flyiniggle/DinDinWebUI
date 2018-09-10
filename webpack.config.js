@@ -22,8 +22,13 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'build', 'static'),
+<<<<<<< HEAD
+        filename: IN_PRODUCTION ? '[name].[hash].js' : '[name].js',
+        publicPath: IN_PRODUCTION ? '/static/' : ''
+=======
         filename: IN_PRODUCTION ? '[name].[chunkhash].js' : '[name].js',
         publicPath: '/static/'
+>>>>>>> 0bbd086d41d9fe58766adbda46324aaa5dee3f24
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json'],
