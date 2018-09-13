@@ -1,6 +1,5 @@
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
 import Overview from 'DinDin/Components/Dashboard/Overview/Overview';
-import Header from 'DinDin/Components/Header/Header';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,18 +16,12 @@ class Dashboard extends React.Component {
 
     static propTypes = {
         meals: PropTypes.array,
-        useMeal: PropTypes.func,
-        logoutHandler: PropTypes.func
+        useMeal: PropTypes.func
     }
 
     render() {
         return (
-            <div className="mainBackground container-fluid dashboard d-flex flex-column justify-content-end">
-                <div className="row d-block">
-                    <div className="col-12">
-                        <Header logoutHandler={ this.props.logoutHandler } />
-                    </div>
-                </div>
+            <div className="d-flex flex-column justify-content-end">
                 <div className="row">
                     <div className="col-xs-12">
                         filters

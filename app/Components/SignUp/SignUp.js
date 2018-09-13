@@ -95,7 +95,7 @@ class SignUp extends React.Component {
 
     render() {
         if (authStatus.authToken) {
-            return <Redirect to="/dashboard" />;
+            return <Redirect to="/meals" />;
         }
 
         return (

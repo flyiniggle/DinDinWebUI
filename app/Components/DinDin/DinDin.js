@@ -3,14 +3,13 @@ import UserContext from 'Business/Auth/UserContext';
 import useMeal from 'Business/Meals/useMeal';
 import MealsService from 'Business/Meals/Service';
 import DinDinService from 'Business/Services/DinDinService';
+import DinDinApp from 'Components/DinDin/DinDinApp';
+import Splash from 'Components/Splash/Splash';
+import ProtectedRoute from 'UI/ProtectedRoute';
 import { eqProps, map, mergeDeepLeft, when } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Result } from 'true-myth';
-import Dashboard from 'Components/Dashboard/Dashboard';
-import Splash from 'Components/Splash/Splash';
-import Meal from 'Components/Meal/Meal';
-import ProtectedRoute from 'UI/ProtectedRoute';
 
 import './DinDin.sass';
 
@@ -65,19 +64,10 @@ class DinDin extends React.Component {
             <UserContext.Provider value={ authStatus.username }>
                 <Switch>
                     <ProtectedRoute
-                        exact
-                        path="/dashboard"
-                        component={ Dashboard }
+                        path="/meals"
+                        component={ DinDinApp }
                         logoutHandler={ this.logOut }
                         meals={ this.state.meals }
-                        useMeal={ this.useMeal }
-                    />
-                    <ProtectedRoute
-                        exact
-                        path="/meals/:id"
-                        component={ Meal }
-                        meals={ this.state.meals }
-                        logoutHandler={ this.logOut }
                         useMeal={ this.useMeal }
                         updateMeal={ this.updateMeal }
                     />

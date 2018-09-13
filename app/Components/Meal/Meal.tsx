@@ -79,12 +79,7 @@ class Meal extends React.Component<MealProps, State> {
         const meal: IMeal = getMealById(this.props.match.params.id, this.props.meals);
 
         return (
-            <div className="meal mainBackground container-fluid">
-                <div className="row">
-                    <div className="col-12">
-                        <Header logoutHandler={this.props.logoutHandler} />
-                    </div>
-                </div>
+            <div className="meal">
                 <div className="row m-2" onClick={() => {
                     this.setState({ activeField: editableFields.name, activeFieldValue: meal.name })
                 }}>
