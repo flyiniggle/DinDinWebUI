@@ -26,7 +26,6 @@ function NameEditor(props: NameEditorProps) {
             </div>
         </div>
     );
-
 }
 
 export default NameEditor

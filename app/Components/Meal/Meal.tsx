@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
 
 import './Meal.sass';
+import NameEditor from 'Components/Meal/NameEditor';
 
 enum editableFields {
     name = 'name',
@@ -58,8 +59,8 @@ class Meal extends React.Component<MealProps, State> {
         return result.isOk();
     }
 
-    saveName = async (meal) => {
-        const success = await this.save(editableFields.name, this.state.activeFieldValue, meal);
+    saveName = async () => {
+        const success = await this.save(editableFields.name, this.state.activeFieldValue, this.props.meal);
 
         if (success) {
             this.setState({ activeField: null });
@@ -87,9 +88,14 @@ class Meal extends React.Component<MealProps, State> {
                     this.setState({ activeField: editableFields.name, activeFieldValue: meal.name })
                 }}>
                     <div className="editable">
-                        {this.state.activeField === editableFields.name ?
-
-                            <h1>{meal.name}</h1> : <h1>{meal.name}</h1>}
+                        {this.state.activeField === editableFields.name
+                            ? <NameEditor
+                                name={meal.name}
+                                onChange={this.updateCurrentValue}
+                                onSave={this.saveName}
+                                onCancel={this.cancelEditing}
+                            />
+                            : <h1>{meal.name}</h1>}
                     </div>
                 </div>
                 <div className="row m-2">
