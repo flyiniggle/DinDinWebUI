@@ -1,11 +1,16 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import getMealById from 'Business/Meals/getMealById';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Meal from 'Components/Meal/Meal';
 import Header from 'Components/Header/Header';
+import { Maybe } from 'true-myth';
+
 
 function DinDinApp(props) {
+    const maybeMeals = props.meals ? props.meals : [];
+
     return (
         <div className="mainBackground container-fluid dashboard d-flex flex-column">
             <div className="row d-block">
@@ -20,7 +25,7 @@ function DinDinApp(props) {
                     render={ routeProps => (
                         <Dashboard
                             { ...routeProps }
-                            meals={ props.meals }
+                            meals={ maybeMeals }
                             useMeal={ props.useMeal } />
                     ) } />
                 <Route
@@ -28,8 +33,7 @@ function DinDinApp(props) {
                     path="/meals/:id"
                     render={ routeProps => (
                         <Meal
-                            { ...routeProps }
-                            meals={ props.meals }
+                            meal={ getMealById(routeProps.match.params.id, maybeMeals) }
                             useMeal={ props.useMeal }
                             updateMeal={ props.updateMeal } />
                     ) } />

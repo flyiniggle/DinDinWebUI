@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponentProps } from 'react-router-dom';
-import getMealById from 'Business/Meals/getMealById';
 import Message from 'Business/Validation/Types/Message';
 import updateMeal from 'Business/Meals/updateMeal';
-import Header from 'Components/Header/Header';
-import TextInput from 'UI/Forms/TextInput/TextInput';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 import dateString from 'UI/Formatting/dateString';
 import IMeal from 'Business/Meals/Types/Meal';
@@ -29,9 +25,7 @@ interface State {
 }
 
 interface MealProps {
-    meals?: IMeal[],
-    logoutHandler: () => void,
-    match: ReactComponentProps,
+    meal?: IMeal,
     useMeal: (IMeal) => Promise<void>,
     updateMeal: (IMeal) => void
 }
@@ -64,6 +58,14 @@ class Meal extends React.Component<MealProps, State> {
         return result.isOk();
     }
 
+    saveName = async (meal) => {
+        const success = await this.save(editableFields.name, this.state.activeFieldValue, meal);
+
+        if (success) {
+            this.setState({ activeField: null });
+        }
+    }
+
     cancelEditing = (e: Event): void => {
         e.preventDefault();
         e.stopPropagation();
@@ -73,10 +75,11 @@ class Meal extends React.Component<MealProps, State> {
     updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
     render() {
-        if (!this.props.meals) {
+        const meal: IMeal = this.props.meal;
+
+        if (!meal) {
             return <p>Loading...</p>
         }
-        const meal: IMeal = getMealById(this.props.match.params.id, this.props.meals);
 
         return (
             <div className="meal">
@@ -85,21 +88,8 @@ class Meal extends React.Component<MealProps, State> {
                 }}>
                     <div className="editable">
                         {this.state.activeField === editableFields.name ?
-                            (<div className="input-group">
-                                <TextInput value={meal.name} className="form-control-lg" onChange={this.updateCurrentValue} />
-                                <div className="input-group-append">
-                                    <AsyncButton onClick={async () => {
-                                        const success = await this.save(editableFields.name, this.state.activeFieldValue, meal);
 
-                                        if (success) {
-                                            this.setState({ activeField: null })
-                                        }
-                                    }}
-                                        className="btn btn-lg btn-primary" > <FontAwesomeIcon icon={faCheck} /></AsyncButton>
-                                    <AsyncButton onClick={this.cancelEditing} className="btn btn-lg btn-outline-primary" ><FontAwesomeIcon icon={faBan} /></AsyncButton>
-                                </div>
-                            </div>)
-                            : <h1>{meal.name}</h1>}
+                            <h1>{meal.name}</h1> : <h1>{meal.name}</h1>}
                     </div>
                 </div>
                 <div className="row m-2">
@@ -155,7 +145,7 @@ class Meal extends React.Component<MealProps, State> {
                                 return this.props.useMeal(meal);
                             }}>Use it!</button>
 
-                        <Link to="/dashboard" className="btn btn-outline-primary">close</Link>
+                        <Link to="/meals" className="btn btn-outline-primary">close</Link>
                     </div>
                 </div>
             </div>

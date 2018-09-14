@@ -19,7 +19,7 @@ describe('#Components #DinDin #DinDin', function() {
     });
 
     it('should redirect to the login component if the user tries to access the dashboard while not logged in.', function() {
-        const wrapper = mount(<StaticRouter basename="" context={ {} } location="/dashboard"><DinDin /></StaticRouter>);
+        const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meals"><DinDin /></StaticRouter>);
         authStatus.logOut();
 
         expect(wrapper.contains(Dashboard)).toBe(false);
@@ -31,7 +31,7 @@ describe('#Components #DinDin #DinDin', function() {
         authStatus.authToken = token;
         authStatus.username = 'me';
 
-        const wrapper = mount(<StaticRouter basename="" context={ {} } location="/dashboard"><DinDin /></StaticRouter>);
+        const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meals"><DinDin /></StaticRouter>);
 
         expect(wrapper.contains(Dashboard)).toBe(true);
 
@@ -54,7 +54,7 @@ describe('#Components #DinDin #DinDin', function() {
             authStatus.authToken = token;
             authStatus.username = 'me';
 
-            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/dashboard"><DinDin /></StaticRouter>);
+            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meals"><DinDin /></StaticRouter>);
 
             expect(wrapper.contains(Dashboard)).toBe(true);
 
