@@ -40,10 +40,10 @@ class Meal extends React.Component<MealProps, State> {
         activeFieldValue: null
     }
 
-    save = async (mealProp: string, val, meal: IMeal): Promise<boolean> => {
+    save = async (): Promise<void> => {
         this.setState({ submitting: true });
 
-        const result = await updateMeal(meal, { [mealProp]: val });
+        const result = await updateMeal(this.props.meal, { [this.state.activeField]: this.state.activeFieldValue });
 
         this.setState({ submitting: false });
 
@@ -56,13 +56,7 @@ class Meal extends React.Component<MealProps, State> {
             activeFieldValue: null
         });
 
-        return result.isOk();
-    }
-
-    saveName = async () => {
-        const success = await this.save(editableFields.name, this.state.activeFieldValue, this.props.meal);
-
-        if (success) {
+        if (result.isOk()) {
             this.setState({ activeField: null });
         }
     }
@@ -92,7 +86,7 @@ class Meal extends React.Component<MealProps, State> {
                             ? <NameEditor
                                 name={meal.name}
                                 onChange={this.updateCurrentValue}
-                                onSave={this.saveName}
+                                onSave={this.save}
                                 onCancel={this.cancelEditing}
                             />
                             : <h1>{meal.name}</h1>}
@@ -108,7 +102,10 @@ class Meal extends React.Component<MealProps, State> {
                         <div><h4 className="d-inline">Difficulty: </h4><span className="difficulty">{meal.difficulty}</span></div>
                     </div>
                     <div className="col-12 col-lg-5">
-                        <div><h4 className="d-inline">Last Used: </h4><span className='lastUsed'>{dateString.display(meal.lastUsed)}</span></div>
+                        <div>
+                            <h4 className="d-inline">Last Used: </h4>
+                            <span className='lastUsed'>{dateString.display(meal.lastUsed)}</span>
+                        </div>
 
                         <h4 className="usedCount">Used {meal.usedCount} {(meal.usedCount === 1) ? 'time' : 'times'}</h4>
                     </div>
@@ -122,21 +119,20 @@ class Meal extends React.Component<MealProps, State> {
                                     <>
                                         <textarea className="form-control d-block mb-2" onChange={this.updateCurrentValue} value={this.state.activeFieldValue} />
                                         <div className="float-right btn-group" role="group">
-                                            <AsyncButton className="btn btn-primary" working={this.state.submitting}>
+                                            <AsyncButton className="btn btn-primary" onClick={this.save} working={this.state.submitting}>
                                                 <FontAwesomeIcon icon={faCheck} />
                                             </AsyncButton>
-                                            <AsyncButton className="btn btn-outline-primary"
-                                                onClick={this.cancelEditing}>
+                                            <AsyncButton className="btn btn-outline-primary" onClick={this.cancelEditing}>
                                                 <FontAwesomeIcon icon={faBan} />
                                             </AsyncButton>
                                         </div>
                                     </>
                                 ) :
-                                <span className="editable"
+                                <span className={`editable ${meal.notes ? '' : 'placeholder'}`}
                                     onClick={() => {
                                         this.setState({ activeField: editableFields.notes, activeFieldValue: meal.notes })
                                     }}
-                                >{meal.notes}</span>
+                                >{meal.notes || "add a note"}</span>
                         }
                     </div>
                 </div>
