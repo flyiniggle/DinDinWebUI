@@ -2,14 +2,12 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Message from 'Business/Validation/Types/Message';
 import updateMeal from 'Business/Meals/updateMeal';
-import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 import dateString from 'UI/Formatting/dateString';
 import IMeal from 'Business/Meals/Types/Meal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
 
 import './Meal.sass';
 import NameEditor from 'Components/Meal/NameEditor';
+import NotesEditor from 'Components/Meal/NotesEditor';
 
 enum editableFields {
     name = 'name',
@@ -114,21 +112,14 @@ class Meal extends React.Component<MealProps, State> {
                     <div className="col-12">
                         <h4>Notes:</h4>
                         {
-                            this.state.activeField === editableFields.notes ?
-                                (
-                                    <>
-                                        <textarea className="form-control d-block mb-2" onChange={this.updateCurrentValue} value={this.state.activeFieldValue} />
-                                        <div className="float-right btn-group" role="group">
-                                            <AsyncButton className="btn btn-primary" onClick={this.save} working={this.state.submitting}>
-                                                <FontAwesomeIcon icon={faCheck} />
-                                            </AsyncButton>
-                                            <AsyncButton className="btn btn-outline-primary" onClick={this.cancelEditing}>
-                                                <FontAwesomeIcon icon={faBan} />
-                                            </AsyncButton>
-                                        </div>
-                                    </>
-                                ) :
-                                <span className={`editable ${meal.notes ? '' : 'placeholder'}`}
+                            this.state.activeField === editableFields.notes
+                                ? <NotesEditor
+                                    notes={meal.notes}
+                                    onSave={this.save}
+                                    onChange={this.updateCurrentValue}
+                                    onCancel={this.cancelEditing}
+                                />
+                                : <span className={`editable ${meal.notes ? '' : 'placeholder'}`}
                                     onClick={() => {
                                         this.setState({ activeField: editableFields.notes, activeFieldValue: meal.notes })
                                     }}
