@@ -42,6 +42,6 @@ describe('#Components #Meal #NameEditor', function() {
         const wrapper = mount(<NameEditor { ...props } />);
 
 
-        //expect(wrapper.find('input[type="text"]').attr('value')).toEqual(props.name);
+        expect(wrapper.find(`input[value="${props.name}"]`).exists()).toEqual(true);
     });
 });
