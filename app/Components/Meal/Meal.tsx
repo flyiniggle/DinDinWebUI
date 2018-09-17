@@ -187,7 +187,7 @@ class Meal extends React.Component<MealProps, State> {
                         {
                             this.state.activeField === editableFields.notes
                                 ? <NotesEditor
-                                    notes={meal.notes}
+                                    notes={this.state.activeFieldValue}
                                     onSave={this.save}
                                     onChange={this.updateCurrentValue}
                                     onCancel={this.cancelEditing}
