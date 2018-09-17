@@ -23,7 +23,6 @@ class NotesEditor extends React.Component<NotesEditorProps, NotesEditorState> {
         this.setState({ submitting: true });
         await this.props.onSave();
         this.setState({ submitting: false });
-
     }
 
     render() {
