@@ -205,7 +205,7 @@ class Meal extends React.Component<MealProps, State> {
                         <button
                             className="btn btn-primary"
                             type="button"
-                            onClick={function (event): void {
+                            onClick={(event) => {
                                 event.stopPropagation();
                                 event.preventDefault();
                                 return this.props.useMeal(meal);
