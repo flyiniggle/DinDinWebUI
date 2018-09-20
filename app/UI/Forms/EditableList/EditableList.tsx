@@ -1,7 +1,5 @@
 import * as React from 'react';
 import ListItem from 'UI/Forms/EditableList/ListItem';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ListItemAdder from 'UI/Forms/EditableList/ListItemAdder';
 
 interface IEditableListProps {
