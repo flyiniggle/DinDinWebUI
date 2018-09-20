@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { map, pipe } from 'ramda';
 import { Link } from 'react-router-dom';
 import Message from 'Business/Validation/Types/Message';
 import updateMeal from 'Business/Meals/updateMeal';
@@ -10,6 +11,8 @@ import RatingEditor from 'Components/Meal/RatingEditor';
 import { faStar as solidStar, faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar, faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
 import RatingDisplay from 'Components/Meal/RatingDisplay';
+import { Maybe } from 'true-myth';
+import IngredientsEditor from 'Components/Meal/IngredientsEditor';
 
 import './Meal.sass';
 
@@ -17,7 +20,8 @@ enum editableFields {
     name = 'name',
     notes = 'notes',
     taste = 'taste',
-    difficulty = 'difficulty'
+    difficulty = 'difficulty',
+    ingredients = 'ingredients'
 }
 
 interface State {
@@ -63,12 +67,11 @@ class Meal extends React.Component<MealProps, State> {
             Err: console.log //use a generic error messager, just as soon as I build it
         });
 
-        this.setState({
-            activeFieldValue: null
-        });
-
         if (result.isOk()) {
-            this.setState({ activeField: null });
+            this.setState({
+                activeField: null,
+                activeFieldValue: null
+            });
         }
     }
 
@@ -89,12 +92,23 @@ class Meal extends React.Component<MealProps, State> {
 
     updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
+    updateCurrentListValue = (a: Array<any>) => {
+        this.setState({ activeFieldValue: a })
+    }
+
     render() {
         const meal: IMeal = this.props.meal;
 
         if (!meal) {
             return <p>Loading...</p>
         }
+
+        const ingredients = meal.ingredients.length !== 0 ? Maybe.of(meal.ingredients) : Maybe.nothing();
+        const renderIngredientsDisplay = map(i => <span className="d-block">{i}</span>);
+        const ingredientsDisplay = pipe(
+            map(renderIngredientsDisplay),
+            Maybe.getOr('add ingredients')
+        )(ingredients);
 
         return (
             <div className="meal">
@@ -115,7 +129,19 @@ class Meal extends React.Component<MealProps, State> {
                 <div className="row m-2">
                     <div className="col-12 col-lg-2">
                         <h4>Ingredients</h4>
-                        {meal.ingredients.map(ingredient => <span>{ingredient}</span>)}
+                        <div className="editable" onClick={() => {
+                            this.setState({ activeField: editableFields.ingredients, activeFieldValue: meal.ingredients })
+                        }}>
+                            {this.state.activeField === editableFields.ingredients
+                                ? <IngredientsEditor
+                                    list={this.state.activeFieldValue}
+                                    onChange={this.updateCurrentListValue}
+                                    onSave={this.save}
+                                    onCancel={this.cancelEditing}
+                                />
+                                : ingredientsDisplay
+                            }
+                        </div>
                     </div>
                     <div className="col-12 col-lg-5">
                         <div>
