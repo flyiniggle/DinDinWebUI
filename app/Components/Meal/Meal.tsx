@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { addIndex, join, map, pipe } from 'ramda';
+import { addIndex, map, pipe } from 'ramda';
 import { Link } from 'react-router-dom';
 import Message from 'Business/Validation/Types/Message';
 import dateString from 'UI/Formatting/dateString';
