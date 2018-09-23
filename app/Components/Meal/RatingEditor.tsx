@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRatingDisplayProps } from 'Components/Meal/RatingDisplay';
-import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
-import { faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
+import FieldControlButtons from 'UI/Forms/FieldControlButtons/FieldControlButtons';
 
 interface RatingEditorState {
     submitting: boolean
@@ -41,14 +40,10 @@ class RatingEditor extends React.Component<IRatingEditorProps, RatingEditorState
                             )
                         })
                 }
-                <div className="float-right btn-group" role="group">
-                    <AsyncButton className="btn btn-primary" onClick={this.doSave} working={this.state.submitting}>
-                        <FontAwesomeIcon icon={faCheck} />
-                    </AsyncButton>
-                    <AsyncButton className="btn btn-outline-primary" onClick={this.props.onCancel}>
-                        <FontAwesomeIcon icon={faBan} />
-                    </AsyncButton>
-                </div>
+                <FieldControlButtons
+                    doSave={this.doSave}
+                    doCancel={this.props.onCancel}
+                    submitting={this.state.submitting} />
             </div>
         )
     }

@@ -119,7 +119,7 @@ class Meal extends React.Component<MealProps, State> {
                     <div className="editable">
                         {this.state.activeField === editableFields.name
                             ? <NameEditor
-                                name={meal.name}
+                                name={this.state.activeFieldValue}
                                 onChange={this.updateCurrentValue}
                                 onSave={this.save}
                                 onCancel={this.cancelEditing}

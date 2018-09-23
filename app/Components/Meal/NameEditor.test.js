@@ -11,9 +11,9 @@ describe('#Components #Meal #NameEditor', function() {
             onSave: jest.fn(),
             onCancel: jest.fn()
         };
-        const wrapper = shallow(<NameEditor { ...props } />);
+        const wrapper = mount(<NameEditor { ...props } />);
 
-        wrapper.find('.name-editor-save').simulate('click');
+        wrapper.find('.field-control-save').simulate('click');
 
         expect(props.onSave).toHaveBeenCalled();
     });
@@ -25,9 +25,9 @@ describe('#Components #Meal #NameEditor', function() {
             onSave: jest.fn(),
             onCancel: jest.fn()
         };
-        const wrapper = shallow(<NameEditor { ...props } />);
+        const wrapper = mount(<NameEditor { ...props } />);
 
-        wrapper.find('.name-editor-cancel').simulate('click');
+        wrapper.find('.field-control-cancel').simulate('click');
 
         expect(props.onCancel).toHaveBeenCalled();
     });

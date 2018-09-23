@@ -1,8 +1,6 @@
 import * as React from 'react';
 import EditableList, { IEditableListProps } from 'UI/Forms/EditableList/EditableList';
-import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faBan } from '@fortawesome/free-solid-svg-icons';
+import FieldControlButtons from 'UI/Forms/FieldControlButtons/FieldControlButtons';
 
 interface IIngredientsEditorProps extends IEditableListProps {
     onSave: () => void,
@@ -25,18 +23,14 @@ class IngredientsEditor extends React.Component<IIngredientsEditorProps, State> 
     }
 
     render() {
-        const { onSave, onCancel, ...rest } = this.props;
+        const { onCancel, ...rest } = this.props;
         return (
             <React.Fragment>
                 <EditableList {...rest} className="mb-3" />
-                <div className="float-right btn-group" role="group">
-                    <AsyncButton className="btn btn-primary" onClick={this.doSave} working={this.state.submitting}>
-                        <FontAwesomeIcon icon={faCheck} />
-                    </AsyncButton>
-                    <AsyncButton className="btn btn-outline-primary" onClick={this.props.onCancel}>
-                        <FontAwesomeIcon icon={faBan} />
-                    </AsyncButton>
-                </div>
+                <FieldControlButtons
+                    doSave={this.doSave}
+                    doCancel={onCancel}
+                    submitting={this.state.submitting} />
             </React.Fragment>
         )
     }

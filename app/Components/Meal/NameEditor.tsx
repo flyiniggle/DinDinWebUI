@@ -1,31 +1,42 @@
 import * as React from 'react';
 import TextInput from 'UI/Forms/TextInput/TextInput';
-import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
+import FieldControlButtons from 'UI/Forms/FieldControlButtons/FieldControlButtons';
 
 
-interface NameEditorProps {
+interface INameEditorProps {
     name: string,
     onChange: (e: React.FormEvent) => void,
-    onSave: () => void,
+    onSave: () => Promise<void>,
     onCancel: (e: Event) => void
 }
 
-function NameEditor(props: NameEditorProps) {
-    return (
-        <div className="input-group pb-2">
-            <TextInput value={props.name} className="form-control-lg" onChange={props.onChange} />
-            <div className="input-group-append">
-                <AsyncButton onClick={props.onSave} className="name-editor-save btn btn-lg btn-primary">
-                    <FontAwesomeIcon icon={faCheck} />
-                </AsyncButton>
-                <AsyncButton onClick={props.onCancel} className="name-editor-cancel btn btn-lg btn-outline-primary">
-                    <FontAwesomeIcon icon={faBan} />
-                </AsyncButton>
+interface IState {
+    submitting: boolean
+}
+
+class NameEditor extends React.Component<INameEditorProps, IState> {
+    readonly state: IState = {
+        submitting: false
+    }
+
+    doSave = async (): Promise<void> => {
+        this.setState({ submitting: true });
+        await this.props.onSave();
+        this.setState({ submitting: false });
+    }
+
+    render() {
+        return (
+            <div className="input-group pb-2">
+                <TextInput value={this.props.name} className="form-control-lg" onChange={this.props.onChange} />
+                <FieldControlButtons
+                    append
+                    doSave={this.doSave}
+                    doCancel={this.props.onCancel}
+                    submitting={this.state.submitting} />
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default NameEditor
