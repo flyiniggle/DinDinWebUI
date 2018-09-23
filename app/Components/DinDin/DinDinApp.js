@@ -3,9 +3,8 @@ import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import getMealById from 'Business/Meals/getMealById';
 import Dashboard from 'Components/Dashboard/Dashboard';
-import Meal from 'Components/Meal/Meal';
 import Header from 'Components/Header/Header';
-import { Maybe } from 'true-myth';
+import MealEditor from 'Components/MealEditor/MealEditor';
 
 
 function DinDinApp(props) {
@@ -32,7 +31,7 @@ function DinDinApp(props) {
                     exact
                     path="/meals/:id"
                     render={ routeProps => (
-                        <Meal
+                        <MealEditor
                             meal={ getMealById(routeProps.match.params.id, maybeMeals) }
                             useMeal={ props.useMeal }
                             updateMeal={ props.updateMeal } />

@@ -2,86 +2,45 @@ import * as React from 'react';
 import { addIndex, join, map, pipe } from 'ramda';
 import { Link } from 'react-router-dom';
 import Message from 'Business/Validation/Types/Message';
-import updateMeal from 'Business/Meals/updateMeal';
 import dateString from 'UI/Formatting/dateString';
 import IMeal from 'Business/Meals/Types/Meal';
 import NameEditor from 'Components/Meal/NameEditor';
 import NotesEditor from 'Components/Meal/NotesEditor';
 import RatingEditor from 'Components/Meal/RatingEditor';
+import editableFields from 'Components/Meal/editableFields';
+import IngredientsEditor from 'Components/Meal/IngredientsEditor';
+import RatingDisplay from 'Components/Meal/RatingDisplay';
 import { faStar as solidStar, faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar, faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
-import RatingDisplay from 'Components/Meal/RatingDisplay';
-import { Maybe } from 'true-myth';
-import IngredientsEditor from 'Components/Meal/IngredientsEditor';
+import { Maybe, Result } from 'true-myth';
 
 import './Meal.sass';
 
-enum editableFields {
-    name = 'name',
-    notes = 'notes',
-    taste = 'taste',
-    difficulty = 'difficulty',
-    ingredients = 'ingredients'
+
+interface IMealProps {
+    meal: IMeal
+    message?: Message
+    useMeal: (IMeal) => Promise<void>
+    save: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>>
 }
 
-interface State {
+interface IState {
     activeField?: editableFields
-    message?: Message
-    submitting: boolean
     activeFieldValue?: any
 }
 
-interface MealProps {
-    meal?: IMeal,
-    useMeal: (IMeal) => Promise<void>,
-    updateMeal: (IMeal) => void
-}
-
-
-class Meal extends React.Component<MealProps, State> {
-    readonly state: State = {
+class Meal extends React.Component<IMealProps, IState> {
+    readonly state: IState = {
         activeField: null,
-        message: null,
-        submitting: false,
         activeFieldValue: null
     }
 
     componentWillMount = function () {
-        document.addEventListener('keydown', this.handleKeydown, false);
+        document.addEventListener('keydown', this.props.handleKeydown, false);
     }
-
 
     componentWillUnmount = function () {
-        document.removeEventListener('keydown', this.handleKeydown, false);
-    }
-
-    save = async (): Promise<void> => {
-        this.setState({ submitting: true });
-
-        const result = await updateMeal(this.props.meal, { [this.state.activeField]: this.state.activeFieldValue });
-
-        this.setState({ submitting: false });
-
-        result.match({
-            Ok: this.props.updateMeal,
-            Err: console.log //use a generic error messager, just as soon as I build it
-        });
-
-        if (result.isOk()) {
-            this.setState({
-                activeField: null,
-                activeFieldValue: null
-            });
-        }
-    }
-
-    handleKeydown = (e: KeyboardEvent): Promise<void> => {
-        switch (e.key) {
-            case 'Enter':
-                return this.save();
-            case 'Escape':
-                return Promise.resolve(this.cancelEditing(e));
-        }
+        document.removeEventListener('keydown', this.props.handleKeydown, false);
     }
 
     cancelEditing = (e: Event): void => {
@@ -96,8 +55,24 @@ class Meal extends React.Component<MealProps, State> {
         this.setState({ activeFieldValue: a });
     }
 
+    doSave = async () => {
+        const result = await this.props.save(this.state.activeField, this.state.activeFieldValue);
+
+        if (result.isOk()) {
+            this.setState({
+                activeField: null,
+                activeFieldValue: null
+            });
+        }
+    }
+
     render() {
-        const meal: IMeal = this.props.meal;
+        const { activeField, activeFieldValue } = this.state;
+        const {
+            meal,
+            message,
+            useMeal
+        } = this.props
 
         if (!meal) {
             return <p>Loading...</p>
@@ -117,11 +92,11 @@ class Meal extends React.Component<MealProps, State> {
                     this.setState({ activeField: editableFields.name, activeFieldValue: meal.name })
                 }}>
                     <div className="editable">
-                        {this.state.activeField === editableFields.name
+                        {activeField === editableFields.name
                             ? <NameEditor
-                                name={this.state.activeFieldValue}
+                                name={activeFieldValue}
                                 onChange={this.updateCurrentValue}
-                                onSave={this.save}
+                                onSave={this.doSave}
                                 onCancel={this.cancelEditing}
                             />
                             : <h1>{meal.name}</h1>}
@@ -133,11 +108,11 @@ class Meal extends React.Component<MealProps, State> {
                         <div onClick={() => {
                             this.setState({ activeField: editableFields.ingredients, activeFieldValue: meal.ingredients })
                         }}>
-                            {this.state.activeField === editableFields.ingredients
+                            {activeField === editableFields.ingredients
                                 ? <IngredientsEditor
-                                    list={this.state.activeFieldValue}
+                                    list={activeFieldValue}
                                     onChange={this.updateCurrentListValue}
-                                    onSave={this.save}
+                                    onSave={this.doSave}
                                     onCancel={this.cancelEditing}
                                 />
                                 : <div className="editable"> {ingredientsDisplay} </div>
@@ -147,16 +122,16 @@ class Meal extends React.Component<MealProps, State> {
                     <div className="col-12 col-lg-5">
                         <div>
                             <h4 className="d-inline">Taste: </h4>
-                            {this.state.activeField === editableFields.taste
+                            {activeField === editableFields.taste
                                 ? <h2>
                                     <RatingEditor
-                                        rating={this.state.activeFieldValue}
+                                        rating={activeFieldValue}
                                         range={5}
                                         selectedIcon={solidStar}
                                         unselectedIcon={emptyStar}
                                         onChange={val => { this.setState({ activeFieldValue: val }) }}
                                         onCancel={this.cancelEditing}
-                                        onSave={this.save}
+                                        onSave={this.doSave}
                                     />
                                 </h2>
                                 : <h2 className="editable" onClick={() => {
@@ -174,16 +149,16 @@ class Meal extends React.Component<MealProps, State> {
                         <div>
                             <h4 className="d-inline">Difficulty: </h4>
 
-                            {this.state.activeField === editableFields.difficulty
+                            {activeField === editableFields.difficulty
                                 ? <h2>
                                     <RatingEditor
-                                        rating={this.state.activeFieldValue}
+                                        rating={activeFieldValue}
                                         range={5}
                                         selectedIcon={solidTired}
                                         unselectedIcon={emptyTired}
                                         onChange={val => { this.setState({ activeFieldValue: val }) }}
                                         onCancel={this.cancelEditing}
-                                        onSave={this.save}
+                                        onSave={this.doSave}
                                     />
                                 </h2>
                                 : <h2 className="editable" onClick={() => {
@@ -212,10 +187,10 @@ class Meal extends React.Component<MealProps, State> {
                     <div className="col-12">
                         <h4>Notes:</h4>
                         {
-                            this.state.activeField === editableFields.notes
+                            activeField === editableFields.notes
                                 ? <NotesEditor
-                                    notes={this.state.activeFieldValue}
-                                    onSave={this.save}
+                                    notes={activeFieldValue}
+                                    onSave={this.doSave}
                                     onChange={this.updateCurrentValue}
                                     onCancel={this.cancelEditing}
                                 />
@@ -235,7 +210,7 @@ class Meal extends React.Component<MealProps, State> {
                             onClick={(event) => {
                                 event.stopPropagation();
                                 event.preventDefault();
-                                return this.props.useMeal(meal);
+                                return useMeal(meal);
                             }}>Use it!</button>
 
                         <Link to="/meals" className="btn btn-outline-primary">close</Link>
