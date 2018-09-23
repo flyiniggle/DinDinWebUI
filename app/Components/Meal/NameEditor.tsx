@@ -14,7 +14,7 @@ interface NameEditorProps {
 
 function NameEditor(props: NameEditorProps) {
     return (
-        <div className="input-group">
+        <div className="input-group pb-2">
             <TextInput value={props.name} className="form-control-lg" onChange={props.onChange} />
             <div className="input-group-append">
                 <AsyncButton onClick={props.onSave} className="name-editor-save btn btn-lg btn-primary">

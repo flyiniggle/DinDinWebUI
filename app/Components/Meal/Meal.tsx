@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { map, pipe } from 'ramda';
+import { addIndex, join, map, pipe } from 'ramda';
 import { Link } from 'react-router-dom';
 import Message from 'Business/Validation/Types/Message';
 import updateMeal from 'Business/Meals/updateMeal';
@@ -92,8 +92,8 @@ class Meal extends React.Component<MealProps, State> {
 
     updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
-    updateCurrentListValue = (a: Array<any>) => {
-        this.setState({ activeFieldValue: a })
+    updateCurrentListValue = (a: Array<any>): void => {
+        this.setState({ activeFieldValue: a });
     }
 
     render() {
@@ -104,7 +104,8 @@ class Meal extends React.Component<MealProps, State> {
         }
 
         const ingredients = meal.ingredients.length !== 0 ? Maybe.of(meal.ingredients) : Maybe.nothing();
-        const renderIngredientsDisplay = map(i => <span className="d-block">{i}</span>);
+        const mapWithIndex = addIndex(map);
+        const renderIngredientsDisplay = mapWithIndex((ing, i) => <span key={i} className="d-block">{ing}</span>);
         const ingredientsDisplay = pipe(
             map(renderIngredientsDisplay),
             Maybe.getOr('add ingredients')
@@ -129,7 +130,7 @@ class Meal extends React.Component<MealProps, State> {
                 <div className="row m-2">
                     <div className="col-12 col-lg-2">
                         <h4>Ingredients</h4>
-                        <div className="editable" onClick={() => {
+                        <div onClick={() => {
                             this.setState({ activeField: editableFields.ingredients, activeFieldValue: meal.ingredients })
                         }}>
                             {this.state.activeField === editableFields.ingredients
@@ -139,7 +140,7 @@ class Meal extends React.Component<MealProps, State> {
                                     onSave={this.save}
                                     onCancel={this.cancelEditing}
                                 />
-                                : ingredientsDisplay
+                                : <div className="editable"> {ingredientsDisplay} </div>
                             }
                         </div>
                     </div>

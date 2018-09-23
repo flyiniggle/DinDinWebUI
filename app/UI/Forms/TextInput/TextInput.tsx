@@ -69,7 +69,7 @@ interface TextInputProps {
 }
 
 interface TextInputState {
-    value: string
+    //value: string
 }
 
 class TextInput extends React.Component<TextInputProps, TextInputState> {
@@ -86,13 +86,13 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
 
     private input = React.createRef<HTMLInputElement>();
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: props.value
-        };
-    }
+    /*     constructor(props) {
+            super(props);
+    
+            this.state = {
+                value: props.value
+            };
+        } */
 
     componentDidMount = () => {
         if (this.input.current) {
@@ -128,7 +128,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
     }
 
     update = (event) => {
-        this.setState({ value: event.target.value });
+        //this.setState({ value: event.target.value });
         this.props.onChange(event);
     };
 
@@ -145,7 +145,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
                 <input
                     ref={this.input}
                     type={this.props.type}
-                    value={this.state.value}
+                    value={this.props.value}
                     placeholder={placeholder}
                     className={`form-control ${this.props.className} ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
                     onChange={this.update} />

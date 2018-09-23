@@ -4,7 +4,8 @@ import ListItemAdder from 'UI/Forms/EditableList/ListItemAdder';
 
 interface IEditableListProps {
     list: Array<string>,
-    onChange: (a: string[]) => void
+    onChange: (a: string[]) => void,
+    className?: string
 }
 
 interface State {
@@ -27,7 +28,7 @@ class EditableList extends React.Component<IEditableListProps, State> {
 
     render() {
         return (
-            <div className="editableList">
+            <div className={`editableList ${this.props.className}`}>
                 {this.props.list.map((li, i) => <ListItem key={i} text={li} handleRemove={this.removeItem} />)}
                 <ListItemAdder addHandler={this.addItem} />
             </div>

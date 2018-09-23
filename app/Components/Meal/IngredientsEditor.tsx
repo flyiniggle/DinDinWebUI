@@ -28,7 +28,7 @@ class IngredientsEditor extends React.Component<IIngredientsEditorProps, State> 
         const { onSave, onCancel, ...rest } = this.props;
         return (
             <React.Fragment>
-                <EditableList {...rest} />
+                <EditableList {...rest} className="mb-3" />
                 <div className="float-right btn-group" role="group">
                     <AsyncButton className="btn btn-primary" onClick={this.doSave} working={this.state.submitting}>
                         <FontAwesomeIcon icon={faCheck} />
