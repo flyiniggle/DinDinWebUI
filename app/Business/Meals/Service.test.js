@@ -14,6 +14,74 @@ describe('#Business #Meals #Service', function() {
         });
     });
 
+    describe('#post', function() {
+        it('should send a post request to the correct meal url.', async function() {
+            expect.assertions(2);
+            await MealsService.post({
+                name: 'new yummy meal',
+                ingredients: ['goodness', 'love'],
+                taste: 5,
+                difficulty: 2,
+                notes: 'this is a great meal'
+            });
+
+            expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals`);
+            expect(fetch.mock.calls[0][1].method).toEqual('POST');
+        });
+
+        it('should send an API formatted meal', async function() {
+            const data = {
+                name: 'new yummy meal',
+                ingredients: ['goodness', 'love'],
+                taste: 5,
+                difficulty: 2,
+                notes: 'this is a great meal'
+            };
+            const expected = {
+                name: 'new yummy meal',
+                ingredients: ['goodness', 'love'],
+                taste: 5,
+                difficulty: 2,
+                notes: 'this is a great meal'
+            };
+
+            expect.assertions(1);
+            await MealsService.post(data);
+
+            expect(JSON.parse(fetch.mock.calls[0][1].body)).toEqual(expected);
+        });
+
+        it('should return a formatted meal.', async function() {
+            const expected = {
+                id: 23,
+                name: 'yummy tasty food',
+                owner: 'admin',
+                taste: 3,
+                difficulty: 5,
+                usedCount: 0,
+                notes: '',
+                ingredients: ['goodness', 'and', 'stuff']
+            };
+
+            fetch.resetMocks();
+            fetch.mockResponse(JSON.stringify({
+                pk: 23,
+                name: 'yummy tasty food',
+                owner: 'admin',
+                taste: 3,
+                difficulty: 5,
+                used_count: 0,
+                notes: '',
+                ingredients: ['goodness', 'and', 'stuff']
+            }));
+
+            expect.assertions(1);
+            const result = await MealsService.post({});
+
+            expect(result.unwrapOrElse('uh oh')).toEqual(expected);
+        });
+    });
+
     describe('#patch', function() {
         it('should send a patch request to the correct meal url.', async function() {
             expect.assertions(2);
