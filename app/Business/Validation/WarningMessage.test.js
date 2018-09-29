@@ -1,5 +1,5 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import { createWarningMessage } from 'Business/Validation/Types/WarningMessage';
+import WarningMessage from 'Business/Validation/WarningMessage';
 
 
 describe('#Business #Validation #Types #WarningMessage', function() {
@@ -10,7 +10,7 @@ describe('#Business #Validation #Types #WarningMessage', function() {
             message: 'you got it all wrong man'
         };
 
-        expect(createWarningMessage(data).type).toEqual(ErrorLevel.warning);
+        expect(new WarningMessage(data).type).toEqual(ErrorLevel.warning);
     });
 
     it('should set other properties correctly', function() {
@@ -20,9 +20,9 @@ describe('#Business #Validation #Types #WarningMessage', function() {
             message: 'you got it all wrong man'
         };
 
-        expect(createWarningMessage(data).field).toEqual(data.field);
-        expect(createWarningMessage(data).value).toEqual(data.value);
-        expect(createWarningMessage(data).message).toEqual(data.message);
+        expect(new WarningMessage(data).field).toEqual(data.field);
+        expect(new WarningMessage(data).value).toEqual(data.value);
+        expect(new WarningMessage(data).message).toEqual(data.message);
     });
 
     it('should set defaults for value and message', function() {
@@ -30,9 +30,9 @@ describe('#Business #Validation #Types #WarningMessage', function() {
             field: 'test field'
         };
 
-        expect(createWarningMessage(data).type).toEqual(ErrorLevel.warning);
-        expect(createWarningMessage(data).field).toEqual(data.field);
-        expect(createWarningMessage(data).value).toEqual(undefined);
-        expect(createWarningMessage(data).message).toEqual('');
+        expect(new WarningMessage(data).type).toEqual(ErrorLevel.warning);
+        expect(new WarningMessage(data).field).toEqual(data.field);
+        expect(new WarningMessage(data).value).toEqual(undefined);
+        expect(new WarningMessage(data).message).toEqual('');
     });
 });
