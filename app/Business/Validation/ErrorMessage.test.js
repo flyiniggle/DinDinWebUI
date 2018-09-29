@@ -2,7 +2,7 @@ import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import ErrorMessage from 'Business/Validation/ErrorMessage';
 
 
-describe('#Business #Validation #Types #ErrorMessage', function() {
+describe('#Business #Validation #ErrorMessage', function() {
     it('should return a new message with an ErrorLevel of error', function() {
         const data = {
             field: 'test field',

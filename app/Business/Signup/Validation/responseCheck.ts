@@ -1,4 +1,4 @@
-import { createErrorMessage } from "Business/Validation/Types/ErrorMessage";
+import { new ErrorMessage } from "Business/Validation/Types/ErrorMessage";
 import Message from "Business/Validation/Types/Message";
 
 interface ErrorResponseProps {
@@ -11,7 +11,7 @@ function responseCheck(responseData: ErrorResponseProps): Message[] {
     const errors = [];
 
     if (responseData.password) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'password',
             message: responseData.password.shift()
         }));
@@ -21,12 +21,12 @@ function responseCheck(responseData: ErrorResponseProps): Message[] {
         const firstError = responseData.username[0];
 
         if (firstError === "This field must be unique.") {
-            errors.push(createErrorMessage({
+            errors.push(new ErrorMessage({
                 field: 'username',
                 message: 'Oops, that username is already in use. Pick another!'
             }));
         } else {
-            errors.push(createErrorMessage({
+            errors.push(new ErrorMessage({
                 field: 'username',
                 message: responseData.username.shift()
             }));
@@ -34,7 +34,7 @@ function responseCheck(responseData: ErrorResponseProps): Message[] {
     }
 
     if (responseData.email) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'email',
             message: responseData.email.shift()
         }))

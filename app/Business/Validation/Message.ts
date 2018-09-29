@@ -10,7 +10,7 @@ abstract class Message implements IMessage {
 
         this.field = field;
         this.value = value;
-        this.message = message;
+        this.message = message || '';
     }
 }
 

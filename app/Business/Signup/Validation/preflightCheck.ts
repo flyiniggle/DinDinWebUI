@@ -1,4 +1,4 @@
-import { createErrorMessage } from 'Business/Validation/Types/ErrorMessage';
+import ErrorMessage from 'Business/Validation/ErrorMessage';
 import AuthValidationMessages from 'Business/Auth/Validation/Messages';
 import SignupValidationMessages from 'Business/Signup/Validation/Messages';
 import { SignupProps } from "Business/Signup/Service";
@@ -19,7 +19,7 @@ function preflightCheck({ password, username, email, passwordRepeat }: SignupPar
     const errors = [];
 
     if (fieldIsEmpty(username) === true) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'username',
             value: username,
             message: AuthValidationMessages.missingUserName
@@ -27,18 +27,18 @@ function preflightCheck({ password, username, email, passwordRepeat }: SignupPar
     }
 
     if ((fieldIsEmpty(password) === true) && (fieldIsEmpty(passwordRepeat) === true)) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'password',
             value: password,
             message: SignupValidationMessages.missingPassword
         }));
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'passwordRepeat',
             value: passwordRepeat,
             message: SignupValidationMessages.missingPasswordRepeat
         }));
     } else if (password !== passwordRepeat) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'passwordRepeat',
             value: passwordRepeat,
             message: SignupValidationMessages.passwordsDoNotMatch
@@ -46,13 +46,13 @@ function preflightCheck({ password, username, email, passwordRepeat }: SignupPar
     }
 
     if (fieldIsEmpty(email) === true) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'email',
             value: email,
             message: SignupValidationMessages.missingEmail
         }));
     } else if (!regexp.email.test(email)) {
-        errors.push(createErrorMessage({
+        errors.push(new ErrorMessage({
             field: 'email',
             value: email,
             message: SignupValidationMessages.invalidEmail
