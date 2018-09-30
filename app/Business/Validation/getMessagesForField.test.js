@@ -1,18 +1,17 @@
-import {createMessage} from 'Business/Validation/Types/Message';
-import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
+import ErrorMessage from 'Business/Validation/Message';
 
 import getMessagesForField from './getMessagesForField';
 
 describe('#Business #Validation #getMessagesForField', function() {
     it('should return an array of messages for the specified field.', function() {
         const messages = [
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field2' }),
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field5' }),
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field4' }),
-            createMessage(ErrorLevel.error, { field: 'field4' })
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field2' }),
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field5' }),
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field4' }),
+            new ErrorMessage({ field: 'field4' })
         ];
         const result = getMessagesForField('field1', messages);
 
@@ -25,13 +24,13 @@ describe('#Business #Validation #getMessagesForField', function() {
 
     it('should return an empty list if there are no messages with a matching field.', function() {
         const messages = [
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field2' }),
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field5' }),
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field4' }),
-            createMessage(ErrorLevel.error, { field: 'field4' })
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field2' }),
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field5' }),
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field4' }),
+            new ErrorMessage({ field: 'field4' })
         ];
         const result = getMessagesForField('no', messages);
 
@@ -40,13 +39,13 @@ describe('#Business #Validation #getMessagesForField', function() {
 
     it('should be curried.', function() {
         const messages = [
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field2' }),
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field5' }),
-            createMessage(ErrorLevel.error, { field: 'field1' }),
-            createMessage(ErrorLevel.error, { field: 'field4' }),
-            createMessage(ErrorLevel.error, { field: 'field4' })
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field2' }),
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field5' }),
+            new ErrorMessage({ field: 'field1' }),
+            new ErrorMessage({ field: 'field4' }),
+            new ErrorMessage({ field: 'field4' })
         ];
         const curried = getMessagesForField('field1');
 

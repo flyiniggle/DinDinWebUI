@@ -1,4 +1,3 @@
-import Message from 'Business/Validation/Types/Message';
 import responseCheck, { ErrorResponseProps } from "Business/Signup/Validation/responseCheck";
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 

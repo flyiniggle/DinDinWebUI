@@ -1,4 +1,4 @@
-import { new ErrorMessage } from "Business/Validation/Types/ErrorMessage";
+import ErrorMessage from "Business/Validation/ErrorMessage";
 import Message from "Business/Validation/Types/Message";
 
 interface ErrorResponseProps {

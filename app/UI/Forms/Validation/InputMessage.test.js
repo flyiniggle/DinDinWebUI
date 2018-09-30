@@ -1,5 +1,5 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
-import { createMessage } from 'Business/Validation/Types/Message';
+import ErrorMessage from 'Business/Validation/ErrorMessage';
 import { createInputMessage } from 'DinDin/UI/Forms/Validation/InputMessage';
 
 
@@ -15,7 +15,7 @@ describe('#UI #Forms #Validation #InputMessage', function() {
     });
 
     it('should accept a Business.Validation.Types.Message.', function() {
-        const message = createMessage(ErrorLevel.error, { field: 'some field', value: 5, message: 'You messed up!' });
+        const message = new ErrorMessage({ field: 'some field', value: 5, message: 'You messed up!' });
         const expected = {
             message: 'You messed up!',
             errorLevel: ErrorLevel.error
