@@ -1,24 +1,26 @@
 import * as React from 'react';
-import { addIndex, map, pipe } from 'ramda';
 import { Link } from 'react-router-dom';
 import Message from 'Business/Validation/Types/Message';
-import dateString from 'UI/Formatting/dateString';
 import IMeal from 'Business/Meals/Types/Meal';
+import INewMeal from 'Business/Meals/Types/NewMeal';
+import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import NameEditor from 'Components/Meal/NameEditor';
 import NotesEditor from 'Components/Meal/NotesEditor';
 import RatingEditor from 'Components/Meal/RatingEditor';
 import editableFields from 'Components/Meal/editableFields';
+import IngredientsDisplay from 'Components/Meal/IngredientsDisplay';
 import IngredientsEditor from 'Components/Meal/IngredientsEditor';
 import RatingDisplay from 'Components/Meal/RatingDisplay';
+import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 import { faStar as solidStar, faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar, faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
-import { Maybe, Result } from 'true-myth';
+import { Result } from 'true-myth';
 
 import './Meal.sass';
 
 
 interface IMealProps {
-    meal: IMeal
+    meal: IMeal | INewMeal
     message?: Message
     useMeal: (IMeal) => Promise<void>
     save: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>>
@@ -52,6 +54,7 @@ class Meal extends React.Component<IMealProps, IState> {
     updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
     updateCurrentListValue = (a: Array<any>): void => {
+        console.log(a)
         this.setState({ activeFieldValue: a });
     }
 
@@ -67,7 +70,6 @@ class Meal extends React.Component<IMealProps, IState> {
     }
 
     render() {
-        const { activeField, activeFieldValue } = this.state;
         const {
             meal,
             message,
@@ -77,14 +79,12 @@ class Meal extends React.Component<IMealProps, IState> {
         if (!meal) {
             return <p>Loading...</p>
         }
+        
+        const { activeField, activeFieldValue } = this.state;
+        const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
+        const usedCount = 'usedCount' in meal ? meal.usedCount : null;
+        const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
 
-        const ingredients = meal.ingredients.length !== 0 ? Maybe.of(meal.ingredients) : Maybe.nothing();
-        const mapWithIndex = addIndex(map);
-        const renderIngredientsDisplay = mapWithIndex((ing, i) => <span key={i} className="d-block">{ing}</span>);
-        const ingredientsDisplay = pipe(
-            map(renderIngredientsDisplay),
-            Maybe.getOr('add ingredients')
-        )(ingredients);
 
         return (
             <div className="meal">
@@ -115,7 +115,7 @@ class Meal extends React.Component<IMealProps, IState> {
                                     onSave={this.doSave}
                                     onCancel={this.cancelEditing}
                                 />
-                                : <div className="editable"> {ingredientsDisplay} </div>
+                                : <div className="editable"> <IngredientsDisplay ingredients={ingredients} /> </div>
                             }
                         </div>
                     </div>
@@ -175,12 +175,8 @@ class Meal extends React.Component<IMealProps, IState> {
                         </div>
                     </div>
                     <div className="col-12 col-lg-5">
-                        <div>
-                            <h4 className="d-inline">Last Used: </h4>
-                            <span className='lastUsed'>{dateString.display(meal.lastUsed)}</span>
-                        </div>
-
-                        <h4 className="usedCount">Used {meal.usedCount} {(meal.usedCount === 1) ? 'time' : 'times'}</h4>
+                        <LastUsedDisplay date={lastUsed} />
+                        <UsedCountDisplay usedCount={usedCount} />
                     </div>
                 </div>
                 <div className="row m-2">

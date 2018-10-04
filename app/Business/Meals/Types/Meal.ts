@@ -1,4 +1,4 @@
-interface Meal {
+interface IMeal {
     id: number,
     name: string,
     owner: string,
@@ -10,4 +10,4 @@ interface Meal {
     ingredients: Array<string>
 }
 
-export default Meal;
+export default IMeal;

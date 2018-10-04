@@ -10,7 +10,6 @@ import editableFields from 'Components/Meal/editableFields';
 interface State {
     activeField?: editableFields
     message?: Message
-    submitting: boolean
     activeFieldValue?: any
 }
 
@@ -23,16 +22,11 @@ interface MealProps {
 
 class MealEditor extends React.Component<MealProps, State> {
     readonly state: State = {
-        message: null,
-        submitting: false
+        message: null
     }
 
     save = async (prop: editableFields, val: any): Promise<Result<IMeal, Message[]>> => {
-        this.setState({ submitting: true });
-
         const result = await updateMeal(this.props.meal, { [prop]: val });
-
-        this.setState({ submitting: false });
 
         result.match({
             Ok: this.props.updateMeal,

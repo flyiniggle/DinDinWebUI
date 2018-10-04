@@ -1,18 +1,18 @@
 import { sortMostUsed, sortRecentlyPrepared } from 'Business/Meals/sorting';
-import Meal from "Business/Meals/Types/Meal";
+import IMeal from "Business/Meals/Types/Meal";
 import * as React from 'react';
 import { slice, map, last, pipe, prop, reverse} from 'ramda';
 
 import './Overview.sass';
 
 interface OverviewProps {
-    meals?: Array<Meal>
+    meals?: Array<IMeal>
 }
 
-const Overview = function(props) {
+const Overview = function(props: OverviewProps) {
     const meals = props.meals || [];
     const getFirstThree = slice(0, 3);
-    const renderMealNamesList = map((meal) => <li key={ meal.id }>{meal.name}</li>);
+    const renderMealNamesList = map((meal: IMeal) => <li key={ meal.id }>{meal.name}</li>);
     const threeMostPrepared = pipe(sortMostUsed, getFirstThree, renderMealNamesList);
     const threeLeastPrepared = pipe(sortMostUsed, reverse, getFirstThree, renderMealNamesList);
     const lastMeal = pipe(sortRecentlyPrepared, reverse, last, prop('name'));

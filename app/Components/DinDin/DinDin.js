@@ -47,12 +47,13 @@ class DinDin extends React.Component {
         if (this.state.meals) {
             const meals = map(replaceMatchingMeal, this.state.meals);
 
-
             this.setMeals(meals);
         }
     }
 
-    useMeal = (meal) => useMeal(meal).then(map(this.updateMeal))
+    useMeal = (meal) => useMeal(meal).then(map(this.updateMeal));
+
+    //createMeal = ()
 
     logOut = () => {
         authStatus.logOut();

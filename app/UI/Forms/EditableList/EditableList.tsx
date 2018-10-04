@@ -29,7 +29,7 @@ class EditableList extends React.Component<IEditableListProps, State> {
     render() {
         return (
             <div className={`editableList ${this.props.className}`}>
-                {this.props.list.map((li, i) => <ListItem key={i} text={li} handleRemove={this.removeItem} />)}
+                {this.props.list.map((li, i) => <ListItem key={i} id={i} text={li} handleRemove={this.removeItem} />)}
                 <ListItemAdder addHandler={this.addItem} />
             </div>
         )
