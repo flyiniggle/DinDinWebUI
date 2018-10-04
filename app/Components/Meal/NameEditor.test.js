@@ -13,7 +13,7 @@ describe('#Components #Meal #NameEditor', function() {
         };
         const wrapper = mount(<NameEditor { ...props } />);
 
-        wrapper.find('.field-control-save .btn').simulate('click');
+        wrapper.find('button.field-control-save').simulate('click');
 
         expect(props.onSave).toHaveBeenCalled();
     });
@@ -27,7 +27,7 @@ describe('#Components #Meal #NameEditor', function() {
         };
         const wrapper = mount(<NameEditor { ...props } />);
 
-        wrapper.find('.field-control-cancel').simulate('click');
+        wrapper.find('button.field-control-cancel').simulate('click');
 
         expect(props.onCancel).toHaveBeenCalled();
     });
