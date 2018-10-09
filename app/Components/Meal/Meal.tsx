@@ -54,7 +54,6 @@ class Meal extends React.Component<IMealProps, IState> {
     updateCurrentValue = (e) => { this.setState({ activeFieldValue: e.target.value }); }
 
     updateCurrentListValue = (a: Array<any>): void => {
-        console.log(a)
         this.setState({ activeFieldValue: a });
     }
 

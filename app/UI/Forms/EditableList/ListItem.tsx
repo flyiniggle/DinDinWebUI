@@ -15,7 +15,11 @@ function ListItem(props: IListItem) {
         <div className="list-item input-group mb-2">
             <span className="form-control form-control-sm">{props.text}</span>
             <span
-                onClick={() => { props.handleRemove(props.id) }}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    props.handleRemove(props.id);
+                }}
                 className="input-group-append"
             >
                 <AsyncButton className="btn btn-sm btn-outline-primary">
