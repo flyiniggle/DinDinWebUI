@@ -43,4 +43,5 @@ class ListItemAdder extends React.Component<IListItemAdder, State> {
     }
 }
 
+export { IListItemAdder }
 export default ListItemAdder

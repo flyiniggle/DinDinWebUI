@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import ListItem, { IListItem } from 'UI/Forms/EditableList/ListItem';
+import ListItem, { IListAdder } from 'UI/Forms/EditableList/ListItem';
 
 describe('#UI #Forms #EditableList #ListItem', function() {
     it('should render', function () {
-        const props: IListItem = {
+        const props: IListAdder = {
             text: 'test',
             id: 1,
             handleRemove: () => null
@@ -15,7 +15,7 @@ describe('#UI #Forms #EditableList #ListItem', function() {
     });
 
     it('should display the provided text.', function () {
-        const props: IListItem = {
+        const props: IListAdder = {
             text: 'test',
             id: 1,
             handleRemove: () => null
@@ -28,7 +28,7 @@ describe('#UI #Forms #EditableList #ListItem', function() {
 
     it('should call handleRemove with the id prop when the remove button is clicked.', function () {
         const spy = jest.fn()
-        const props: IListItem = {
+        const props: IListAdder = {
             text: 'test',
             id: 1,
             handleRemove: spy
