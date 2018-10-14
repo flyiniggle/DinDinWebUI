@@ -1,5 +1,5 @@
 
-import { fake, replace, restore, stub } from 'sinon';
+import { fake, replace, restore } from 'sinon';
 import { Result } from 'true-myth';
 import signup from 'Business/Signup/signup';
 import SignupService from 'Business/Signup/Service';
@@ -47,5 +47,15 @@ describe('#Business #Signup #signup', function() {
         const result = await signup(userData);
 
         expect(result.isErr()).toBe(true);
+    });
+
+    it('should return a failure result if the preflight check fails.', async function() {
+        const badData = {
+            username: 'meh'
+        };
+        const result = await signup(badData);
+
+        expect(result.isErr()).toBe(true);
+
     });
 });
