@@ -12,17 +12,18 @@ describe('#UI #Forms #EditableList #ListItemAdder', function() {
         expect(wrapper).toMatchSnapshot();
     });
 
-    // it('should call addHandler with current state value when the add button is clicked.', function () {
-    //     const spy = jest.fn()
-    //     const props: IListItemAdder = {
-    //         addHandler: spy
-    //     }
-    //     const text = 'hooah!'
-    //     const wrapper = shallow(<ListItemAdder {...props} />);
+    it('should call addHandler with current state value when the add button is clicked.', function () {
+        const spy = jest.fn()
+        const props: IListItemAdder = {
+            addHandler: spy
+        }
+        const text = 'hooah!'
+        const event = new Event('click');
+        const wrapper = shallow(<ListItemAdder {...props} />);
 
-    //     wrapper.setState({ val: text });
-    //     wrapper.find('.btn').simulate('click')
+        wrapper.setState({ val: text });
+        wrapper.find('.btn').simulate('click', event);
 
-    //     expect(spy).toHaveBeenCalledWith(text);
-    // })
+        expect(spy).toHaveBeenCalledWith(text);
+    })
 });
