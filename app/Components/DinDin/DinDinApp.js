@@ -5,6 +5,7 @@ import getMealById from 'Business/Meals/getMealById';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Header from 'Components/Header/Header';
 import MealEditor from 'Components/MealEditor/MealEditor';
+import MealCreator from 'Components/MealCreator/MealCreator';
 
 
 function DinDinApp(props) {
@@ -26,6 +27,12 @@ function DinDinApp(props) {
                             { ...routeProps }
                             meals={ maybeMeals }
                             useMeal={ props.useMeal } />
+                    ) } />
+                <Route
+                    exact
+                    path="/meals/new"
+                    render={ () => (
+                        <MealCreator />
                     ) } />
                 <Route
                     exact
