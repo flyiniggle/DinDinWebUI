@@ -35,7 +35,7 @@ describe('#UI #Forms #EditableList #ListItem', function() {
         }
         const wrapper = shallow(<ListItem {...props} />);
 
-        wrapper.find('.input-group-append').simulate('click')
+        wrapper.find('.input-group-append').simulate('click', new Event('click'))
 
         expect(spy).toHaveBeenCalledWith(props.id);
     })
