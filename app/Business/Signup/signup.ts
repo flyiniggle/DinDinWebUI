@@ -12,7 +12,7 @@ interface SignupData {
     password: string,
     passwordRepeat: string
 }
-// SignupData => Promise(Result<User, Message[]>)
+
 async function signup(data: SignupData): Promise<Result<User, Message[]>> {
     const trySignup = pipeP(
         SignupService.post,

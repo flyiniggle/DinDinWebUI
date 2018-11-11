@@ -8,14 +8,7 @@ interface IEditableListProps {
     className?: string
 }
 
-interface State {
-    newValue: string
-}
-
-class EditableList extends React.Component<IEditableListProps, State> {
-    readonly state: State = {
-        newValue: ''
-    }
+class EditableList extends React.Component<IEditableListProps> {
 
     removeItem = (key: number): void => {
         const updatedList = this.props.list.filter((v, i) => i !== key);

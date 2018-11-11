@@ -4,13 +4,13 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 
-interface IListItem {
+interface IListAdder {
     text: string
     id: number,
     handleRemove: (number) => void
 }
 
-function ListItem(props: IListItem) {
+function ListItem(props: IListAdder) {
     return (
         <div className="list-item input-group mb-2">
             <span className="form-control form-control-sm">{props.text}</span>
@@ -31,4 +31,4 @@ function ListItem(props: IListItem) {
 }
 
 export default ListItem
-export { IListItem };
+export { IListAdder };
