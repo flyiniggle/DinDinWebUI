@@ -5,11 +5,11 @@ import editableFields from 'Components/Meal/editableFields';
 import { Result } from 'true-myth';
 
 
-interface IMealControlProps {
+interface IMealEditorControlProps {
     meal: IMeal | INewMeal
     message?: Message
-    useMeal?: (IMeal) => Promise<void>
-    save: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>>
+    useMeal: (IMeal: IMeal) => Promise<void>
+    updateMeal: (IMeal: IMeal) => void
 }
 
-export default IMealControlProps
+export default IMealEditorControlProps

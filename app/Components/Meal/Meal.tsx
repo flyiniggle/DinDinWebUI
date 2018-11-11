@@ -1,5 +1,8 @@
+import { curry } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import maybe from 'Business/Lib/maybe';
+import IMeal from 'Business/Meals/Types/Meal';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import NameEditor from 'Components/Meal/NameEditor';
 import NotesEditor from 'Components/Meal/NotesEditor';
@@ -8,20 +11,53 @@ import editableFields from 'Components/Meal/editableFields';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import IngredientsDisplay from 'Components/Meal/IngredientsDisplay';
 import IngredientsEditor from 'Components/Meal/IngredientsEditor';
-import MealControl from 'Components/Meal/MealControl';
 import RatingDisplay from 'Components/Meal/RatingDisplay';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 import { faStar as solidStar, faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar, faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
 
 import './Meal.sass';
+import INewMeal from 'Business/Meals/Types/NewMeal';
+
+const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
+    return (
+        <button
+            className="btn btn-primary"
+            type="button"
+            onClick={(event) => {
+                event.stopPropagation();
+                event.preventDefault();
+                return handler(meal);
+            }}
+        >
+            Use it!
+        </button>
+    );
+});
+
+const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: (INewMeal) => any) {
+    return (
+        <button
+            className="btn btn-primary"
+            type="button"
+            onClick={(event) => {
+                event.stopPropagation();
+                event.preventDefault();
+                return handler(newMeal);
+            }}
+        >
+            Save
+        </button>
+    );
+});
 
 
-function MealBase(props: IMealProps) {
+function Meal(props: IMealProps) {
     const {
         meal,
         message,
         useMeal,
+        save,
         activeField,
         activeFieldValue,
         updateFieldHandler,
@@ -37,6 +73,10 @@ function MealBase(props: IMealProps) {
     const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
+    const saveHandler = maybe(save);
+    const useHandler = maybe(useMeal);
+    const renderUseIt = getRenderUseIt(meal);
+    const renderSaveButton = getRenderSaveButton(meal);
 
 
     return (
@@ -153,20 +193,8 @@ function MealBase(props: IMealProps) {
             </div>
             <div className="row m2 d-flex justify-content-end">
                 <div className="col-2 d-flex justify-content-between">
-                    {
-                        typeof props.useMeal === 'function' &&
-                        <button
-                            className="btn btn-primary"
-                            type="button"
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                event.preventDefault();
-                                return useMeal(meal);
-                            }}
-                        >
-                        Use it!
-                        </button>
-                    }
+                    {useHandler.map(renderUseIt).unwrapOr(null)}
+                    {saveHandler.map(renderSaveButton).unwrapOr(null)}
 
                     <Link to="/meals" className="btn btn-outline-primary">close</Link>
                 </div>
@@ -174,7 +202,5 @@ function MealBase(props: IMealProps) {
         </div>
     );
 }
-
-const Meal = MealControl(MealBase);
 
 export default Meal;
