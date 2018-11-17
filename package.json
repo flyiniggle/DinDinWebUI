@@ -4,7 +4,7 @@
   "description": "Web interface for DinDin",
   "main": "index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --progress --colors -p",
+    "build": "webpack --progress --colors -p",
     "build-dev": "webpack --colors --watch --errors-only --open",
     "lint": "eslint --fix ./",
     "serve": "node server/server.js",
@@ -34,7 +34,6 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "coveralls": "3.0.2",
-    "cross-env": "5.2.0",
     "css-loader": "1.0.0",
     "dotenv": "6.0.0",
     "enzyme": "3.3.0",
