@@ -25,7 +25,7 @@ describe('#Business #Meals #Service', function() {
                 notes: 'this is a great meal'
             });
 
-            expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals`);
+            expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals/`);
             expect(fetch.mock.calls[0][1].method).toEqual('POST');
         });
 

@@ -48,13 +48,13 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
             this.setState({ activeField: null, activeFieldValue: null });
         }
 
-        updateCurrentValue = (e: any) => {
+        updateCurrentValue = (e: MouseEvent | KeyboardEvent | number | string) => {
             let val;
 
-            if (typeof e === 'object' && !('target' in  e)) {
-                val = e.target.value;
-            } else {
+            if (typeof e === 'string' || typeof e === 'number') {
                 val = e;
+            } else {
+                val = (e.target as HTMLInputElement).value;
             }
 
             this.setState({ activeFieldValue: val });
@@ -65,6 +65,7 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
         }
     
         doSaveField = async () => {
+            console.log(this.state)
             if (this.state.activeField) {
                 const updatedNewMeal = {
                     ...this.state.newMeal,

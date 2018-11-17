@@ -70,6 +70,7 @@ function Meal(props: IMealProps) {
         return <p>Loading...</p>
     }
     
+    const nameDisplay = meal.name ? <h1>{meal.name}</h1> : <h1 className='font-italic font-weight-light'>add a name</h1>;
     const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
@@ -81,9 +82,7 @@ function Meal(props: IMealProps) {
 
     return (
         <div className="meal">
-            <div className="row m-2" onClick={() => {
-                props.activateEditor(editableFields.name, meal.name);
-            }}>
+            <div className="row m-2">
                 <div className="editable">
                     {activeField === editableFields.name
                         ? <NameEditor
@@ -92,7 +91,11 @@ function Meal(props: IMealProps) {
                             onSave={saveFieldHandler}
                             onCancel={cancelEditingHandler}
                         />
-                        : <h1>{meal.name}</h1>}
+                        : <div onClick={() => {
+                            props.activateEditor(editableFields.name, meal.name);
+                        }}>
+                            {nameDisplay}
+                        </div>}
                 </div>
             </div>
             <div className="row m-2">

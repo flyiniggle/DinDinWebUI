@@ -20,7 +20,7 @@ const MealsService = {
         }).then(map(formatMeal));
     },
     post: function (meal: INewMeal): Promise<Result<IMeal, Message[]>> {
-        return DinDinService.send('/meals', {
+        return DinDinService.send('/meals/', {
             method: 'POST',
             body: pipe(formatMealToAPI, JSON.stringify)(meal)
         }).then(map(formatMeal));
