@@ -2,7 +2,6 @@ language: node_js
 node_js:
 - 8
 script:
-- npm install
 - npm run lint
 - npm run test-ci
 - npm run build
@@ -14,7 +13,7 @@ deploy:
   app: din-din-staging
   on:
     repo: flyiniggle/DinDinWebUI
-    branchh: master
+    branch: master
 - provider: heroku
   skip_cleanup: true
   api_key:
