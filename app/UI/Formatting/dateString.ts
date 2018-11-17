@@ -4,7 +4,7 @@ const zeroPad = function (n: number): string {
 
 const dateString = {
     display(date: string | Date): string {
-        const dateNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Nov', 'Dec'];
+        const dateNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         let d;
 
         if (date instanceof Date) {

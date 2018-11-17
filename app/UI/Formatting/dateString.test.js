@@ -10,6 +10,7 @@ describe('#UI #Formatting #dateString', function() {
         it('should return a display-formatted date string when given a Date.', function() {
             expect(dateString.display(new Date(1993, 6, 28, 14, 39, 7))).toEqual('Jul 28, 1993');
             expect(dateString.display(new Date('August 19, 1975'))).toEqual('Aug 19, 1975');
+            expect(dateString.display(new Date('December 21, 1955'))).toEqual('Dec 21, 1955');
         });
 
         it('should thrown an error if not given a valid date string', function() {

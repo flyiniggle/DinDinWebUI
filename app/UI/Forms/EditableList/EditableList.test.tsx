@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mount } from 'enzyme'
+import { mount } from 'enzyme';
 import EditableList, { IEditableListProps } from 'UI/Forms/EditableList/EditableList';
 import ListItem from 'UI/Forms/EditableList/ListItem';
 import ListItemAdder from 'UI/Forms/EditableList/ListItemAdder';

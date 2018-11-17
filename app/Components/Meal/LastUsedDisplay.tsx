@@ -18,7 +18,7 @@ function renderLastUsed(lastUsedDate) {
 };
 
 const LastUsedDisplay: (ILastUsedDisplayProps) => JSX.Element = pipe(
-    prop('lastUsed'),
+    prop('date'),
     maybe,
     Maybe.map(dateString.display),
     Maybe.map(renderLastUsed),

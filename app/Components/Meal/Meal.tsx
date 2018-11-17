@@ -98,19 +98,19 @@ function Meal(props: IMealProps) {
             <div className="row m-2">
                 <div className="col-12 col-lg-2">
                     <h4>Ingredients</h4>
-                    <div onClick={() => {
-                        props.activateEditor(editableFields.ingredients, meal.ingredients);
-                    }}>
-                        {activeField === editableFields.ingredients
-                            ? <IngredientsEditor
-                                list={activeFieldValue}
-                                onChange={updateListFieldHandler}
-                                onSave={saveFieldHandler}
-                                onCancel={cancelEditingHandler}
-                            />
-                            : <div className="editable"> <IngredientsDisplay ingredients={ingredients} /> </div>
-                        }
-                    </div>
+                    {activeField === editableFields.ingredients
+                        ? <IngredientsEditor
+                            list={activeFieldValue}
+                            onChange={updateListFieldHandler}
+                            onSave={saveFieldHandler}
+                            onCancel={cancelEditingHandler}
+                        />
+                        : <div className="editable" onClick={() => {
+                            props.activateEditor(editableFields.ingredients, meal.ingredients);
+                        }}>
+                            <IngredientsDisplay ingredients={ingredients} />
+                        </div>
+                    }
                 </div>
                 <div className="col-12 col-lg-5">
                     <div>
