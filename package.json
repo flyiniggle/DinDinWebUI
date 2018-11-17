@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --progress --colors -p",
     "build-dev": "webpack --colors --watch --errors-only --open",
+    "heroku-prebuild": "npm install --dev",
     "lint": "eslint --fix ./",
     "serve": "node server/server.js",
     "serve-dev": "nodemon server/server.js",
