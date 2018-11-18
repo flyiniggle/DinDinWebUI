@@ -1,6 +1,8 @@
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
-import Overview from 'DinDin/Components/Dashboard/Overview/Overview';
+import Overview from 'Components/Dashboard/Overview/Overview';
+import Ribbon from 'Components/Ribbon/Ribbon';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import 'Styles/theme.sass';
@@ -22,6 +24,13 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="d-flex flex-column justify-content-end">
+                <div className="row">
+                    <Ribbon>
+                        <Link to="meals/new">
+                            new meal
+                        </Link>
+                    </Ribbon>
+                </div>
                 <div className="row">
                     <div className="col-xs-12">
                         filters
