@@ -86,14 +86,6 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
 
     private input = React.createRef<HTMLInputElement>();
 
-    /*     constructor(props) {
-            super(props);
-    
-            this.state = {
-                value: props.value
-            };
-        } */
-
     componentDidMount = () => {
         if (this.input.current) {
             this.forceUpdate();

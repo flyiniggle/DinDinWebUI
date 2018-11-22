@@ -1,42 +1,29 @@
 import * as React from 'react';
+import InlineEditor from 'Components/Meal/InlineEditor';
 import TextInput from 'UI/Forms/TextInput/TextInput';
-import FieldControlButtons from 'UI/Forms/FieldControlButtons/FieldControlButtons';
 
 
 interface INameEditorProps {
-    name: string,
-    onChange: (e: React.FormEvent) => void,
-    onSave: () => Promise<void>,
-    onCancel: (e: Event) => void
+    value: string,
+    onChange: (e: React.FormEvent) => void
 }
 
-interface IState {
-    submitting: boolean
-}
+const nameDisplay = ({value}) => value ? <h1>{value}</h1> : <h1 className='font-italic font-weight-light'>add a name</h1>;
+    
+class NameEditorThingy extends React.Component<INameEditorProps, {}> {
+    private input = React.createRef<TextInput>();
 
-class NameEditor extends React.Component<INameEditorProps, IState> {
-    readonly state: IState = {
-        submitting: false
-    }
-
-    doSave = async (): Promise<void> => {
-        this.setState({ submitting: true });
-        await this.props.onSave();
-        this.setState({ submitting: false });
+    componentDidmount = () => {
+        //this.input.focus()
     }
 
     render() {
-        return (
-            <div className="input-group pb-2">
-                <TextInput value={this.props.name} className="form-control-lg" onChange={this.props.onChange} />
-                <FieldControlButtons
-                    append
-                    doSave={this.doSave}
-                    doCancel={this.props.onCancel}
-                    submitting={this.state.submitting} />
-            </div>
-        );
+        const { value, onChange } = this.props;
+
+        return <TextInput ref={this.input} value={value} className="form-control-lg" onChange={onChange} />;
     }
 }
+
+const NameEditor = InlineEditor(nameDisplay, NameEditorThingy)
 
 export default NameEditor
