@@ -47,6 +47,8 @@ function InlineEditor(
         handleKeydown = (e: KeyboardEvent) => {
             if (e.key === 'Enter') {
                 this.doSave();
+            } else if (e.key === 'Escape') {
+                this.props.onCancel(e);
             }
         }
 
