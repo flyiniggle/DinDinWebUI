@@ -7,7 +7,8 @@ interface IFieldControlButtonsProps {
     doSave: () => void | Promise<void>;
     submitting: boolean;
     doCancel: (e: Event) => void;
-    append?: boolean
+    append?: boolean,
+    className?: string,
 }
 
 function FieldControlButtons(props: IFieldControlButtonsProps) {
@@ -20,10 +21,10 @@ function FieldControlButtons(props: IFieldControlButtonsProps) {
 
     return (
         <div {...displayProps}>
-            <AsyncButton className="field-control-save btn btn-primary" onClick={props.doSave} working={props.submitting}>
+            <AsyncButton className={`field-control-save btn btn-primary ${props.className}`} onClick={props.doSave} working={props.submitting}>
                 <FontAwesomeIcon icon={faCheck} />
             </AsyncButton>
-            <AsyncButton className="field-control-cancel btn btn-outline-primary" onClick={props.doCancel}>
+            <AsyncButton className={`field-control-cancel btn btn-outline-primary ${props.className}`} onClick={props.doCancel}>
                 <FontAwesomeIcon icon={faBan} />
             </AsyncButton>
         </div>

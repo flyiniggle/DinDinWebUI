@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
+import INewMeal from 'Business/Meals/Types/NewMeal';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
 import DisplayOrEditName, {IDisplayOrEditNameProps} from 'Components/Meal/DisplayOrEditName/DisplayOrEditName';
@@ -15,7 +16,6 @@ import IngredientsEditor from 'Components/Meal/IngredientsEditor';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 
 import './Meal.sass';
-import INewMeal from 'Business/Meals/Types/NewMeal';
 
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
     return (

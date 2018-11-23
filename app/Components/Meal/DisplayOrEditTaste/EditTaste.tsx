@@ -28,7 +28,7 @@ class EditRating extends React.Component<IEditRatingProps, IEditRatingState> {
 
                             return (
                                 <span key={i} onClick={() => { onChange(value + 1) }}>
-                                    <FontAwesomeIcon icon={icon} />
+                                    <FontAwesomeIcon icon={icon}  size="lg" />
                                 </span>
                             )
                         })

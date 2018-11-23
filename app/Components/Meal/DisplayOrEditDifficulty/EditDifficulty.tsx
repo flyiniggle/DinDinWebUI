@@ -29,7 +29,7 @@ class EditDifficulty extends React.Component<IEditDifficultyProps, IEditDifficul
 
                             return (
                                 <span key={i} onClick={() => { onChange(value + 1) }}>
-                                    <FontAwesomeIcon icon={icon} />
+                                    <FontAwesomeIcon icon={icon} size="lg" />
                                 </span>
                             )
                         })

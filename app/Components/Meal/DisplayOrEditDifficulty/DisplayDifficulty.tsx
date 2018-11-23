@@ -21,7 +21,7 @@ function DisplayDifficulty(props: IDisplayDifficulty) {
 
                         return (
                             <span key={i} >
-                                <FontAwesomeIcon icon={icon} />
+                                <FontAwesomeIcon icon={icon}  size="lg" />
                             </span>
                         );
                     })

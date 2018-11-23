@@ -21,7 +21,7 @@ function DisplayTaste(props: IDisplayTaste) {
 
                         return (
                             <span key={i} >
-                                <FontAwesomeIcon icon={icon} />
+                                <FontAwesomeIcon icon={icon} size="lg"/>
                             </span>
                         );
                     })

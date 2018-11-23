@@ -1,24 +1,17 @@
 import * as React from 'react';
 import FieldControlButtons from 'UI/Forms/FieldControlButtons/FieldControlButtons';
+import IInlineEditorProps from './Types/IInlineEditorProps';
+import FieldControlDisplay from './Types/FieldControlDisplay'
 
 
 interface IState {
     submitting: boolean
 }
 
-interface IInlineEditorProps {
-    active: boolean,
-    activate: () => void,
-    onSave: () => Promise<void>,
-    onCancel: (e: Event) => void,
-    onChange: any,
-    displayValue: any,
-    editingValue: any,
-}
-
 function InlineEditor(
     Display,
     Editor,
+    fieldControlDisplay: FieldControlDisplay = FieldControlDisplay.append
 ): React.ComponentClass<IInlineEditorProps, IState> {
     return class InlineEditor extends React.Component<IInlineEditorProps, IState> {
         readonly state: IState = {
@@ -55,21 +48,43 @@ function InlineEditor(
                         <div className="editable" onClick={activate}>
                             <Display value={displayValue} {...rest}/>
                         </div>}
-                    {active &&
-                        <div className="input-group pb-2">
-                            <Editor {...{ onChange, value: editingValue, ...rest }} />
-                            <FieldControlButtons
-                                append
-                                doSave={this.doSave}
-                                doCancel={onCancel}
-                                submitting={this.state.submitting} />
-                        </div>
-                    }
+                    {active && renderControls(Editor,
+                        fieldControlDisplay,
+                        { onChange, value: editingValue, ...rest },
+                        { doSave: this.doSave, doCancel: onCancel, submitting: this.state.submitting }
+                    )}
                 </div>
             )
         }
     }
 }
 
-export { IInlineEditorProps };
+function renderControls(Editor, display: FieldControlDisplay, editorProps, buttonsProps) {
+    switch (display) {
+        case FieldControlDisplay.append:
+            return (
+                <div className="input-group pb-2">
+                    <Editor {...editorProps } />
+                    <FieldControlButtons append {...buttonsProps} />
+                </div>
+            );
+        case FieldControlDisplay.inline:
+            return (
+                <div className="input-group pb-2">
+                    <div className="pr-4">
+                        <Editor {...editorProps} />
+                    </div>
+                    <FieldControlButtons {...buttonsProps} className="btn-sm"/>
+                </div>
+            );
+        case FieldControlDisplay.block:
+            return (
+                <div>
+                    <Editor {...editorProps } />
+                    <FieldControlButtons {...buttonsProps} />
+                </div>
+            );
+    }
+}
+
 export default InlineEditor;
