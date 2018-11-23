@@ -1,16 +1,12 @@
 import * as React from 'react';
-import InlineEditor from 'Components/Meal/InlineEditor';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 
-
-interface INameEditorProps {
+interface IEditNameProps {
     value: string,
     onChange: (e: React.FormEvent) => void
 }
 
-const nameDisplay = ({value}) => value ? <h1>{value}</h1> : <h1 className='font-italic font-weight-light'>add a name</h1>;
-    
-class NameEditorThingy extends React.Component<INameEditorProps, {}> {
+class EditName extends React.Component<IEditNameProps, {}> {
     private input = React.createRef<TextInput>();
 
     componentDidmount = () => {
@@ -24,6 +20,4 @@ class NameEditorThingy extends React.Component<INameEditorProps, {}> {
     }
 }
 
-const NameEditor = InlineEditor(nameDisplay, NameEditorThingy)
-
-export default NameEditor
+export default EditName;

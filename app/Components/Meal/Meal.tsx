@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
-import NameEditor from 'Components/Meal/NameEditor';
+import DisplayOrEditName, {IDisplayOrEditNameProps} from 'Components/Meal/DisplayOrEditName/DisplayOrEditName';
 import NotesEditor from 'Components/Meal/NotesEditor';
 import RatingEditor from 'Components/Meal/RatingEditor';
 import editableFields from 'Components/Meal/editableFields';
@@ -77,21 +77,22 @@ function Meal(props: IMealProps) {
     const useHandler = maybe(useMeal);
     const renderUseIt = getRenderUseIt(meal);
     const renderSaveButton = getRenderSaveButton(meal);
+    const displayOrEditNameProps: IDisplayOrEditNameProps = {
+        active: activeField === editableFields.name,
+        activate: () => props.activateEditor(editableFields.name, meal.name),
+        onSave: saveFieldHandler,
+        onCancel: cancelEditingHandler,
+        displayValue: meal.name,
+        editingValue: activeFieldValue,
+        onChange: updateFieldHandler,
+    }
 
 
     return (
         <div className="meal">
             <div className="row m-2">
                 <div className="editable">
-                        <NameEditor
-                            active={activeField === editableFields.name}
-                            activate={() => props.activateEditor(editableFields.name, meal.name)}
-                            onSave={saveFieldHandler}
-                            onCancel={cancelEditingHandler}
-                            displayValue={meal.name}
-                            editingValue={activeFieldValue}
-                            onChange={updateFieldHandler}
-                        />
+                    <DisplayOrEditName {...displayOrEditNameProps}/>
                 </div>
             </div>
             <div className="row m-2">

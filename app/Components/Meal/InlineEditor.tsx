@@ -2,22 +2,11 @@ import * as React from 'react';
 import FieldControlButtons from 'UI/Forms/FieldControlButtons/FieldControlButtons';
 
 
-/* function InlineEditor(
-    Display: React.Component<any, any> | ((props: object) => JSX.Element),
-    Editor: React.Component<any, any> | ((props: object) => JSX.Element),
-    propName: editableFields,
-    value: any
-): React.ComponentClass {
-    return class InlineEditor extends React.Component {
-
-    }
-} */
-
 interface IState {
     submitting: boolean
 }
 
-interface InlineEditorProps {
+interface IInlineEditorProps {
     active: boolean,
     activate: () => void,
     onSave: () => Promise<void>,
@@ -30,8 +19,8 @@ interface InlineEditorProps {
 function InlineEditor(
     Display,
     Editor,
-): React.ComponentClass<InlineEditorProps, IState> {
-    return class InlineEditor extends React.Component<InlineEditorProps, IState> {
+): React.ComponentClass<IInlineEditorProps, IState> {
+    return class InlineEditor extends React.Component<IInlineEditorProps, IState> {
         readonly state: IState = {
             submitting: false
         }
@@ -82,4 +71,5 @@ function InlineEditor(
     }
 }
 
-export default InlineEditor
+export { IInlineEditorProps };
+export default InlineEditor;

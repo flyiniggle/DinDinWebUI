@@ -65,7 +65,6 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
         }
     
         doSaveField = async () => {
-            console.log(this.state)
             if (this.state.activeField) {
                 const updatedNewMeal = {
                     ...this.state.newMeal,
