@@ -28,7 +28,7 @@ class EditDifficulty extends React.Component<IEditDifficultyProps, IEditDifficul
                             const icon = (i < value) ? solidTired : emptyTired;
 
                             return (
-                                <span key={i} onClick={() => { onChange(value + 1) }}>
+                                <span key={i} onClick={() => { onChange(i + 1) }}>
                                     <FontAwesomeIcon icon={icon} size="lg" />
                                 </span>
                             )
