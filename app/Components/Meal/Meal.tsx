@@ -4,17 +4,15 @@ import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
+import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
 import DisplayOrEditName, {IDisplayOrEditNameProps} from 'Components/Meal/DisplayOrEditName/DisplayOrEditName';
+import DisplayOrEditTaste, { IDisplayOrEditTasteProps } from 'Components/Meal/DisplayOrEditTaste/DisplayOrEditTaste';
 import NotesEditor from 'Components/Meal/NotesEditor';
-import RatingEditor from 'Components/Meal/RatingEditor';
 import editableFields from 'Components/Meal/editableFields';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import IngredientsDisplay from 'Components/Meal/IngredientsDisplay';
 import IngredientsEditor from 'Components/Meal/IngredientsEditor';
-import RatingDisplay from 'Components/Meal/RatingDisplay';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
-import { faStar as solidStar, faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
-import { faStar as emptyStar, faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
 
 import './Meal.sass';
 import INewMeal from 'Business/Meals/Types/NewMeal';
@@ -85,6 +83,26 @@ function Meal(props: IMealProps) {
         displayValue: meal.name,
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
+    };
+    const displayOrEditTasteProps: IDisplayOrEditTasteProps = {
+        active: activeField === editableFields.taste,
+        activate: () => props.activateEditor(editableFields.taste, meal.taste),
+        onSave: saveFieldHandler,
+        onCancel: cancelEditingHandler,
+        displayValue: meal.taste,
+        editingValue: activeFieldValue,
+        onChange: updateFieldHandler,
+        range: 5,
+    }
+    const displayOrEditDifficultyProps: IDisplayOrEditDifficultyProps = {
+        active: activeField === editableFields.difficulty,
+        activate: () => props.activateEditor(editableFields.difficulty, meal.difficulty),
+        onSave: saveFieldHandler,
+        onCancel: cancelEditingHandler,
+        displayValue: meal.difficulty,
+        editingValue: activeFieldValue,
+        onChange: updateFieldHandler,
+        range: 5,
     }
 
 
@@ -115,56 +133,11 @@ function Meal(props: IMealProps) {
                 <div className="col-12 col-lg-5">
                     <div>
                         <h4 className="d-inline">Taste: </h4>
-                        {activeField === editableFields.taste
-                            ? <h2>
-                                <RatingEditor
-                                    rating={activeFieldValue}
-                                    range={5}
-                                    selectedIcon={solidStar}
-                                    unselectedIcon={emptyStar}
-                                    onChange={updateFieldHandler}
-                                    onCancel={cancelEditingHandler}
-                                    onSave={saveFieldHandler}
-                                />
-                            </h2>
-                            : <h2 className="editable" onClick={() => {
-                                props.activateEditor(editableFields.taste, meal.taste);
-                            }}>
-                                <RatingDisplay
-                                    rating={meal.taste}
-                                    range={5}
-                                    selectedIcon={solidStar}
-                                    unselectedIcon={emptyStar}
-                                />
-                            </h2>
-                        }
+                        <DisplayOrEditTaste { ...displayOrEditTasteProps} />
                     </div>
                     <div>
                         <h4 className="d-inline">Difficulty: </h4>
-
-                        {activeField === editableFields.difficulty
-                            ? <h2>
-                                <RatingEditor
-                                    rating={activeFieldValue}
-                                    range={5}
-                                    selectedIcon={solidTired}
-                                    unselectedIcon={emptyTired}
-                                    onChange={updateFieldHandler}
-                                    onCancel={cancelEditingHandler}
-                                    onSave={saveFieldHandler}
-                                />
-                            </h2>
-                            : <h2 className="editable" onClick={() => {
-                                props.activateEditor(editableFields.difficulty, meal.difficulty);
-                            }}>
-                                <RatingDisplay
-                                    rating={meal.difficulty}
-                                    range={5}
-                                    selectedIcon={solidTired}
-                                    unselectedIcon={emptyTired}
-                                />
-                            </h2>
-                        }
+                        <DisplayOrEditDifficulty { ...displayOrEditDifficultyProps} />
                     </div>
                 </div>
                 <div className="col-12 col-lg-5">

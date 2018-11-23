@@ -53,7 +53,7 @@ function InlineEditor(
                 <div className='inline-editor'>
                     {!active &&
                         <div className="editable" onClick={activate}>
-                            <Display value={displayValue} />
+                            <Display value={displayValue} {...rest}/>
                         </div>}
                     {active &&
                         <div className="input-group pb-2">
