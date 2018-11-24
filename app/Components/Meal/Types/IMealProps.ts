@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import editableFields from 'Components/Meal/editableFields';
+import editableFields from 'Components/Meal/Types/editableFields';
 import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
 import Message from 'Business/Validation/Message';

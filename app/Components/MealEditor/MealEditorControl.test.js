@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import MealEditorControl from 'Components/MealEditor/MealEditorControl';
-import editableFields from 'Components/Meal/editableFields';
+import editableFields from 'Components/Meal/Types/editableFields';
 
 
 describe('#Components #MealEditor #MealEditorControl', function() {

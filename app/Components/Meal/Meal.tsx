@@ -6,13 +6,12 @@ import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
-import DisplayOrEditName, {IDisplayOrEditNameProps} from 'Components/Meal/DisplayOrEditName/DisplayOrEditName';
+import DisplayOrEditIngredients, { IDisplayOrEditIngredientsProps } from 'Components/Meal/DisplayOrEditIngredients/DisplayOrEditIngredients';
+import DisplayOrEditName, { IDisplayOrEditNameProps } from 'Components/Meal/DisplayOrEditName/DisplayOrEditName';
 import DisplayOrEditTaste, { IDisplayOrEditTasteProps } from 'Components/Meal/DisplayOrEditTaste/DisplayOrEditTaste';
 import NotesEditor from 'Components/Meal/NotesEditor';
-import editableFields from 'Components/Meal/editableFields';
+import editableFields from 'Components/Meal/Types/editableFields';
 import IMealProps from 'Components/Meal/Types/IMealProps';
-import IngredientsDisplay from 'Components/Meal/IngredientsDisplay';
-import IngredientsEditor from 'Components/Meal/IngredientsEditor';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 
 import './Meal.sass';
@@ -104,6 +103,15 @@ function Meal(props: IMealProps) {
         onChange: updateFieldHandler,
         range: 5,
     }
+    const displayOrEditIngredientsProps: IDisplayOrEditIngredientsProps = {
+        active: activeField === editableFields.ingredients,
+        activate: () => props.activateEditor(editableFields.ingredients, meal.ingredients),
+        onSave: saveFieldHandler,
+        onCancel: cancelEditingHandler,
+        displayValue: meal.ingredients,
+        editingValue: activeFieldValue,
+        onChange: updateListFieldHandler,
+    };
 
 
     return (
@@ -116,19 +124,7 @@ function Meal(props: IMealProps) {
             <div className="row m-2">
                 <div className="col-12 col-lg-2">
                     <h4>Ingredients</h4>
-                    {activeField === editableFields.ingredients
-                        ? <IngredientsEditor
-                            list={activeFieldValue}
-                            onChange={updateListFieldHandler}
-                            onSave={saveFieldHandler}
-                            onCancel={cancelEditingHandler}
-                        />
-                        : <div className="editable" onClick={() => {
-                            props.activateEditor(editableFields.ingredients, meal.ingredients);
-                        }}>
-                            <IngredientsDisplay ingredients={ingredients} />
-                        </div>
-                    }
+                    <DisplayOrEditIngredients { ...displayOrEditIngredientsProps} />
                 </div>
                 <div className="col-12 col-lg-5">
                     <div>

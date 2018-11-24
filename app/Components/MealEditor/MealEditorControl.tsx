@@ -1,5 +1,5 @@
 import * as React from 'react';
-import editableFields from "Components/Meal/editableFields";
+import editableFields from "Components/Meal/Types/editableFields";
 import IMealEditorControlProps from 'Components/MealEditor/Types/IMealEditorControlProps';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import updateMeal from 'Business/Meals/updateMeal';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
 import { Result } from 'true-myth';
-import editableFields from "Components/Meal/editableFields";
+import editableFields from "Components/Meal/Types/editableFields";
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import IMealCreatorControlProps from 'Components/MealCreator/Types/IMealCreaterControlProps';
 import IMeal from 'Business/Meals/Types/Meal';

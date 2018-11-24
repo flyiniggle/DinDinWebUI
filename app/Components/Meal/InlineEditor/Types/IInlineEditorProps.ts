@@ -4,8 +4,8 @@ interface IInlineEditorProps {
     onSave: () => Promise<void>,
     onCancel: (e: Event) => void,
     onChange: any,
-    displayValue: any,
-    editingValue: any
+    displayValue?: any,
+    editingValue?: any
 }
 
 export default IInlineEditorProps;
