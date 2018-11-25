@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#Components #Meal #DisplayOrEditNotes #DisplayNotes should display the value if one is provided 1`] = `"<textarea class=\\"form-control d-block mb-2\\">wheeeee</textarea>"`;

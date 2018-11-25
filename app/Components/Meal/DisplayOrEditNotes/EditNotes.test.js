@@ -8,7 +8,7 @@ describe('#Components #Meal #DisplayOrEditNotes #DisplayNotes', function() {
         const onChangeSpy = jest.fn();
         const wrapper = shallow(<EditNotes value="wheeeee" onChange={ onChangeSpy } />);
 
-        //expect(wrapper.text()).toEqual('wheeeee');
+        expect(wrapper.html()).toMatchSnapshot();
     });
 
     it('should call the changehandler when updating the value.', function() {
