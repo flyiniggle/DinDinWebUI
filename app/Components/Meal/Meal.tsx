@@ -8,8 +8,8 @@ import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
 import DisplayOrEditIngredients, { IDisplayOrEditIngredientsProps } from 'Components/Meal/DisplayOrEditIngredients/DisplayOrEditIngredients';
 import DisplayOrEditName, { IDisplayOrEditNameProps } from 'Components/Meal/DisplayOrEditName/DisplayOrEditName';
+import DisplayOrEditNotes, { IDisplayOrEditNotesProps } from 'Components/Meal/DisplayOrEditNotes/DisplayOrEditNotes';
 import DisplayOrEditTaste, { IDisplayOrEditTasteProps } from 'Components/Meal/DisplayOrEditTaste/DisplayOrEditTaste';
-import NotesEditor from 'Components/Meal/NotesEditor';
 import editableFields from 'Components/Meal/Types/editableFields';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
@@ -112,10 +112,19 @@ function Meal(props: IMealProps) {
         editingValue: activeFieldValue,
         onChange: updateListFieldHandler,
     };
+    const displayOrEditNotesProps: IDisplayOrEditNotesProps = {
+        onSave: saveFieldHandler,
+        active: activeField === editableFields.notes,
+        activate: () => props.activateEditor(editableFields.notes, meal.notes),
+        displayValue: meal.notes,
+        editingValue: activeFieldValue,
+        onChange: updateFieldHandler,
+        onCancel: cancelEditingHandler
+    };
 
 
     return (
-        <div className="meal">
+        <div className="meal col-12">
             <div className="row m-2">
                 <div className="editable">
                     <DisplayOrEditName {...displayOrEditNameProps}/>
@@ -144,20 +153,7 @@ function Meal(props: IMealProps) {
             <div className="row m-2">
                 <div className="col-12">
                     <h4>Notes:</h4>
-                    {
-                        activeField === editableFields.notes
-                            ? <NotesEditor
-                                notes={activeFieldValue}
-                                onSave={saveFieldHandler}
-                                onChange={updateFieldHandler}
-                                onCancel={cancelEditingHandler}
-                            />
-                            : <span className={`editable ${meal.notes ? '' : 'placeholder'}`}
-                                onClick={() => {
-                                    props.activateEditor(editableFields.notes, meal.notes);
-                                }}
-                            >{meal.notes || "add a note"}</span>
-                    }
+                    <DisplayOrEditNotes {...displayOrEditNotesProps} />
                 </div>
             </div>
             <div className="row m2 d-flex justify-content-end">
