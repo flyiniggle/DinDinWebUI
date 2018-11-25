@@ -67,7 +67,6 @@ function Meal(props: IMealProps) {
         return <p>Loading...</p>
     }
     
-    const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
     const saveHandler = maybe(save);
@@ -103,12 +102,13 @@ function Meal(props: IMealProps) {
         onChange: updateFieldHandler,
         range: 5,
     }
+    const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
     const displayOrEditIngredientsProps: IDisplayOrEditIngredientsProps = {
         active: activeField === editableFields.ingredients,
         activate: () => props.activateEditor(editableFields.ingredients, meal.ingredients),
         onSave: saveFieldHandler,
         onCancel: cancelEditingHandler,
-        displayValue: meal.ingredients,
+        displayValue: ingredients,
         editingValue: activeFieldValue,
         onChange: updateListFieldHandler,
     };

@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            <div className="d-flex flex-column justify-content-end">
+            <div className="dashboard col-12 d-flex flex-column">
                 <div className="row">
                     <Ribbon>
                         <Link to="meals/new">
@@ -36,7 +36,7 @@ class Dashboard extends React.Component {
                         filters
                     </div>
                 </div>
-                <div className="main-container row flex-grow-1">
+                <div className="dashboard-main row flex-grow-1">
                     <div className="col-xs-12 col-md-4">
                         <div className="position-fixed">
                             <Overview meals={ this.props.meals } />
