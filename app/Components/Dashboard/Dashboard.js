@@ -24,18 +24,12 @@ class Dashboard extends React.Component {
     render() {
         return (
             <div className="dashboard col-12 d-flex flex-column">
-                <div className="row">
-                    <Ribbon>
-                        <Link to="meals/new">
+                <Ribbon>
+                    <Link to="meals/new" className="btn btn-sm btn-outline-primary">
                             new meal
-                        </Link>
-                    </Ribbon>
-                </div>
-                <div className="row">
-                    <div className="col-xs-12">
-                        filters
-                    </div>
-                </div>
+                    </Link>
+                </Ribbon>
+                <p>filters</p>
                 <div className="dashboard-main row flex-grow-1">
                     <div className="col-xs-12 col-md-4">
                         <div className="position-fixed">
