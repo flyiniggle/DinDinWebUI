@@ -1,5 +1,4 @@
 import * as React from 'react';
-import TextInput from 'UI/Forms/TextInput/TextInput';
 
 interface IEditNotesProps {
     value?: string,
@@ -17,7 +16,6 @@ class EditNotes extends React.Component<IEditNotesProps, {}> {
         const { value, onChange } = this.props;
 
         return <textarea ref={this.input} className="form-control d-block mb-2" onChange={onChange} value={value} />
-                
     }
 }
 
