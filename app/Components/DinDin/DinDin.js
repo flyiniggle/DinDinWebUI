@@ -57,7 +57,7 @@ class DinDin extends React.Component {
 
     logOut = () => {
         authStatus.logOut();
-        this.forceUpdate();
+        this.setMeals();
     }
 
     render() {
@@ -68,6 +68,7 @@ class DinDin extends React.Component {
                         path="/meals"
                         component={ DinDinApp }
                         logoutHandler={ this.logOut }
+                        getMeals={ this.getMeals }
                         meals={ this.state.meals }
                         useMeal={ this.useMeal }
                         updateMeal={ this.updateMeal }
