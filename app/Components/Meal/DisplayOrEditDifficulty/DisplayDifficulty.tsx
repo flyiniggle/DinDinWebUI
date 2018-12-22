@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
 import { faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
+import './DisplayDifficulty.sass'
 
 
 interface IDisplayDifficulty {
@@ -13,7 +14,7 @@ function DisplayDifficulty(props: IDisplayDifficulty) {
     const { range, value } = props;
 
     return (
-        <React.Fragment>
+        <div className="display-difficulty">
             {
                 Array.from(Array(range).keys())
                     .map(function (i) {
@@ -21,12 +22,12 @@ function DisplayDifficulty(props: IDisplayDifficulty) {
 
                         return (
                             <span key={i} >
-                                <FontAwesomeIcon icon={icon}  size="lg" />
+                                <FontAwesomeIcon className="font" icon={icon}  size="lg" />
                             </span>
                         );
                     })
             }
-        </React.Fragment>
+        </div>
     )
 }
 

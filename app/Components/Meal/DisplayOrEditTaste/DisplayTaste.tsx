@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
-import { faStar as emptyStar} from '@fortawesome/free-regular-svg-icons';
+import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
+import './DisplayTaste.sass'
 
 
 interface IDisplayTaste {
@@ -13,7 +14,7 @@ function DisplayTaste(props: IDisplayTaste) {
     const { range, value } = props;
 
     return (
-        <React.Fragment>
+        <div className={"display-taste"}>
             {
                 Array.from(Array(range).keys())
                     .map(function (i) {
@@ -21,12 +22,12 @@ function DisplayTaste(props: IDisplayTaste) {
 
                         return (
                             <span key={i} >
-                                <FontAwesomeIcon icon={icon} size="lg"/>
+                                <FontAwesomeIcon className="font" icon={icon} size="lg"/>
                             </span>
                         );
                     })
             }
-        </React.Fragment>
+        </div>
     )
 }
 

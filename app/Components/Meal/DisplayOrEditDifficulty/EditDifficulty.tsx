@@ -3,6 +3,7 @@ import { IDisplayDifficulty } from 'Components/Meal/DisplayOrEditDifficulty/Disp
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTired as solidTired } from '@fortawesome/free-solid-svg-icons';
 import { faTired as emptyTired } from '@fortawesome/free-regular-svg-icons';
+import './EditDifficulty.sass'
 
 
 interface IEditDifficultyState {
@@ -21,7 +22,7 @@ class EditDifficulty extends React.Component<IEditDifficultyProps, IEditDifficul
     render() {
         const { range, value, onChange } = this.props
         return (
-            <div className="rating-editor">
+            <div className="rating-editor edit-difficulty">
                 {
                     Array.from(Array(range).keys())
                         .map(function (i) {
@@ -29,7 +30,7 @@ class EditDifficulty extends React.Component<IEditDifficultyProps, IEditDifficul
 
                             return (
                                 <span key={i} onClick={() => { onChange(i + 1) }}>
-                                    <FontAwesomeIcon icon={icon} size="lg" />
+                                    <FontAwesomeIcon className="font" icon={icon} size="lg" />
                                 </span>
                             )
                         })

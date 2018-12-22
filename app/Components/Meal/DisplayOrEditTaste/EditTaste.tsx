@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar} from '@fortawesome/free-regular-svg-icons';
 import { IDisplayTaste } from 'Components/Meal/DisplayOrEditTaste/DisplayTaste';
+import './EditTaste.sass';
 
 interface IEditRatingState {
     submitting: boolean
@@ -20,7 +21,7 @@ class EditRating extends React.Component<IEditRatingProps, IEditRatingState> {
     render() {
         const { range, value, onChange } = this.props
         return (
-            <div className="rating-editor">
+            <div className="rating-editor edit-taste">
                 {
                     Array.from(Array(range).keys())
                         .map(function (i) {
@@ -28,7 +29,7 @@ class EditRating extends React.Component<IEditRatingProps, IEditRatingState> {
 
                             return (
                                 <span key={i} onClick={() => { onChange(i + 1) }}>
-                                    <FontAwesomeIcon icon={icon} size="lg" />
+                                    <FontAwesomeIcon className="font" icon={icon} size="lg" />
                                 </span>
                             )
                         })
