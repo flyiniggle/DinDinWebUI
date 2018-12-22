@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
         return (
             <div className="dashboard col-12 d-flex flex-column">
                 <Ribbon>
-                    <Link to="meals/new" className="btn btn-sm btn-outline-primary">
+                    <Link to="meals/new" className="btn btn-sm btn-outline-accent">
                             new meal
                     </Link>
                 </Ribbon>

@@ -5,13 +5,14 @@ $brand-red: #BF4D28
 $brand-turquoise: #80bca3
 //$brand-turquoise: #0fffd3
 
-$primary: #ca054d //$brand-orange
-$secondary: #3b1c32 //$brand-red
-$tertiary: #a4d4b4 //$brand-brown
-$quaternary: #b96d40 //$brand-turquoise
-$brand-base: #fffaf6 //$brand-beige
+$primary: $brand-orange
+$secondary: $brand-red
 
+@import "~Styles/brand-primary.sass"
+@import "~Styles/brand-secondary.sass"
+@import "~Styles/brand-base.sass"
+@import "~Styles/brand-accent.sass"
 @import "~Styles/bootstrap-mixins.scss"
 
 $ErrorLevels: error, warning, info
-$ErrorLevelColors: (error: map-get($theme-colors, danger), warning: map-get($theme-colors, warning), info: map-get($theme-colors, info))
+$ErrorLevelColors: (error: $brand-red, warning: $brand-orange, info: $accent)

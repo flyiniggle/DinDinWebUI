@@ -1,0 +1,11 @@
+
+@import "./bootstrap-mixins.scss";
+@import "./brand-accent.sass";
+
+.btn-accent {
+    @include button-variant($brand-turquoise, $brand-turquoise)
+}
+
+.btn-outline-accent {
+    @include button-outline-variant($brand-turquoise);
+}
