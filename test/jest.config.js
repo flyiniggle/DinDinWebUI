@@ -19,6 +19,7 @@ module.exports = {
     moduleNameMapper: {
         '^.+\\.(css|scss|sass)$': path.join('<rootDir>', 'test', 'mocks', 'styles.js'),
         '^Business(.*)$': path.join('<rootDir>', 'app', 'Business', '$1'),
+        '^Data(.*)$': path.join('<rootDir>', 'app', 'Data', '$1'),
         '^DinDin(.*)$': path.join('<rootDir>', 'app', '$1'),
         '^Components(.*)$': path.join('<rootDir>', 'app', 'Components', '$1'),
         '^UI(.*)$': path.join('<rootDir>', 'app', 'UI', '$1'),

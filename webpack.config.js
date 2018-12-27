@@ -29,6 +29,7 @@ module.exports = {
         extensions: ['.ts', '.tsx', '.js', '.json'],
         alias: {
             Business: `${__dirname}/app/Business`,
+            Data: `${__dirname}/app/Data`,
             DinDin: `${__dirname}/app`,
             Components: `${__dirname}/app/Components`,
             UI: `${__dirname}/app/UI`,

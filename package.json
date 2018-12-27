@@ -84,7 +84,9 @@
     "ramda": "0.25.0",
     "react": "16.4.1",
     "react-dom": "16.4.1",
+    "react-redux": "6.0.0",
     "react-router-dom": "4.3.1",
+    "redux": "4.0.1",
     "true-myth": "2.0.0"
   }
 }
