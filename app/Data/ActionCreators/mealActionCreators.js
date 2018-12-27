@@ -1,4 +1,4 @@
-import * as actions from 'Data/ActionTypes/mealActionTypes';
+import * as actions from 'Data/ActionTypes/mealsActionTypes';
 
 
 export function setMeals(meals) {

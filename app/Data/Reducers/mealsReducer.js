@@ -1,5 +1,6 @@
-import * as actionTypes from 'Data/ActionTypes/mealActionTypes';
+import * as actionTypes from 'Data/ActionTypes/mealsActionTypes';
 import createReducer from 'Data/createReducer';
+
 
 const initialState = {
     meals: null
