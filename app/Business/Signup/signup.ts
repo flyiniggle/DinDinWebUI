@@ -4,7 +4,7 @@ import Message from "Business/Validation/Types/Message";
 import responseCheck from "Business/Signup/Validation/responseCheck";
 import { Result } from "true-myth";
 import { pipe, pipeP } from 'ramda';
-import User, { createUser } from "Business/Auth/Types/User";
+import IUser, { createUser } from "Business/Auth/Types/User";
 
 interface SignupData {
     username: string,
@@ -13,7 +13,7 @@ interface SignupData {
     passwordRepeat: string
 }
 
-async function signup(data: SignupData): Promise<Result<User, Message[]>> {
+async function signup(data: SignupData): Promise<Result<IUser, Message[]>> {
     const trySignup = pipeP(
         SignupService.post,
         Result.mapErr(responseCheck)

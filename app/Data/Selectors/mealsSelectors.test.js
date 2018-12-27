@@ -1,4 +1,4 @@
-import * as selectors from './mealSelectors';
+import * as selectors from 'Data/Selectors/mealsSelectors';
 
 
 describe('#Data #Selectors #mealSelectors', function() {

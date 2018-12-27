@@ -1,4 +1,4 @@
 const initialState = {
-    userName: '',
-    userEmail: ''
+    userName: null,
+    userEmail: null
 };

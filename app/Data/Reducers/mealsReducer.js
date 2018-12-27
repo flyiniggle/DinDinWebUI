@@ -2,7 +2,7 @@ import * as actionTypes from 'Data/ActionTypes/mealActionTypes';
 import createReducer from 'Data/createReducer';
 
 const initialState = {
-    meals: []
+    meals: null
 };
 
 export function setMeals(state, action) {
