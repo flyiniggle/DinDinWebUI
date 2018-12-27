@@ -1,5 +1,5 @@
 import * as actionTypes from 'Data/ActionTypes/mealsActionTypes';
-import createReducer from 'Data/createReducer';
+import createReducer from 'Data/Lib/createReducer';
 
 
 const initialState = {

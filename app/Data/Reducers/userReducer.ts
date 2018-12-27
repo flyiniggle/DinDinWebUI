@@ -1,10 +1,10 @@
 import * as actionTypes from 'Data/ActionTypes/userActionTypes';
-import createReducer from 'Data/createReducer';
+import createReducer from 'Data/Lib/createReducer';
 
 
 const initialState = {
-    userName: null,
-    userEmail: null
+    username: null,
+    email: null
 };
 
 export function setEmail(state, action) {
