@@ -3,11 +3,12 @@ import createReducer from 'Data/Lib/createReducer';
 
 
 const initialState = {
-    meals: null
+    meals: null,
+    messages: null
 };
 
 export function setMeals(state, action) {
-    const meals = action.payload || [];
+    const meals = action.meals;
 
     return {
         ...state,
@@ -15,9 +16,18 @@ export function setMeals(state, action) {
     };
 }
 
+export function setMealsMessages(state, action) {
+    const messages = action.messages;
+
+    return {
+        ...state,
+        messages
+    };
+}
+
 const subReducers = {
-    [actionTypes.GET_MEALS]: (state) => state,
-    [actionTypes.SET_MEALS]: setMeals
+    [actionTypes.SET_MEALS]: setMeals,
+    [actionTypes.SET_MESSAGES]: setMealsMessages
 };
 
 export default createReducer(initialState, subReducers);

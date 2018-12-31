@@ -1,7 +1,6 @@
 import authStatus from 'Business/Auth/authStatus';
 import UserContext from 'Business/Auth/UserContext';
 import useMeal from 'Business/Meals/useMeal';
-import MealsService from 'Business/Meals/Service';
 import DinDinService from 'Business/Services/DinDinService';
 import DinDinApp from 'Components/DinDin/DinDinApp';
 import Splash from 'Components/Splash/Splash';
@@ -9,31 +8,13 @@ import ProtectedRoute from 'UI/ProtectedRoute';
 import { eqProps, map, mergeDeepLeft, when } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Result } from 'true-myth';
 
 import './DinDin.sass';
 
 class DinDin extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            meals: null
-        };
-    }
 
     componentWillMount = () => {
         DinDinService.addNotLoggedInHandler(this.logOut);
-        this.getMeals();
-    }
-
-    componentDidUpdate = this.getMeals;
-
-    getMeals = () => {
-        if (authStatus.authToken && !this.state.meals) {
-            MealsService.get()
-                .then(Result.unwrapOr([]))
-                .then(this.setMeals);
-        }
     }
 
     setMeals = (meals) => {
@@ -68,8 +49,6 @@ class DinDin extends React.Component {
                         path="/meals"
                         component={ DinDinApp }
                         logoutHandler={ this.logOut }
-                        getMeals={ this.getMeals }
-                        meals={ this.state.meals }
                         useMeal={ this.useMeal }
                         updateMeal={ this.updateMeal }
                     />

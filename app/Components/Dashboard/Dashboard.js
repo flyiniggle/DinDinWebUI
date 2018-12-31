@@ -1,24 +1,34 @@
-import MealCard from 'Components/Dashboard/MealCard/MealCard';
-import Overview from 'Components/Dashboard/Overview/Overview';
 import Ribbon from 'Components/Ribbon/Ribbon';
+import { pipe } from 'ramda';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import MealCard from 'Components/Dashboard/MealCard/MealCard';
+import Overview from 'Components/Dashboard/Overview/Overview';
+import { getMeals } from 'Data/ActionCreators/mealActionCreators';
+import { meals } from 'Data/Selectors/mealsSelectors';
 
 import 'Styles/theme.sass';
 import './Dashboard.sass';
 
 
-class Dashboard extends React.Component {
+class DashboardBase extends React.Component {
     static defaultPropTypes = {
         meals: undefined,
         useMeal: () => undefined,
-        logoutHandler: () => undefined
+        logoutHandler: () => undefined,
+        getMeals: () => undefined
     }
 
     static propTypes = {
-        meals: PropTypes.array,
-        useMeal: PropTypes.func
+        meals: PropTypes.object,
+        useMeal: PropTypes.func,
+        getMeals: PropTypes.func
+    }
+
+    componentWillMount = () => {
+        this.props.getMeals();
     }
 
     render() {
@@ -33,11 +43,16 @@ class Dashboard extends React.Component {
                 <div className="dashboard-main row flex-grow-1">
                     <div className="col-xs-12 col-md-4">
                         <div className="position-fixed">
-                            <Overview meals={ this.props.meals } />
+                            <Overview meals={ this.props.meals.unwrapOr([]) } />
                         </div>
                     </div>
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
-                        {this.props.meals && this.props.meals.map((meal) => <MealCard meal={ meal } useMeal={ this.props.useMeal } key={ meal.id } />)}
+                        {
+                            this.props.meals.match({
+                                Just: (m) => m.map((meal) => <MealCard meal={ meal } useMeal={ this.props.useMeal } key={ meal.id } />),
+                                Nothing: () => <span>No meals</span>
+                            })
+                        }
                     </div>
                 </div>
             </div>
@@ -45,4 +60,20 @@ class Dashboard extends React.Component {
     }
 }
 
+const mapStateToProps = function(state) {
+    return {
+        meals: meals(state)
+    };
+};
+
+const mapDispatchToProps = function(dispatch) {
+    return {
+        getMeals: pipe(getMeals, dispatch)
+    };
+};
+
+const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardBase);
+
+
+export { DashboardBase };
 export default Dashboard;

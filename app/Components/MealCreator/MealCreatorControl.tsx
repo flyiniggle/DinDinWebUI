@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
-import { Result } from 'true-myth';
+import { Result, Maybe } from 'true-myth';
 import editableFields from "Components/Meal/Types/editableFields";
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import IMealCreatorControlProps from 'Components/MealCreator/Types/IMealCreaterControlProps';
@@ -8,6 +8,7 @@ import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
 import createMeal from 'Business/Meals/createMeal';
 import Message from 'Business/Validation/Types/Message';
+import maybe from 'Business/Lib/maybe';
 
 
 interface IState {
@@ -105,9 +106,9 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
                 return <Redirect to={`/meals/${this.state.mealId}`} />
             }
 
-            const childProps: IMealProps = {
-                meal: this.state.newMeal,
+            const childProps = {
                 save: this.doSaveMeal,
+                meal: maybe(this.state.newMeal),
                 saveFieldHandler: this.doSaveField,
                 updateFieldHandler: this.updateCurrentValue,
                 updateListFieldHandler: this.updateCurrentListValue,

@@ -51,7 +51,7 @@ const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: (INewMea
 
 function Meal(props: IMealProps) {
     const {
-        meal,
+        meal: maybeMeal,
         message,
         useMeal,
         save,
@@ -61,12 +61,14 @@ function Meal(props: IMealProps) {
         updateListFieldHandler,
         saveFieldHandler,
         cancelEditingHandler
-    } = props
+    } = props;
 
-    if (!meal) {
+
+    if (maybeMeal.isNothing()) {
         return <p>Loading...</p>
     }
     
+    const meal = maybeMeal.unsafelyUnwrap();
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
     const saveHandler = maybe(save);

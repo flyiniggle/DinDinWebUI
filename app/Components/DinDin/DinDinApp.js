@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -10,53 +11,44 @@ import MealCreator from 'Components/MealCreator/MealCreator';
 import './DinDinApp.sass';
 
 
-class DinDinApp extends React.Component {
-    componentWillMount = () => {
-        this.props.getMeals();
-    }
+function DinDinApp(props) {
 
-    render() {
-        const props = this.props;
-        const maybeMeals = props.meals ? props.meals : [];
-
-        return (
-            <div className="mainBackground din-din-app container-fluid dashboard d-flex flex-column">
-                <div className="row d-block">
-                    <div className="col-12">
-                        <Header logoutHandler={ props.logoutHandler } />
-                    </div>
-                </div>
-                <div className="main-container row flex-grow-1">
-                    <Switch>
-                        <Route
-                            exact
-                            path="/meals"
-                            render={ routeProps => (
-                                <Dashboard
-                                    { ...routeProps }
-                                    meals={ maybeMeals }
-                                    useMeal={ props.useMeal } />
-                            ) } />
-                        <Route
-                            exact
-                            path="/meals/new"
-                            render={ () => (
-                                <MealCreator />
-                            ) } />
-                        <Route
-                            exact
-                            path="/meals/:id"
-                            render={ routeProps => (
-                                <MealEditor
-                                    meal={ getMealById(routeProps.match.params.id, maybeMeals) }
-                                    useMeal={ props.useMeal }
-                                    updateMeal={ props.updateMeal } />
-                            ) } />
-                    </Switch>
+    return (
+        <div className="mainBackground din-din-app container-fluid dashboard d-flex flex-column">
+            <div className="row d-block">
+                <div className="col-12">
+                    <Header logoutHandler={ props.logoutHandler } />
                 </div>
             </div>
-        );
-    }
+            <div className="main-container row flex-grow-1">
+                <Switch>
+                    <Route
+                        exact
+                        path="/meals"
+                        render={ routeProps => (
+                            <Dashboard
+                                { ...routeProps }
+                                useMeal={ props.useMeal } />
+                        ) } />
+                    <Route
+                        exact
+                        path="/meals/new"
+                        render={ () => (
+                            <MealCreator />
+                        ) } />
+                    <Route
+                        exact
+                        path="/meals/:id"
+                        render={ routeProps => (
+                            <MealEditor
+                                mealId={ routeProps.match.params.id }
+                                useMeal={ props.useMeal }
+                                updateMeal={ props.updateMeal } />
+                        ) } />
+                </Switch>
+            </div>
+        </div>
+    );
 }
 
 DinDinApp.defaultPropTypes = {
@@ -66,8 +58,6 @@ DinDinApp.defaultPropTypes = {
 };
 
 DinDinApp.propTypes = {
-    meals: PropTypes.array,
-    getMeals: PropTypes.func,
     useMeal: PropTypes.func,
     logoutHandler: PropTypes.func,
     updateMeal: PropTypes.func.isRequired

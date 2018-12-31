@@ -3,11 +3,10 @@ import editableFields from 'Components/Meal/Types/editableFields';
 import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
 import Message from 'Business/Validation/Message';
-import { Result } from 'true-myth';
-
+import { Result, Maybe } from 'true-myth';
 
 interface IMealProps  {
-    meal: IMeal | INewMeal
+    meal: Maybe<IMeal> | Maybe<INewMeal>
     message?: Message
     useMeal?: (IMeal) => Promise<void>
     save?: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>> | Result<INewMeal, Message[]>
