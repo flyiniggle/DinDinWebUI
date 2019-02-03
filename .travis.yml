@@ -1,11 +1,12 @@
 language: node_js
 node_js:
 - 9
-install: yarn
+env:
+- NODE_ENV=development
 script:
-- yarn lint
-- yarn test-ci
-- yarn build
+- npm run lint
+- npm run test-ci
+- npm run build
 deploy:
 - provider: heroku
   api_key:
