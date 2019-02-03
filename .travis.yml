@@ -1,26 +1,11 @@
 language: node_js
 node_js:
-- 8
-# `nvm install` happens before the cache is restored, which means
-# we must install our own npm elsewhere (`~/npm`)
-before_install: |
-  [[ ! -x ~/npm/node_modules/.bin/npm ]] && {
-    # caching feature creates `~/npm` for us
-    cd ~/npm && npm install npm
-    cd -
-  } || true
-  # avoids bugs around https://github.com/travis-ci/travis-ci/issues/5092
-  export PATH=~/npm/node_modules/.bin:$PATH
-# this avoids compilation in most cases (where we don't need it)
-install: npm ci --ignore-scripts
-cache:
-  directories:
-    - ~/.npm # cache npm's cache
-    - ~/npm # cache latest npm
+- 9
+install: yarn
 script:
-- npm run lint
-- npm run test-ci
-- npm run build
+- yarn lint
+- yarn test-ci
+- yarn build
 deploy:
 - provider: heroku
   api_key:
