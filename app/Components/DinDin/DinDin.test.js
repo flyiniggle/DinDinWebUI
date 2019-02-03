@@ -1,5 +1,7 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { StaticRouter, Redirect } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import Splash from 'Components/Splash/Splash';
 import Dashboard from 'Components/Dashboard/Dashboard';
@@ -9,8 +11,16 @@ import getMealById from 'Business/Meals/getMealById';
 import DinDin from './DinDin';
 import fixtures from './DinDin.fixtures';
 
+
+const initialState = { meals: [] };
+let store;
+
 describe('#Components #DinDin #DinDin', function() {
     const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
+
+    beforeEach(function() {
+        store = configureStore()(initialState);
+    });
 
     it('should render the splash page if not logged in.', function() {
         const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
@@ -31,7 +41,13 @@ describe('#Components #DinDin #DinDin', function() {
         authStatus.authToken = token;
         authStatus.username = 'me';
 
-        const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meals"><DinDin /></StaticRouter>);
+        const wrapper = mount(
+            <Provider store={ store }>
+                <StaticRouter basename="" context={ {} } location="/meals">
+                    <DinDin />
+                </StaticRouter>
+            </Provider>
+        );
 
         expect(wrapper.contains(Dashboard)).toBe(true);
 
@@ -54,7 +70,13 @@ describe('#Components #DinDin #DinDin', function() {
             authStatus.authToken = token;
             authStatus.username = 'me';
 
-            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/meals"><DinDin /></StaticRouter>);
+            const wrapper = mount(
+                <Provider store={ store }>
+                    <StaticRouter basename="" context={ {} } location="/meals">
+                        <DinDin />
+                    </StaticRouter>
+                </Provider>
+            );
 
             expect(wrapper.contains(Dashboard)).toBe(true);
 
@@ -93,7 +115,13 @@ describe('#Components #DinDin #DinDin', function() {
         });
 
         it('should do nothing if there are no meals.', function() {
-            const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
+            const wrapper = mount(
+                <Provider store={ store }>
+                    <StaticRouter basename="" context={ {} } location="/meals">
+                        <DinDin />
+                    </StaticRouter>
+                </Provider>
+            );
             const dinDinInstance = wrapper.find(DinDin).instance();
             const updateData = { id: 10, usedCount: 2, difficulty: 8 };
             const updater = () => { dinDinInstance.updateMeal(updateData); };

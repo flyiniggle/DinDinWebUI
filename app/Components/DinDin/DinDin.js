@@ -34,8 +34,6 @@ class DinDin extends React.Component {
 
     useMeal = (meal) => useMeal(meal).then(map(this.updateMeal));
 
-    //createMeal = ()
-
     logOut = () => {
         authStatus.logOut();
         this.setMeals();
