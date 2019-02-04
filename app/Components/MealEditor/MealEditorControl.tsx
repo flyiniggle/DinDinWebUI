@@ -86,7 +86,7 @@ function MealEditorControl(MealComponent): React.ComponentClass {
                 activateEditor: this.activateEditor,
                 meal: this.props.meal,
                 message: this.props.message,
-                useMeal: this.props.useMeal
+                updateMeal: this.props.updateMeal
             }
 
             return <MealComponent {...childProps}/>;

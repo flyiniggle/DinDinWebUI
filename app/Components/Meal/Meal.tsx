@@ -1,4 +1,4 @@
-import { curry } from 'ramda';
+import { curry, pipe } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
@@ -15,6 +15,7 @@ import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 
 import './Meal.sass';
+import useMeal from 'Business/Meals/useMeal';
 
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
     return (
@@ -53,7 +54,7 @@ function Meal(props: IMealProps) {
     const {
         meal: maybeMeal,
         message,
-        useMeal,
+        updateMeal,
         save,
         activeField,
         activeFieldValue,
@@ -72,7 +73,7 @@ function Meal(props: IMealProps) {
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
     const saveHandler = maybe(save);
-    const useHandler = maybe(useMeal);
+    const useHandler = maybe(updateMeal).map(u => pipe(useMeal, u));
     const renderUseIt = getRenderUseIt(meal);
     const renderSaveButton = getRenderSaveButton(meal);
     const displayOrEditNameProps: IDisplayOrEditNameProps = {

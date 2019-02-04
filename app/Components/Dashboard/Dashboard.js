@@ -49,7 +49,7 @@ class DashboardBase extends React.Component {
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
                         {
                             this.props.meals.match({
-                                Just: (m) => m.map((meal) => <MealCard meal={ meal } useMeal={ this.props.useMeal } key={ meal.id } />),
+                                Just: (m) => m.map((meal) => <MealCard meal={ meal } updateMeal={ this.props.useMeal } key={ meal.id } />),
                                 Nothing: () => <span>No meals</span>
                             })
                         }

@@ -1,17 +1,27 @@
+import { pipe } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import useMeal from 'Business/Meals/useMeal';
 import Meal from 'Business/Meals/Types/Meal';
+import { useMeal as useMealActionCreator } from 'Data/ActionCreators/mealActionCreators';
 import dateString from 'UI/Formatting/dateString';
 
 import './MealCard.sass';
 
 interface MealCardProps {
     meal: Meal
-    useMeal: (meal: Meal) => Promise<void>
+    updateMeal: (meal: Meal) => Promise<void>
 }
 
-function MealCard(props: MealCardProps) {
-    const { meal, useMeal } = props;
+function MealCardBase(props: MealCardProps) {
+    const { meal, updateMeal } = props;
+    const handleUseMeal = function (e) {
+        e.stopPropogation();
+        e.preventDefault();
+        
+        pipe(useMeal, updateMeal)(meal);
+    }
 
     return (
         <Link to={`/meals/${meal.id}`} className="mealCard row p-lg-4 p-2 mb-2">
@@ -27,16 +37,19 @@ function MealCard(props: MealCardProps) {
                 <button
                     className="btn btn-primary"
                     type="button"
-                    onClick={function (event) {
-                        event.stopPropagation();
-                        event.preventDefault();
-                        return useMeal(meal);
-                    }}>Use it!</button>
+                    onClick={handleUseMeal}>Use it!</button>
                 <h4 className="usedCount">Used {meal.usedCount} {(meal.usedCount === 1) ? 'time' : 'times'}</h4>
             </div>
-
         </Link>
     );
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        updateMeal: pipe(useMealActionCreator, dispatch)
+    }
+}
+
+const MealCard = connect(() => ({}), mapDispatchToProps)(MealCardBase);
 
 export default MealCard;

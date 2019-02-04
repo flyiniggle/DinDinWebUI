@@ -1,11 +1,12 @@
-import { watchGetMeals } from 'Data/Sagas/mealsSagas';
+import { watchGetMeals, watchUseMeal } from 'Data/Sagas/mealsSagas';
 
 import { all } from 'redux-saga/effects';
 
 
 function* rootSaga() {
     yield all([
-        watchGetMeals()
+        watchGetMeals(),
+        watchUseMeal()
     ]);
 }
 

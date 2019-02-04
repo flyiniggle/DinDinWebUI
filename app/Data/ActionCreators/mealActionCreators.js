@@ -9,6 +9,18 @@ export function setMeals(meals) {
     return { type: actions.SET_MEALS, meals };
 }
 
+export function setMeal(meal) {
+    return { type: actions.SET_MEAL, meal };
+}
+
 export function setMealMessages(messages = null) {
     return { type: actions.SET_MESSAGES, messages};
+}
+
+export function useMeal(meal) {
+    return { type: actions.USE_MEAL, meal };
+}
+
+export function editMeal(meal) {
+    return {type: actions.EDIT_MEAL, meal };
 }

@@ -5,7 +5,7 @@ import DinDinService from 'Business/Services/DinDinService';
 import DinDinApp from 'Components/DinDin/DinDinApp';
 import Splash from 'Components/Splash/Splash';
 import ProtectedRoute from 'UI/ProtectedRoute';
-import { eqProps, map, mergeDeepLeft, when } from 'ramda';
+import { map } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
@@ -21,21 +21,6 @@ class DinDin extends React.Component {
 
     componentWillMount = () => {
         DinDinService.addNotLoggedInHandler(this.logOut);
-    }
-
-    setMeals = (meals) => {
-        this.setState({ meals });
-    }
-
-    updateMeal = (meal) => {
-        const isMatchingMeal = eqProps('id', meal);
-        const replaceMatchingMeal = when(isMatchingMeal, mergeDeepLeft(meal));
-
-        if (this.state.meals) {
-            const meals = map(replaceMatchingMeal, this.state.meals);
-
-            this.setMeals(meals);
-        }
     }
 
     useMeal = (meal) => useMeal(meal).then(map(this.updateMeal));
