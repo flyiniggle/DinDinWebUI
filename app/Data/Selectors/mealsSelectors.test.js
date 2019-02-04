@@ -38,9 +38,10 @@ describe('#Data #Selectors #mealSelectors', function() {
                     messages: [{ name: 'meal1' }, { name: 'meal2' }]
                 }
             };
+
             const result = selectors.messages(testStore);
 
-            expect(result.unwrapOr('meh')).toEqual(testStore.meals.meals);
+            expect(result.unwrapOr('meh')).toEqual(testStore.meals.messages);
         });
 
         it('should return a Maybe of nothing if the messages property is null.', function() {

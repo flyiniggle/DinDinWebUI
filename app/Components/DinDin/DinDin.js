@@ -12,6 +12,12 @@ import { Switch, Route } from 'react-router-dom';
 import './DinDin.sass';
 
 class DinDin extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            meals: null
+        };
+    }
 
     componentWillMount = () => {
         DinDinService.addNotLoggedInHandler(this.logOut);
