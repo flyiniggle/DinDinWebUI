@@ -5,8 +5,8 @@ import INewMeal from 'Business/Meals/Types/NewMeal';
 import Message from 'Business/Validation/Message';
 import { Result, Maybe } from 'true-myth';
 
-interface IMealProps  {
-    meal: Maybe<IMeal> | Maybe<INewMeal>
+interface IMealProps {
+    meal: Maybe<IMeal | INewMeal>
     message?: Message
     useMeal?: (IMeal) => Promise<void>
     save?: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>> | Result<INewMeal, Message[]>
