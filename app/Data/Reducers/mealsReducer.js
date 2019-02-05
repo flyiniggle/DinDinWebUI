@@ -1,6 +1,7 @@
 import { eqProps, map, mergeDeepLeft, when } from 'ramda';
 import * as actionTypes from 'Data/ActionTypes/mealsActionTypes';
 import createReducer from 'Data/Lib/createReducer';
+import safeGetProp from 'Business/Lib/safeGetProp';
 
 
 const initialState = {
@@ -9,7 +10,7 @@ const initialState = {
 };
 
 export function setMeals(state, action) {
-    const meals = action.meals;
+    const meals = safeGetProp('meals', action).unwrapOr([]);
 
     return {
         ...state,
@@ -27,15 +28,19 @@ export function setMealsMessages(state, action) {
 }
 
 export function setMeal(state, action) {
-    const meal = action.meal;
-    const isMatchingMeal = eqProps('id', meal);
-    const replaceMatchingMeal = when(isMatchingMeal, mergeDeepLeft(meal));
-    const meals = map(replaceMatchingMeal, state.meals);
+    if (action.meal) {
+        const meal = action.meal;
+        const isMatchingMeal = eqProps('id', meal);
+        const replaceMatchingMeal = when(isMatchingMeal, mergeDeepLeft(meal));
+        const meals = map(replaceMatchingMeal, state.meals);
 
-    return {
-        ...state,
-        meals
-    };
+        return {
+            ...state,
+            meals
+        };
+    }
+
+    return state;
 }
 
 const subReducers = {
