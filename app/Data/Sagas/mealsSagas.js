@@ -15,14 +15,20 @@ function* loadMeals() {
     yield put(action);
 }
 
-function* patchMeal(action) {
+export function* updateMeal(action) {
     const meal = action.meal;
-    const patchResult = yield call(MealService.patch, meal.id, meal);
+    const updateResult = yield call(MealService.patch, meal.id, meal);
+    const nextAction = updateResult.match({
+        Ok: setMeal,
+        Err: setMealsMessages
+    });
+
+    yield put(nextAction);
 }
 
-function* sendUseMeal(action) {
-    const useMealResult = yield call(useMeal, action.meal);
-    const nextAction = useMealResult.match({
+export function* sendUseMeal(action) {
+    const updatedMeal = useMeal(action.meal);
+    const nextAction = updateMeal.match({
         Ok: setMeal,
         Err: setMealsMessages
     });

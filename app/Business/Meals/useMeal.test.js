@@ -14,31 +14,25 @@ describe('#Business #Meals #useMeal', function() {
         notes: 'gonna use you!'
     };
 
-    it('should send a request to the correct URL.', async function() {
-        expect.assertions(2);
-        await useMeal(meal);
+    // it('should send a request to the correct URL.', async function() {
+    //     expect.assertions(2);
+    //     await useMeal(meal);
 
-        expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals/4/`);
-        expect(fetch.mock.calls[0][1].method).toEqual('PATCH');
-    });
+    //     expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals/4/`);
+    //     expect(fetch.mock.calls[0][1].method).toEqual('PATCH');
+    // });
 
 
-    it('should send meal data with an updated date.', async function() {
-        expect.assertions(1);
-        await useMeal(meal);
-
-        const payloadData = JSON.parse(fetch.mock.calls[0][1].body);
+    it('should update the meal date.', function() {
+        const updatedMeal = useMeal(meal);
         const today = dateString.store(new Date());
 
-        expect(payloadData.last_used).toEqual(today);
+        expect(updatedMeal.lastUsed).toEqual(today);
     });
 
-    it('should send meal data with an updated use count', async function() {
-        expect.assertions(1);
-        await useMeal(meal);
+    it('should update the meal use count', function() {
+        const updatedMeal = useMeal(meal);
 
-        const payloadData = JSON.parse(fetch.mock.calls[0][1].body);
-
-        expect(payloadData.used_count).toEqual(4);
+        expect(updatedMeal.usedCount).toEqual(4);
     });
 });
