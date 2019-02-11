@@ -5,7 +5,7 @@ import { setMealMessages, setMeals, setMeal } from 'Data/ActionCreators/mealActi
 
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-function* loadMeals() {
+export function* loadMeals() {
     const mealsResult = yield call(MealService.get);
     const action = mealsResult.match({
         Ok: setMeals,
