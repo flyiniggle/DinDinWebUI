@@ -16,14 +16,12 @@ import './Dashboard.sass';
 class DashboardBase extends React.Component {
     static defaultPropTypes = {
         meals: undefined,
-        useMeal: () => undefined,
         logoutHandler: () => undefined,
         getMeals: () => undefined
     }
 
     static propTypes = {
         meals: PropTypes.object,
-        useMeal: PropTypes.func,
         getMeals: PropTypes.func
     }
 
@@ -49,7 +47,7 @@ class DashboardBase extends React.Component {
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
                         {
                             this.props.meals.match({
-                                Just: (m) => m.map((meal) => <MealCard meal={ meal } updateMeal={ this.props.useMeal } key={ meal.id } />),
+                                Just: (m) => m.map((meal) => <MealCard meal={ meal } key={ meal.id } />),
                                 Nothing: () => <span>No meals</span>
                             })
                         }
