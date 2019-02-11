@@ -1,7 +1,7 @@
 import MealService from 'Business/Meals/Service';
 import useMeal from 'Business/Meals/useMeal';
 import * as mealActionTypes from 'Data/ActionTypes/mealsActionTypes';
-import { setMealsMessages, setMeals, setMeal } from 'Data/ActionCreators/mealActionCreators';
+import { setMealMessages, setMeals, setMeal } from 'Data/ActionCreators/mealActionCreators';
 
 import { call, put, takeEvery } from 'redux-saga/effects';
 
@@ -9,7 +9,7 @@ function* loadMeals() {
     const mealsResult = yield call(MealService.get);
     const action = mealsResult.match({
         Ok: setMeals,
-        Err: setMealsMessages
+        Err: setMealMessages
     });
 
     yield put(action);
@@ -20,17 +20,19 @@ export function* updateMeal(action) {
     const updateResult = yield call(MealService.patch, meal.id, meal);
     const nextAction = updateResult.match({
         Ok: setMeal,
-        Err: setMealsMessages
+        Err: setMealMessages
     });
 
     yield put(nextAction);
 }
 
 export function* sendUseMeal(action) {
-    const updatedMeal = useMeal(action.meal);
-    const nextAction = updateMeal.match({
+    const meal = action.meal;
+    const updatedMeal = useMeal(meal);
+    const updateResult = yield call(MealService.patch, updatedMeal.id, updatedMeal);
+    const nextAction = updateResult.match({
         Ok: setMeal,
-        Err: setMealsMessages
+        Err: setMealMessages
     });
 
     yield put(nextAction);
