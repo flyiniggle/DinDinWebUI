@@ -12,24 +12,28 @@ describe('#Business #Meals #updateMeal', function() {
         notes: 'gonna use you!'
     };
 
-    afterEach(fetch.resetMocks);
-
-    it('should send a request to the correct URL.', async function() {
-        expect.assertions(2);
-        await updateMeal(meal);
-
-        expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals/4/`);
-        expect(fetch.mock.calls[0][1].method).toEqual('PATCH');
-    });
-
-    it('should send meal data with an updated instance.', async function() {
+    it('should return a meal with the specified updates applied.', function() {
         const updates = {
             name: 'updated name'
         };
+        const result = updateMeal(meal, updates);
 
-        expect.assertions(1);
-        await updateMeal(meal, updates);
-        const payloadData = JSON.parse(fetch.mock.calls[0][1].body);
-        expect(payloadData.name).toEqual(updates.name);
+        expect(result.name).toEqual(updates.name);
+    });
+
+    it('should not change omitted properties.', function() {
+        const updates = {
+            name: 'updated name'
+        };
+        const result = updateMeal(meal, updates);
+
+        expect(result.id).toEqual(meal.id);
+        expect(result.owner).toEqual(meal.owner);
+        expect(result.taste).toEqual(meal.taste);
+        expect(result.difficulty).toEqual(meal.difficulty);
+        expect(result.lastUsed).toEqual(meal.lastUsed);
+        expect(result.usedCount).toEqual(meal.usedCount);
+        expect(result.notes).toEqual(meal.notes);
+
     });
 });

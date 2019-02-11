@@ -2,7 +2,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import getMealById from 'Business/Meals/getMealById';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Header from 'Components/Header/Header';
 import MealEditor from 'Components/MealEditor/MealEditor';
@@ -26,9 +25,7 @@ function DinDinApp(props) {
                         exact
                         path="/meals"
                         render={ routeProps => (
-                            <Dashboard
-                                { ...routeProps }
-                                useMeal={ props.useMeal } />
+                            <Dashboard { ...routeProps } />
                         ) } />
                     <Route
                         exact
@@ -40,10 +37,7 @@ function DinDinApp(props) {
                         exact
                         path="/meals/:id"
                         render={ routeProps => (
-                            <MealEditor
-                                mealId={ routeProps.match.params.id }
-                                useMeal={ props.useMeal }
-                                updateMeal={ props.updateMeal } />
+                            <MealEditor mealId={ routeProps.match.params.id } />
                         ) } />
                 </Switch>
             </div>
@@ -52,15 +46,11 @@ function DinDinApp(props) {
 }
 
 DinDinApp.defaultPropTypes = {
-    meals: undefined,
-    useMeal: () => undefined,
     logoutHandler: () => undefined
 };
 
 DinDinApp.propTypes = {
-    useMeal: PropTypes.func,
-    logoutHandler: PropTypes.func,
-    updateMeal: PropTypes.func.isRequired
+    logoutHandler: PropTypes.func
 };
 
 export default DinDinApp;

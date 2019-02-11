@@ -3,7 +3,7 @@ import MealService from 'Business/Meals/Service';
 import { setMealMessages, setMeal, setMeals } from 'Data/ActionCreators/mealActionCreators';
 import dateString from 'UI/Formatting/dateString';
 
-import { updateMeal, sendUseMeal, loadMeals } from './mealsSagas';
+import { sendUpdateMeal, sendUseMeal, loadMeals } from './mealsSagas';
 
 import { call, put } from 'redux-saga/effects';
 
@@ -80,8 +80,19 @@ describe('#Data #mealSagas', function() {
                 usedCount: 3,
                 notes: 'gonna use you!'
             };
-            const expected = call(MealService.patch, meal.id, meal);
-            const mealUpdater = updateMeal({ meal });
+            const updates = { name: 'latke' };
+            const expectedMeal = {
+                id: 4,
+                name: 'latke',
+                owner: 'jamal',
+                taste: 5,
+                difficulty: 4,
+                lastUsed: '2018-01-01',
+                usedCount: 3,
+                notes: 'gonna use you!'
+            };
+            const expected = call(MealService.patch, meal.id, expectedMeal);
+            const mealUpdater = sendUpdateMeal({ meal, updates });
             const result = mealUpdater.next();
 
             expect(result.value).toEqual(expected);
@@ -98,9 +109,20 @@ describe('#Data #mealSagas', function() {
                 usedCount: 3,
                 notes: 'gonna use you!'
             };
-            const expected = put(setMeal(meal));
-            const mealUpdater = updateMeal({ meal });
-            const mockResponse = Result.ok(meal);
+            const updates = { name: 'latke' };
+            const expectedMeal = {
+                id: 4,
+                name: 'latke',
+                owner: 'jamal',
+                taste: 5,
+                difficulty: 4,
+                lastUsed: '2018-01-01',
+                usedCount: 3,
+                notes: 'gonna use you!'
+            };
+            const expected = put(setMeal(expectedMeal));
+            const mealUpdater = sendUpdateMeal({ meal, updates });
+            const mockResponse = Result.ok(expectedMeal);
 
             mealUpdater.next();
 
@@ -118,8 +140,9 @@ describe('#Data #mealSagas', function() {
                 usedCount: 3,
                 notes: 'gonna use you!'
             };
+            const updates = { name: 'latke' };
             const expected = put(setMealMessages(['yeah, that didn\'t work at all boyo.']));
-            const mealUpdater = updateMeal({ meal });
+            const mealUpdater = sendUpdateMeal({ meal, updates });
             const mockResponse = Result.err(['yeah, that didn\'t work at all boyo.']);
 
             mealUpdater.next();

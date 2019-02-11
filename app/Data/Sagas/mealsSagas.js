@@ -1,4 +1,5 @@
 import MealService from 'Business/Meals/Service';
+import updateMeal from 'Business/Meals/updateMeal';
 import useMeal from 'Business/Meals/useMeal';
 import * as mealActionTypes from 'Data/ActionTypes/mealsActionTypes';
 import { setMealMessages, setMeals, setMeal } from 'Data/ActionCreators/mealActionCreators';
@@ -15,9 +16,11 @@ export function* loadMeals() {
     yield put(action);
 }
 
-export function* updateMeal(action) {
+export function* sendUpdateMeal(action) {
     const meal = action.meal;
-    const updateResult = yield call(MealService.patch, meal.id, meal);
+    const updates = action.updates;
+    const updatedMeal = updateMeal(meal, updates);
+    const updateResult = yield call(MealService.patch, meal.id, updatedMeal);
     const nextAction = updateResult.match({
         Ok: setMeal,
         Err: setMealMessages
@@ -44,4 +47,8 @@ export function* watchGetMeals() {
 
 export function* watchUseMeal() {
     yield takeEvery(mealActionTypes.USE_MEAL, sendUseMeal);
+}
+
+export function* watchUpdateMeal() {
+    yield takeEvery(mealActionTypes.UPDATE_MEAL, sendUpdateMeal);
 }

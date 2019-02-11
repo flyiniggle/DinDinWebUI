@@ -1,5 +1,5 @@
 interface IMeal {
-    id: number,
+    readonly id: number,
     name: string,
     owner: string,
     taste: number,

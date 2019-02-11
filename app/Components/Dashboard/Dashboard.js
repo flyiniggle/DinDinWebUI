@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
-import Overview from 'Components/Dashboard/Overview/Overview';
+import OverviewBase from 'Components/Dashboard/Overview/Overview';
 import { getMeals } from 'Data/ActionCreators/mealActionCreators';
 import { meals } from 'Data/Selectors/mealsSelectors';
 
@@ -43,7 +43,7 @@ class DashboardBase extends React.Component {
                 <div className="dashboard-main row flex-grow-1">
                     <div className="col-xs-12 col-md-4">
                         <div className="position-fixed">
-                            <Overview meals={ this.props.meals.unwrapOr([]) } />
+                            <OverviewBase meals={ this.props.meals.unwrapOr([]) } />
                         </div>
                     </div>
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">

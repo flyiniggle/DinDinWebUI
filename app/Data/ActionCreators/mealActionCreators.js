@@ -21,6 +21,6 @@ export function useMeal(meal) {
     return { type: actions.USE_MEAL, meal };
 }
 
-export function editMeal(meal) {
-    return {type: actions.EDIT_MEAL, meal };
+export function editMeal(meal, updates = {}) {
+    return {type: actions.UPDATE_MEAL, meal, updates };
 }

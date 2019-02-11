@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import MealCard from './MealCard';
+import { MealCardBase as MealCard } from './MealCard';
 
 describe('#Components #Dashboard #MealCard', function() {
     const meal = {
@@ -51,5 +51,14 @@ describe('#Components #Dashboard #MealCard', function() {
 
         meal.usedCount = 0;
         expect(shallow(<MealCard meal={ meal } />).find('.usedCount').text()).toEqual('Used 0 times');
+    });
+
+    it('should call the useMeal handler when clicking the appropriate button.', function() {
+        const useMealSpy = jest.fn();
+        const wrapper = shallow(<MealCard meal={ meal } useMeal={ useMealSpy } />);
+
+        wrapper.find('.useMealButton').simulate('click', { stopPropogation: () => undefined, preventDefault: () => undefined });
+
+        expect(useMealSpy).toHaveBeenCalledWith(meal);
     });
 });

@@ -2,7 +2,6 @@ import { pipe } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import useMeal from 'Business/Meals/useMeal';
 import Meal from 'Business/Meals/Types/Meal';
 import { useMeal as useMealActionCreator } from 'Data/ActionCreators/mealActionCreators';
 import dateString from 'UI/Formatting/dateString';
@@ -11,16 +10,16 @@ import './MealCard.sass';
 
 interface MealCardProps {
     meal: Meal
-    updateMeal: (meal: Meal) => Promise<void>
+    useMeal: (meal: Meal) => Promise<void>
 }
 
 function MealCardBase(props: MealCardProps) {
-    const { meal, updateMeal } = props;
+    const { meal, useMeal } = props;
     const handleUseMeal = function (e) {
         e.stopPropogation();
         e.preventDefault();
-        
-        pipe(useMeal, updateMeal)(meal);
+
+        useMeal(meal);
     }
 
     return (
@@ -35,7 +34,7 @@ function MealCardBase(props: MealCardProps) {
             </div>
             <div className="col-4">
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary useMealButton"
                     type="button"
                     onClick={handleUseMeal}>Use it!</button>
                 <h4 className="usedCount">Used {meal.usedCount} {(meal.usedCount === 1) ? 'time' : 'times'}</h4>
@@ -46,10 +45,11 @@ function MealCardBase(props: MealCardProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        updateMeal: pipe(useMealActionCreator, dispatch)
+        useMeal: pipe(useMealActionCreator, dispatch)
     }
 }
 
 const MealCard = connect(() => ({}), mapDispatchToProps)(MealCardBase);
 
+export { MealCardBase };
 export default MealCard;
