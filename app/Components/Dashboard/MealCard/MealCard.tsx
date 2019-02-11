@@ -10,7 +10,7 @@ import './MealCard.sass';
 
 interface MealCardProps {
     meal: Meal
-    useMeal: (meal: Meal) => Promise<void>
+    useMeal: (meal: Meal) => void
 }
 
 function MealCardBase(props: MealCardProps) {

@@ -14,15 +14,6 @@ describe('#Business #Meals #useMeal', function() {
         notes: 'gonna use you!'
     };
 
-    // it('should send a request to the correct URL.', async function() {
-    //     expect.assertions(2);
-    //     await useMeal(meal);
-
-    //     expect(fetch.mock.calls[0][0]).toEqual(`${__APIRoot__}/meals/4/`);
-    //     expect(fetch.mock.calls[0][1].method).toEqual('PATCH');
-    // });
-
-
     it('should update the meal date.', function() {
         const updatedMeal = useMeal(meal);
         const today = dateString.store(new Date());

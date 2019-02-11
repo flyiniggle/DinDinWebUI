@@ -8,7 +8,7 @@ import { Result, Maybe } from 'true-myth';
 interface IMealProps {
     meal: Maybe<IMeal | INewMeal>
     message?: Message
-    updateMeal?: (IMeal) => Promise<void>
+    updateMeal?: (meal: IMeal, updates: Partial<IMeal>) => IMeal
     save?: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>> | Result<INewMeal, Message[]>
     saveFieldHandler: () => Promise<void>
     updateFieldHandler: (any) => void

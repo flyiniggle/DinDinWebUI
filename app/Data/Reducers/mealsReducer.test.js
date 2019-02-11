@@ -103,7 +103,7 @@ describe('mealsReducer', function() {
             expect(Reducers.setMeal(initialState, action)).toEqual(expected);
         });
 
-        it('should make no change if no matching meal exists.', function() {
+        it('should add a new meal if no matching meal exists.', function() {
             const initialState = {
                 meals: [
                     {id: 1, name: 'oobleck'},
@@ -116,8 +116,11 @@ describe('mealsReducer', function() {
             const action = {
                 meal: { id: 33, taste: 5}
             };
+            const expected = {
+                meals: [...initialState.meals, action.meal]
+            };
 
-            expect(Reducers.setMeal(initialState, action)).toEqual(initialState);
+            expect(Reducers.setMeal(initialState, action)).toEqual(expected);
         });
 
         it('should make no change if no meal is provided.', function() {
