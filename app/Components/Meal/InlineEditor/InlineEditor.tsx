@@ -21,7 +21,7 @@ function InlineEditor(
         componentWillMount = function() {
             document.addEventListener('keydown', this.handleKeydown, false);
         }
-    
+
         componentWillUnmount = function() {
             document.removeEventListener('keydown', this.handleKeydown, false);
         }
@@ -34,9 +34,9 @@ function InlineEditor(
             }
         }
 
-        doSave = async (): Promise<void> => {
+        doSave = (): void => {
             this.setState({ submitting: true });
-            await this.props.onSave();
+            this.props.onSave();
             this.setState({ submitting: false });
         }
 

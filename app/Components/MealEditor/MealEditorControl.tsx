@@ -2,7 +2,6 @@ import * as React from 'react';
 import editableFields from "Components/Meal/Types/editableFields";
 import IMealEditorControlProps from 'Components/MealEditor/Types/IMealEditorControlProps';
 import IMealProps from 'Components/Meal/Types/IMealProps';
-import updateMeal from 'Business/Meals/updateMeal';
 import IMeal from 'Business/Meals/Types/Meal';
 
 
@@ -49,26 +48,16 @@ function MealEditorControl(MealComponent): React.ComponentClass {
         updateCurrentListValue = (a: Array<any>): void => {
             this.setState({ activeFieldValue: a });
         }
-    
-        doSave = async () => {
-            const result = await updateMeal(
-                this.props.meal,
-                { [this.state.activeField]: this.state.activeFieldValue }
-            );
 
-            result.match({
-                Ok: this.handleOkSave,
-                Err: console.log //use a generic error messager, just as soon as I build it
+        doSave = () => {
+            const { updateMeal, meal } = this.props;
+
+            meal.match({
+                Just: function (meal: IMeal): void {
+                    updateMeal(meal, { [this.state.activeField]: this.state.activeFieldValue });
+                },
+                Nothing: () => undefined
             });
-        }
-
-        handleOkSave = (meal: IMeal) => {
-            this.setState({
-                activeField: null,
-                activeFieldValue: null
-            });
-
-            return this.props.updateMeal(meal);
         }
 
         activateEditor = (field: editableFields, value: any) => {

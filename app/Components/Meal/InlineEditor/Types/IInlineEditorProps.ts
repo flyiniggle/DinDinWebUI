@@ -1,7 +1,7 @@
 interface IInlineEditorProps {
     active: boolean,
     activate: () => void,
-    onSave: () => Promise<void>,
+    onSave: () => void,
     onCancel: (e: Event) => void,
     onChange: any,
     displayValue?: any,

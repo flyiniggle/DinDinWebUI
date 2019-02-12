@@ -7,7 +7,7 @@ import getMealById from 'Business/Meals/getMealById';
 
 const getMealsProp = safeGetProp('meals');
 
-export const meals: (object) => Maybe<IMeal[]> = pipe(
+export const meals: (state: object) => Maybe<IMeal[]> = pipe(
     getMealsProp,
     Maybe.chain(getMealsProp)
 );
@@ -21,7 +21,7 @@ export const meal = function (state: object, id: number): IMeal {
     )(state);
 }
 
-export const messages: (object) => Maybe<Message[]> = pipe(
+export const messages: (state: object) => Maybe<Message[]> = pipe(
     getMealsProp,
     Maybe.chain(safeGetProp('messages'))
 );
