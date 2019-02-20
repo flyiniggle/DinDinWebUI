@@ -57,7 +57,7 @@ describe('#Components #Dashboard #MealCard', function() {
         const useMealSpy = jest.fn();
         const wrapper = shallow(<MealCard meal={ meal } useMeal={ useMealSpy } />);
 
-        wrapper.find('.useMealButton').simulate('click', { stopPropogation: () => undefined, preventDefault: () => undefined });
+        wrapper.find('.useMealButton').simulate('click', { stopPropagation: () => undefined, preventDefault: () => undefined });
 
         expect(useMealSpy).toHaveBeenCalledWith(meal);
     });

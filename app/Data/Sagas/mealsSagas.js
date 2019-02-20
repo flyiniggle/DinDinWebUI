@@ -32,7 +32,7 @@ export function* sendUpdateMeal(action) {
 export function* sendUseMeal(action) {
     const meal = action.meal;
     const updatedMeal = useMeal(meal);
-    const updateResult = yield call(MealService.patch, updatedMeal.id, updatedMeal);
+    const updateResult = yield call(MealService.patch, meal.id, updatedMeal);
     const nextAction = updateResult.match({
         Ok: setMeal,
         Err: setMealMessages

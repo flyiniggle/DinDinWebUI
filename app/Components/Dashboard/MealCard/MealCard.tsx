@@ -15,8 +15,8 @@ interface MealCardProps {
 
 function MealCardBase(props: MealCardProps) {
     const { meal, useMeal } = props;
-    const handleUseMeal = function (e) {
-        e.stopPropogation();
+    const handleUseMeal = function (e: React.MouseEvent<HTMLButtonElement>) {
+        e.stopPropagation();
         e.preventDefault();
 
         useMeal(meal);

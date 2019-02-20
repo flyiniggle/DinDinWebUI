@@ -152,7 +152,7 @@ describe('#Data #mealSagas', function() {
     });
 
     describe('sendUseMeal', function() {
-        it('should do should call the MealService patch API with the updated meal data.', function() {
+        it('should call the MealService patch API with the updated meal data.', function() {
             const meal = {
                 id: 4,
                 name: 'delish dish',
@@ -165,7 +165,7 @@ describe('#Data #mealSagas', function() {
             };
             const today = dateString.store(new Date());
             const expectedMeal = { lastUsed: today, usedCount: 4 };
-            const expected = call(MealService.patch, expectedMeal.id, expectedMeal);
+            const expected = call(MealService.patch, meal.id, expectedMeal);
             const mealUpdater = sendUseMeal({ meal });
             const result = mealUpdater.next();
 
