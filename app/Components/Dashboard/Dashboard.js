@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
 import OverviewBase from 'Components/Dashboard/Overview/Overview';
 import { getMeals, useMeal } from 'Data/ActionCreators/mealsActionCreators';
-import { meals, isLoading as isMealsLoading } from 'Data/Selectors/mealsSelectors';
+import { meals, isLoading as isMealsLoading, isWorking as isMealsWorking } from 'Data/Selectors/mealsSelectors';
 import { isLoading as isDashbordLoading, messages as dashboardMessages } from 'Data/Selectors/dashboardSelectors';
 
 import 'Styles/theme.sass';
@@ -75,7 +75,7 @@ const mapStateToProps = function(state) {
     return {
         meals: meals(state),
         mealsAreLoading: isMealsLoading(state),
-        mealIsUpdating: isDashbordLoading(state)
+        mealIsUpdating: isMealsWorking(state)
     };
 };
 
