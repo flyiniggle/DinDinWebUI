@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Meal from 'Components/Meal/Meal';
 import MealEditorControl from 'Components/MealEditor/MealEditorControl';
 import { useMeal, updateMeal } from 'Data/ActionCreators/mealsActionCreators';
-import { meal, isWorking } from 'Data/Selectors/mealsSelectors';
+import { meal, isWorking, messages } from 'Data/Selectors/mealsSelectors';
 import IMealEditorControlProps from './Types/IMealEditorControlProps';
 import IMeal from 'Business/Meals/Types/Meal';
 
@@ -11,7 +11,8 @@ import IMeal from 'Business/Meals/Types/Meal';
 const mapStateToProps = function (state, ownProps): Partial<IMealEditorControlProps> {
     return {
         meal: meal(state, ownProps.mealId),
-        isWorking: isWorking(state)
+        isWorking: isWorking(state),
+        messages: messages(state)
     }
 }
 

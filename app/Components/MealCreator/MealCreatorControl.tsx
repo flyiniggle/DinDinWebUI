@@ -6,7 +6,6 @@ import IMealProps from 'Components/Meal/Types/IMealProps';
 import IMealCreatorControlProps from 'Components/MealCreator/Types/IMealCreaterControlProps';
 import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
-import createMeal from 'Business/Meals/createMeal';
 import Message from 'Business/Validation/Types/Message';
 import maybe from 'Business/Lib/maybe';
 
@@ -80,21 +79,8 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
             }
         }
 
-        doSaveMeal = async (): Promise<Result<IMeal, Message[]>> => {
-            const result = await createMeal(this.state.newMeal);
-    
-            result.map((meal) => {
-                this.setState({
-                    mealId: meal.id
-                });
-            })
-    
-            result.match({
-                Ok: () => null,
-                Err: console.log //use a generic error messager, just as soon as I build it
-            });
-    
-            return result;
+        saveNewMeal = (): void => {
+            this.props.createMeal(this.state.newMeal);
         }
 
         activateEditor = (field: editableFields, value: any) => {
@@ -107,9 +93,10 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
             }
 
             const childProps = {
-                save: this.doSaveMeal,
+                saveNewMeal: this.saveNewMeal,
+                isWorking: this.props.isWorking,
                 meal: maybe(this.state.newMeal),
-                saveFieldHandler: this.doSaveField,
+                saveField: this.doSaveField,
                 updateFieldHandler: this.updateCurrentValue,
                 updateListFieldHandler: this.updateCurrentListValue,
                 cancelEditingHandler: this.cancelEditing,

@@ -6,10 +6,8 @@ import { mount } from 'enzyme';
 import Splash from 'Components/Splash/Splash';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import authStatus from 'Business/Auth/authStatus';
-import getMealById from 'Business/Meals/getMealById';
 
 import DinDin from './DinDin';
-import fixtures from './DinDin.fixtures';
 
 
 const initialState = { meals: [] };

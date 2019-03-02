@@ -6,7 +6,7 @@ import { Maybe } from 'true-myth';
 interface IMealEditorControlProps {
     meal: Maybe<IMeal>,
     isWorking: boolean
-    message?: Message
+    messages: Maybe<Message[]>
     useMeal: (IMeal: IMeal) => void
     updateMeal: (IMeal: IMeal, updates: Partial<IMeal>) => void
 }

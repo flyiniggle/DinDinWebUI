@@ -32,7 +32,7 @@ const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
     );
 });
 
-const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: (INewMeal) => any) {
+const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: () => any) {
     return (
         <button
             className="btn btn-primary"
@@ -40,7 +40,7 @@ const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: (INewMea
             onClick={(event) => {
                 event.stopPropagation();
                 event.preventDefault();
-                return handler(newMeal);
+                handler();
             }}
         >
             Save
@@ -52,7 +52,7 @@ const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: (INewMea
 function Meal(props: IMealProps) {
     const {
         meal: maybeMeal,
-        message,
+        messages,
         isWorking,
         saveField,
         useMeal,

@@ -2,19 +2,28 @@ import { compose, pipe } from 'ramda';
 import { connect } from 'react-redux'
 import Meal from 'Components/Meal/Meal';
 import MealCreatorControl from 'Components/MealCreator/MealCreatorControl';
-import { updateMeal } from 'Data/ActionCreators/mealActionCreators';
+import { createMeal } from 'Data/ActionCreators/mealsActionCreators';
+import IMealCreatorControlProps from './Types/IMealCreaterControlProps';
+import { isWorking, messages } from 'Data/Selectors/mealsSelectors';
 
 
-function mapDispatchToProps(dispatch) {
+const mapStateToProps = function (state): Partial<IMealCreatorControlProps> {
     return {
-        updateMeal: pipe(updateMeal, dispatch)
+        isWorking: isWorking(state),
+        messages: messages(state)
     }
 }
 
-const MealCardStoreConnector = connect(() => ({}), mapDispatchToProps);
+function mapDispatchToProps(dispatch) {
+    return {
+        createMeal: pipe(createMeal, dispatch),
+    }
+}
+
+const MealCreatorStoreConnector = connect(mapStateToProps, mapDispatchToProps);
 
 const MealCreator = compose(
-    MealCardStoreConnector,
+    MealCreatorStoreConnector,
     MealCreatorControl
 )(Meal)
 

@@ -63,7 +63,7 @@ function MealEditorControl(MealComponent): React.ComponentClass {
                 },
                 Nothing: () => undefined
             });
-            
+
             this.setState({ activeField: null, activeFieldValue: null });
         }
 
@@ -79,7 +79,7 @@ function MealEditorControl(MealComponent): React.ComponentClass {
                 activeFieldValue: this.state.activeFieldValue,
                 activateEditor: this.activateEditor,
                 meal: this.props.meal,
-                message: this.props.message,
+                messages: this.props.messages,
             }
 
             return <MealComponent {...childProps}/>;

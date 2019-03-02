@@ -71,7 +71,6 @@ export function* sendUseMeal(action: IUseMealAction) {
 
 export function* sendCreateMeal(action: ICreateMealAction) {
     yield put(startMealsWorking());
-
     const updateResult = yield call(MealService.post, action.meal);
 
     yield put(endMealsWorking());
