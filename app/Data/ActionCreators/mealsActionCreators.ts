@@ -79,3 +79,21 @@ export interface IEndMealsLoading {
 export function endMealsLoading(): IEndMealsLoading {
     return { type: actions.END_MEALS_LOADING };
 }
+
+
+export interface IStartMealsWorking {
+    type: string
+}
+
+export function startMealsWorking(): IStartMealsWorking {
+    return { type: actions.START_MEALS_WORKING };
+}
+
+
+export interface IEndMealsWorking {
+    type: string
+}
+
+export function endMealsWorking(): IEndMealsWorking {
+    return { type: actions.END_MEALS_WORKING };
+}

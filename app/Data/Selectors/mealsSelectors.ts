@@ -32,3 +32,9 @@ export const isLoading: (state: IMealsState) => boolean = pipe(
     Maybe.chain(safeGetProp('isLoading')),
     Maybe.unwrapOr(false)
 );
+
+export const isWorking: (state: IMealsState) => boolean = pipe(
+    getMealsProp,
+    Maybe.chain(safeGetProp('isWorking')),
+    Maybe.unwrapOr(false)
+);

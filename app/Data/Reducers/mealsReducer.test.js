@@ -174,4 +174,40 @@ describe('mealsReducer', function() {
             expect(result2).toHaveProperty('isLoading', false);
         });
     });
+
+    describe('startMealsWorking', function() {
+        it('should set the working state to true.', function() {
+            const initialState1 = {
+                isWorking: false,
+                messages: []
+            };
+            const result1 = Reducers.startMealsWorking(initialState1);
+            const initalState2 = {
+                isWorking: true,
+                message: []
+            };
+            const result2 = Reducers.startMealsWorking(initalState2);
+
+            expect(result1).toHaveProperty('isWorking', true);
+            expect(result2).toHaveProperty('isWorking', true);
+        });
+    });
+
+    describe('endMealsWorking', function() {
+        it('should set the working state to false.', function() {
+            const initialState1 = {
+                isWorking: false,
+                messages: []
+            };
+            const result1 = Reducers.endMealsLoading(initialState1);
+            const initalState2 = {
+                isWorking: true,
+                message: []
+            };
+            const result2 = Reducers.endMealsWorking(initalState2);
+
+            expect(result1).toHaveProperty('isWorking', false);
+            expect(result2).toHaveProperty('isWorking', false);
+        });
+    });
 });

@@ -73,4 +73,17 @@ describe('#Data #Selectors #mealSelectors', function() {
             expect(result).toBe(true);
         });
     });
+
+    describe('#isWorking', function() {
+        it('should return the loading state.', function() {
+            const testStore = {
+                meals: {
+                    isWorking: true
+                }
+            };
+            const result = selectors.isWorking(testStore);
+
+            expect(result).toBe(true);
+        });
+    });
 });

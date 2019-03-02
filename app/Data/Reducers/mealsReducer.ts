@@ -10,6 +10,7 @@ import IMeal from 'Business/Meals/Types/Meal';
 const initialState: IMealsState = {
     meals: null,
     isLoading: false,
+    isWorking: false,
     messages: null
 };
 
@@ -64,12 +65,28 @@ export function endMealsLoading(state: IMealsState): IMealsState {
     }
 }
 
+export function startMealsWorking(state: IMealsState): IMealsState {
+    return {
+        ...state,
+        isWorking: true
+    }
+}
+
+export function endMealsWorking(state: IMealsState): IMealsState {
+    return {
+        ...state,
+        isWorking: false
+    }
+}
+
 const subReducers = {
     [actionTypes.SET_MEALS]: setMeals,
     [actionTypes.SET_MESSAGES]: setMealsMessages,
     [actionTypes.SET_MEAL]: setMeal,
     [actionTypes.START_MEALS_LOADING]: startMealsLoading,
-    [actionTypes.END_MEALS_LOADING]: endMealsLoading
+    [actionTypes.END_MEALS_LOADING]: endMealsLoading,
+    [actionTypes.START_MEALS_WORKING]: startMealsWorking,
+    [actionTypes.END_MEALS_WORKING]: endMealsWorking
 };
 
 export default createReducer(initialState, subReducers);
