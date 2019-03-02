@@ -6,14 +6,14 @@ import Message from 'Business/Validation/Types/Message';
 import getMealById from 'Business/Meals/getMealById';
 import IMealsState from 'Data/Reducers/Types/IMealsState';
 
-const getMealsProp = safeGetProp('meals');
+const getMealsProp: (state: IMealsState) => Maybe<IMeal[]> = safeGetProp('meals');
 
 export const meals: (state: IMealsState) => Maybe<IMeal[]> = pipe(
     getMealsProp,
     Maybe.chain(getMealsProp)
 );
 
-export const meal = function (state: IMealsState, id: number): IMeal {
+export const meal = function (state: IMealsState, id: number): Maybe<IMeal> {
     const getMeal = getMealById(id);
 
     return pipe(

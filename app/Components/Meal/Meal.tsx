@@ -1,4 +1,4 @@
-import { curry, pipe } from 'ramda';
+import { curry } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
@@ -15,7 +15,6 @@ import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 
 import './Meal.sass';
-import useMeal from 'Business/Meals/useMeal';
 
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
     return (
@@ -54,13 +53,14 @@ function Meal(props: IMealProps) {
     const {
         meal: maybeMeal,
         message,
-        updateMeal,
-        save,
+        isWorking,
+        saveField,
+        useMeal,
+        saveNewMeal,
         activeField,
         activeFieldValue,
         updateFieldHandler,
         updateListFieldHandler,
-        saveFieldHandler,
         cancelEditingHandler
     } = props;
 
@@ -72,14 +72,14 @@ function Meal(props: IMealProps) {
     const meal = maybeMeal.unsafelyUnwrap();
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
-    const saveHandler = maybe(save);
-    const useHandler = maybe(updateMeal).map(u => pipe(useMeal, u));
+    const saveNewMealHandler = maybe(saveNewMeal);
+    const useHandler = maybe(useMeal);
     const renderUseIt = getRenderUseIt(meal);
     const renderSaveButton = getRenderSaveButton(meal);
     const displayOrEditNameProps: IDisplayOrEditNameProps = {
         active: activeField === editableFields.name,
         activate: () => props.activateEditor(editableFields.name, meal.name),
-        onSave: saveFieldHandler,
+        onSave: saveField,
         onCancel: cancelEditingHandler,
         displayValue: meal.name,
         editingValue: activeFieldValue,
@@ -88,35 +88,35 @@ function Meal(props: IMealProps) {
     const displayOrEditTasteProps: IDisplayOrEditTasteProps = {
         active: activeField === editableFields.taste,
         activate: () => props.activateEditor(editableFields.taste, meal.taste),
-        onSave: saveFieldHandler,
+        onSave: saveField,
         onCancel: cancelEditingHandler,
         displayValue: meal.taste,
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
         range: 5,
-    }
+    };
     const displayOrEditDifficultyProps: IDisplayOrEditDifficultyProps = {
         active: activeField === editableFields.difficulty,
         activate: () => props.activateEditor(editableFields.difficulty, meal.difficulty),
-        onSave: saveFieldHandler,
+        onSave: saveField,
         onCancel: cancelEditingHandler,
         displayValue: meal.difficulty,
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
         range: 5,
-    }
+    };
     const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
     const displayOrEditIngredientsProps: IDisplayOrEditIngredientsProps = {
         active: activeField === editableFields.ingredients,
         activate: () => props.activateEditor(editableFields.ingredients, meal.ingredients),
-        onSave: saveFieldHandler,
+        onSave: saveField,
         onCancel: cancelEditingHandler,
         displayValue: ingredients,
         editingValue: activeFieldValue,
         onChange: updateListFieldHandler,
     };
     const displayOrEditNotesProps: IDisplayOrEditNotesProps = {
-        onSave: saveFieldHandler,
+        onSave: saveField,
         active: activeField === editableFields.notes,
         activate: () => props.activateEditor(editableFields.notes, meal.notes),
         displayValue: meal.notes,
@@ -162,7 +162,7 @@ function Meal(props: IMealProps) {
             <div className="row m2 d-flex justify-content-end">
                 <div className="col-2 d-flex justify-content-between">
                     {useHandler.map(renderUseIt).unwrapOr(null)}
-                    {saveHandler.map(renderSaveButton).unwrapOr(null)}
+                    {saveNewMealHandler.map(renderSaveButton).unwrapOr(null)}
 
                     <Link to="/meals" className="btn btn-outline-primary">close</Link>
                 </div>

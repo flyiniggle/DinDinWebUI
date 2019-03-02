@@ -8,14 +8,15 @@ import { Result, Maybe } from 'true-myth';
 interface IMealProps {
     meal: Maybe<IMeal | INewMeal>
     message?: Message
-    updateMeal?: (meal: IMeal, updates: Partial<IMeal>) => void
-    save?: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>> | Result<INewMeal, Message[]>
-    saveFieldHandler: () => void
+    isWorking: boolean
+    saveField?: () => void
+    useMeal?: (meal: IMeal) => void
+    saveNewMeal?: (string: editableFields, val: any) => Promise<Result<IMeal, Message[]>> | Result<INewMeal, Message[]>
     updateFieldHandler: (any) => void
     updateListFieldHandler: (a: Array<any>) => void
     cancelEditingHandler: (e: Event) => void
-    activeField?: string,
-    activeFieldValue?: any,
+    activeField?: string
+    activeFieldValue?: any
     activateEditor?: (field: editableFields, value: any) => void
     children?: ReactNode
 }

@@ -49,24 +49,29 @@ function MealEditorControl(MealComponent): React.ComponentClass {
             this.setState({ activeFieldValue: a });
         }
 
-        doSave = () => {
-            const { updateMeal, meal } = this.props;
-
-            meal.match({
-                Just: function (meal: IMeal): void {
-                    updateMeal(meal, { [this.state.activeField]: this.state.activeFieldValue });
-                },
-                Nothing: () => undefined
-            });
-        }
-
         activateEditor = (field: editableFields, value: any) => {
             this.setState({ activeField: field, activeFieldValue: value });
         }
 
+        save = () => {
+            const updates: Partial<IMeal> = { [this.state.activeField]: this.state.activeFieldValue }
+            const { updateMeal, meal } = this.props;
+
+            meal.match({
+                Just: function (meal: IMeal): void {
+                    updateMeal(meal, updates);
+                },
+                Nothing: () => undefined
+            });
+            
+            this.setState({ activeField: null, activeFieldValue: null });
+        }
+
         render() {
             const childProps: IMealProps = {
-                saveFieldHandler: this.doSave,
+                saveField: this.save,
+                isWorking: this.props.isWorking,
+                useMeal: this.props.useMeal,
                 updateFieldHandler: this.updateCurrentValue,
                 updateListFieldHandler: this.updateCurrentListValue,
                 cancelEditingHandler: this.cancelEditing,
@@ -75,7 +80,6 @@ function MealEditorControl(MealComponent): React.ComponentClass {
                 activateEditor: this.activateEditor,
                 meal: this.props.meal,
                 message: this.props.message,
-                updateMeal: this.props.updateMeal
             }
 
             return <MealComponent {...childProps}/>;
