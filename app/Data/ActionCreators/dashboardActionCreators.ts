@@ -1,4 +1,4 @@
-import * as actions from 'Data/ActionTypes/dashboardActiontypes';
+import * as actions from 'Data/ActionTypes/dashboardActionTypes';
 import Message from 'Business/Validation/Types/Message';
 
 
