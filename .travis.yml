@@ -3,11 +3,11 @@ node_js:
 - 9
 
 install:
-- NODE_ENV=development npm ci
+- NODE_ENV=development npm install
 
 cache:
   directories:
-  - "$HOME/.npm"
+  - "node_modules"
 
 jobs:
   include:
