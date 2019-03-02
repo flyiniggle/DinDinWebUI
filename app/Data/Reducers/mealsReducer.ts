@@ -3,12 +3,13 @@ import * as actionTypes from 'Data/ActionTypes/mealsActionTypes';
 import createReducer from 'Data/Lib/createReducer';
 import safeGetProp from 'Business/Lib/safeGetProp';
 import IMealsState from './Types/IMealsState';
-import { ISetMealAction, ISetMealMessagesAction, ISetMealsAction } from 'Data/ActionCreators/mealActionCreators';
+import { ISetMealAction, ISetMealMessagesAction, ISetMealsAction } from 'Data/ActionCreators/mealsActionCreators';
 import IMeal from 'Business/Meals/Types/Meal';
 
 
 const initialState: IMealsState = {
     meals: null,
+    saveMealInProgress: false,
     messages: null
 };
 

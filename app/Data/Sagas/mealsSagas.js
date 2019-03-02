@@ -2,7 +2,7 @@ import MealService from 'Business/Meals/Service';
 import updateMeal from 'Business/Meals/updateMeal';
 import useMeal from 'Business/Meals/useMeal';
 import * as mealActionTypes from 'Data/ActionTypes/mealsActionTypes';
-import { setMealMessages, setMeals, setMeal } from 'Data/ActionCreators/mealActionCreators';
+import { setMealMessages, setMeals, setMeal } from 'Data/ActionCreators/mealsActionCreators';
 
 import { call, put, takeEvery } from 'redux-saga/effects';
 

@@ -1,6 +1,6 @@
 import { Result } from 'true-myth';
 import MealService from 'Business/Meals/Service';
-import { setMealMessages, setMeal, setMeals } from 'Data/ActionCreators/mealActionCreators';
+import { setMealMessages, setMeal, setMeals } from 'Data/ActionCreators/mealsActionCreators';
 import dateString from 'UI/Formatting/dateString';
 
 import { sendUpdateMeal, sendUseMeal, loadMeals } from './mealsSagas';
