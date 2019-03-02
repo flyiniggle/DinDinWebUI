@@ -9,7 +9,7 @@ import IMeal from 'Business/Meals/Types/Meal';
 
 const initialState: IMealsState = {
     meals: null,
-    saveMealInProgress: false,
+    isLoading: false,
     messages: null
 };
 
@@ -19,15 +19,6 @@ export function setMeals(state: IMealsState, action: ISetMealsAction): IMealsSta
     return {
         ...state,
         meals
-    };
-}
-
-export function setMealsMessages(state: IMealsState, action: ISetMealMessagesAction): IMealsState {
-    const messages = action.messages;
-
-    return {
-        ...state,
-        messages
     };
 }
 
@@ -50,10 +41,35 @@ export function setMeal(state: IMealsState, action: ISetMealAction): IMealsState
     return state;
 }
 
+export function setMealsMessages(state: IMealsState, action: ISetMealMessagesAction): IMealsState {
+    const messages = action.messages;
+
+    return {
+        ...state,
+        messages
+    };
+}
+
+export function startMealsLoading(state: IMealsState): IMealsState {
+    return {
+        ...state,
+        isLoading: true
+    }
+}
+
+export function endMealsLoading(state: IMealsState): IMealsState {
+    return {
+        ...state,
+        isLoading: false
+    }
+}
+
 const subReducers = {
     [actionTypes.SET_MEALS]: setMeals,
     [actionTypes.SET_MESSAGES]: setMealsMessages,
-    [actionTypes.SET_MEAL]: setMeal
+    [actionTypes.SET_MEAL]: setMeal,
+    [actionTypes.START_MEALS_LOADING]: startMealsLoading,
+    [actionTypes.END_MEALS_LOADING]: endMealsLoading
 };
 
 export default createReducer(initialState, subReducers);

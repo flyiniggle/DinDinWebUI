@@ -1,8 +1,6 @@
 import IMeal from "Business/Meals/Types/Meal";
-import Message from "Business/Validation/Types/Message";
+import IAsyncViewState from './IAsyncViewState';
 
-export default interface IMealsState {
+export default interface IMealsState extends IAsyncViewState {
     meals: IMeal[] | null
-    saveMealInProgress: boolean
-    messages: Message[] | null
 }

@@ -138,4 +138,40 @@ describe('mealsReducer', function() {
             expect(Reducers.setMeal(initialState, action)).toEqual(initialState);
         });
     });
+
+    describe('startMealsLoading', function() {
+        it('should set the loading state to true.', function() {
+            const initialState1 = {
+                isLoading: false,
+                messages: []
+            };
+            const result1 = Reducers.startMealsLoading(initialState1);
+            const initalState2 = {
+                isLoading: true,
+                message: []
+            };
+            const result2 = Reducers.startMealsLoading(initalState2);
+
+            expect(result1).toHaveProperty('isLoading', true);
+            expect(result2).toHaveProperty('isLoading', true);
+        });
+    });
+
+    describe('endMealsLoading', function() {
+        it('should set the loading state to false.', function() {
+            const initialState1 = {
+                isLoading: false,
+                messages: []
+            };
+            const result1 = Reducers.endMealsLoading(initialState1);
+            const initalState2 = {
+                isLoading: true,
+                message: []
+            };
+            const result2 = Reducers.endMealsLoading(initalState2);
+
+            expect(result1).toHaveProperty('isLoading', false);
+            expect(result2).toHaveProperty('isLoading', false);
+        });
+    });
 });

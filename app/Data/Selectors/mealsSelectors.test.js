@@ -60,4 +60,17 @@ describe('#Data #Selectors #mealSelectors', function() {
             expect(result.unwrapOr([])).toEqual([]);
         });
     });
+
+    describe('#isLoading', function() {
+        it('should return the loading state.', function() {
+            const testStore = {
+                meals: {
+                    isLoading: true
+                }
+            };
+            const result = selectors.isLoading(testStore);
+
+            expect(result).toBe(true);
+        });
+    });
 });
