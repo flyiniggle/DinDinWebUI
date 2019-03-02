@@ -6,7 +6,7 @@ import createReducer from 'Data/Lib/createReducer';
 
 const initialState: IMealCreatorState = {
     isLoading: false,
-    messages: []
+    messages: null
 };
 
 export function startMealCreatorLoading(state: IMealCreatorState): IMealCreatorState {

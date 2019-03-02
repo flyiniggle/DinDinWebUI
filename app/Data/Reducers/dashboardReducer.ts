@@ -6,7 +6,7 @@ import createReducer from 'Data/Lib/createReducer';
 
 const initialState: IDashboardState = {
     isLoading: false,
-    messages: []
+    messages: null
 };
 
 export function startDashboardLoading(state: IDashboardState): IDashboardState {
