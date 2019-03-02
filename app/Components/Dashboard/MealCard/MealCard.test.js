@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { MealCardBase as MealCard } from './MealCard';
+import MealCard from './MealCard';
 
 describe('#Components #Dashboard #MealCard', function() {
     const meal = {

@@ -1,20 +1,18 @@
-import { pipe } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Meal from 'Business/Meals/Types/Meal';
-import { useMeal as useMealActionCreator } from 'Data/ActionCreators/mealActionCreators';
 import dateString from 'UI/Formatting/dateString';
 
 import './MealCard.sass';
 
 interface MealCardProps {
     meal: Meal
-    useMeal: (meal: Meal) => void
+    useMeal: (meal: Meal) => void,
+    mealIsUpdating: boolean
 }
 
-function MealCardBase(props: MealCardProps) {
-    const { meal, useMeal } = props;
+function MealCard(props: MealCardProps) {
+    const { meal, useMeal, mealIsUpdating: isMealUpdating } = props;
     const handleUseMeal = function (e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation();
         e.preventDefault();
@@ -43,13 +41,5 @@ function MealCardBase(props: MealCardProps) {
     );
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        useMeal: pipe(useMealActionCreator, dispatch)
-    }
-}
 
-const MealCard = connect(() => ({}), mapDispatchToProps)(MealCardBase);
-
-export { MealCardBase };
 export default MealCard;

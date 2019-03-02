@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
 import OverviewBase from 'Components/Dashboard/Overview/Overview';
-import { getMeals } from 'Data/ActionCreators/mealActionCreators';
-import { meals } from 'Data/Selectors/mealsSelectors';
+import { getMeals, useMeal } from 'Data/ActionCreators/mealsActionCreators';
+import { meals, isLoading as isMealsLoading } from 'Data/Selectors/mealsSelectors';
+import { isLoading as isDashbordLoading, messages as dashboardMessages } from 'Data/Selectors/dashboardSelectors';
 
 import 'Styles/theme.sass';
 import './Dashboard.sass';
@@ -17,12 +18,18 @@ class DashboardBase extends React.Component {
     static defaultPropTypes = {
         meals: undefined,
         logoutHandler: () => undefined,
-        getMeals: () => undefined
+        getMeals: () => undefined,
+        useMeal: () => undefined,
+        mealIsUpdating: false,
+        mealsAreLoading: false
     }
 
     static propTypes = {
         meals: PropTypes.object,
-        getMeals: PropTypes.func
+        getMeals: PropTypes.func,
+        useMeal: PropTypes.func,
+        mealIsUpdating: PropTypes.bool,
+        mealsAreLoading: PropTypes.bool
     }
 
     componentWillMount = () => {
@@ -47,7 +54,13 @@ class DashboardBase extends React.Component {
                     <div className="meal-card-container col-xs-12 col-md-8 p-5">
                         {
                             this.props.meals.match({
-                                Just: (m) => m.map((meal) => <MealCard meal={ meal } key={ meal.id } />),
+                                Just: (m) => m.map((meal) => (
+                                    <MealCard
+                                        meal={ meal }
+                                        key={ meal.id }
+                                        useMeal={ this.props.useMeal }
+                                        mealIsUpdating={ this.props.mealIsUpdating } />
+                                )),
                                 Nothing: () => <span>No meals</span>
                             })
                         }
@@ -60,13 +73,16 @@ class DashboardBase extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        meals: meals(state)
+        meals: meals(state),
+        mealsAreLoading: isMealsLoading(state),
+        mealIsUpdating: isDashbordLoading(state)
     };
 };
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        getMeals: pipe(getMeals, dispatch)
+        getMeals: pipe(getMeals, dispatch),
+        useMeal: pipe(useMeal, dispatch)
     };
 };
 
