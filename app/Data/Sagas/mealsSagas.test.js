@@ -10,7 +10,7 @@ import { call, put } from 'redux-saga/effects';
 describe('#Data #mealSagas', function() {
     describe('loadMeals', function() {
         it('should set the loading state to true.', function() {
-            const expected = put(startMealsLoading);
+            const expected = put(startMealsLoading());
             const mealLoader = loadMeals();
 
             expect(mealLoader.next().value).toEqual(expected);
@@ -25,7 +25,7 @@ describe('#Data #mealSagas', function() {
         });
 
         it('should set the loading state to false.', function() {
-            const expected = put(endMealsLoading);
+            const expected = put(endMealsLoading());
             const mealLoader = loadMeals();
 
             mealLoader.next();
@@ -103,7 +103,7 @@ describe('#Data #mealSagas', function() {
                 notes: 'gonna use you!'
             };
             const updates = { name: 'latke' };
-            const expected = put(startMealsWorking);
+            const expected = put(startMealsWorking());
             const mealUpdater = sendUpdateMeal({ meal, updates });
 
             expect(mealUpdater.next().value).toEqual(expected);
@@ -153,7 +153,7 @@ describe('#Data #mealSagas', function() {
                 notes: 'gonna use you!'
             };
             const updates = { name: 'latke' };
-            const expected = put(endMealsWorking);
+            const expected = put(endMealsWorking());
             const mealUpdater = sendUpdateMeal({ meal, updates });
 
             mealUpdater.next();
@@ -232,7 +232,7 @@ describe('#Data #mealSagas', function() {
                 notes: 'gonna use you!'
             };
             const mealUpdater = sendUseMeal({ meal });
-            const expected = put(startMealsWorking);
+            const expected = put(startMealsWorking());
 
             expect(mealUpdater.next().value).toEqual(expected);
         });
@@ -272,7 +272,7 @@ describe('#Data #mealSagas', function() {
                 notes: 'gonna use you!'
             };
             const mealUpdater = sendUseMeal({ meal });
-            const expected = put(endMealsWorking);
+            const expected = put(endMealsWorking());
 
             mealUpdater.next();
             mealUpdater.next();

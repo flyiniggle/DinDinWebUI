@@ -7,11 +7,11 @@ import { setMealMessages, setMeals, setMeal, startMealsLoading, endMealsLoading,
 import { call, put, takeEvery } from 'redux-saga/effects';
 
 export function* loadMeals() {
-    yield put(startMealsLoading);
+    yield put(startMealsLoading());
 
     const mealsResult = yield call(MealService.get);
 
-    yield put(endMealsLoading);
+    yield put(endMealsLoading());
 
     const action = mealsResult.match({
         Ok: setMeals,
@@ -26,11 +26,11 @@ export function* sendUpdateMeal(action) {
     const updates = action.updates;
     const updatedMeal = updateMeal(meal, updates);
 
-    yield put(startMealsWorking);
+    yield put(startMealsWorking());
 
     const updateResult = yield call(MealService.patch, meal.id, updatedMeal);
 
-    yield put(endMealsWorking);
+    yield put(endMealsWorking());
 
     const nextAction = updateResult.match({
         Ok: setMeal,
@@ -44,11 +44,11 @@ export function* sendUseMeal(action) {
     const meal = action.meal;
     const updatedMeal = useMeal(meal);
 
-    yield put(startMealsWorking);
+    yield put(startMealsWorking());
 
     const updateResult = yield call(MealService.patch, meal.id, updatedMeal);
 
-    yield put(endMealsWorking);
+    yield put(endMealsWorking());
 
     const nextAction = updateResult.match({
         Ok: setMeal,
