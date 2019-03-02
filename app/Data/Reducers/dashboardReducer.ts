@@ -1,5 +1,5 @@
 import { ISetDashboardMessagesAction } from 'Data/ActionCreators/dashboardActionCreators';
-import * as actions from 'Data/ActionTypes/dashboardActiontypes';
+import * as actions from 'Data/ActionTypes/dashboardActionTypes';
 import IDashboardState from 'Data/Reducers/Types/IDashboardState';
 import createReducer from 'Data/Lib/createReducer';
 
