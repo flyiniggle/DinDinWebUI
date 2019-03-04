@@ -33,7 +33,7 @@ export function setMealCreatorMessages(state: IMealCreatorState, action: ISetMea
 }
 
 const subReducers = {
-    [actions.START_MEAL_CREATOR_LOADING]: setMealCreatorMessages,
+    [actions.START_MEAL_CREATOR_LOADING]: startMealCreatorLoading,
     [actions.END_MEAL_CREATOR_LOADING]: endMealCreatorLoading,
     [actions.SET_MEAL_CREATOR_MESSAGES]: setMealCreatorMessages
 }

@@ -1,4 +1,5 @@
-import { watchGetMeals, watchUseMeal, watchUpdateMeal, watchCreateMeal } from 'Data/Sagas/mealsSagas';
+import { watchGetMeals, watchUseMeal, watchUpdateMeal } from 'Data/Sagas/mealsSagas';
+import { watchCreateMeal } from 'Data/Sagas/mealCreatorSagas';
 
 import { all } from 'redux-saga/effects';
 

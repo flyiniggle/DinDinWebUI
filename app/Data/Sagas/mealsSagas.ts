@@ -11,8 +11,7 @@ import {
     startMealsWorking,
     endMealsWorking,
     IUseMealAction,
-    IUpdateMealAction,
-    ICreateMealAction
+    IUpdateMealAction
 } from 'Data/ActionCreators/mealsActionCreators';
 
 import { call, put, takeEvery } from 'redux-saga/effects';
@@ -69,20 +68,6 @@ export function* sendUseMeal(action: IUseMealAction) {
     yield put(nextAction);
 }
 
-export function* sendCreateMeal(action: ICreateMealAction) {
-    yield put(startMealsWorking());
-    const updateResult = yield call(MealService.post, action.meal);
-
-    yield put(endMealsWorking());
-
-    const nextAction = updateResult.match({
-        Ok: setMeal,
-        Err: setMealMessages
-    });
-
-    yield put(nextAction);
-}
-
 export function* watchGetMeals() {
     yield takeEvery(mealActionTypes.GET_MEALS, loadMeals);
 }
@@ -93,8 +78,4 @@ export function* watchUseMeal() {
 
 export function* watchUpdateMeal() {
     yield takeEvery(mealActionTypes.UPDATE_MEAL, sendUpdateMeal);
-}
-
-export function* watchCreateMeal() {
-    yield takeEvery(mealActionTypes.CREATE_MEAL, sendCreateMeal);
 }

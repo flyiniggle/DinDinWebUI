@@ -1,5 +1,16 @@
 import * as actions from 'Data/ActionTypes/mealCreatorActionTypes';
 import Message from 'Business/Validation/Types/Message';
+import INewMeal from 'Business/Meals/Types/NewMeal';
+
+
+export interface ICreateMealAction {
+    type: string,
+    meal: INewMeal
+}
+
+export function createMeal(meal: INewMeal): ICreateMealAction {
+    return { type: actions.CREATE_MEAL, meal };
+}
 
 
 export interface IStartMealCreatorLoading {
@@ -7,8 +18,11 @@ export interface IStartMealCreatorLoading {
 }
 
 export function startMealCreatorLoading(): IStartMealCreatorLoading {
+    debugger
     return { type: actions.START_MEAL_CREATOR_LOADING };
 }
+
+
 export interface IEndMealCreatorLoading {
     type: string
 }
@@ -22,6 +36,6 @@ export interface ISetMealCreatorMessagesAction {
     messages: Message[] | null
 }
 
-export function setMealMessages(messages: Message[] = null): ISetMealCreatorMessagesAction {
+export function setMealCreatorMessages(messages: Message[] = null): ISetMealCreatorMessagesAction {
     return { type: actions.SET_MEAL_CREATOR_MESSAGES, messages};
 }

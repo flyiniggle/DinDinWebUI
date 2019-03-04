@@ -1,7 +1,6 @@
 import * as actions from 'Data/ActionTypes/mealsActionTypes';
 import IMeal from 'Business/Meals/Types/Meal';
 import Message from 'Business/Validation/Types/Message';
-import INewMeal from 'Business/Meals/Types/NewMeal';
 
 
 export interface IGetMealsAction {
@@ -40,16 +39,6 @@ export interface ISetMealMessagesAction {
 
 export function setMealMessages(messages: Message[] = null): ISetMealMessagesAction {
     return { type: actions.SET_MESSAGES, messages};
-}
-
-
-export interface ICreateMealAction {
-    type: string,
-    meal: INewMeal
-}
-
-export function createMeal(meal: INewMeal): ICreateMealAction {
-    return { type: actions.CREATE_MEAL, meal };
 }
 
 
