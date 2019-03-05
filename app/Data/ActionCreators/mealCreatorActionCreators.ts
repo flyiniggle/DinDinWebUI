@@ -18,7 +18,6 @@ export interface IStartMealCreatorLoading {
 }
 
 export function startMealCreatorLoading(): IStartMealCreatorLoading {
-    debugger
     return { type: actions.START_MEAL_CREATOR_LOADING };
 }
 
