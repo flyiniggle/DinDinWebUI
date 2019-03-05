@@ -1,4 +1,4 @@
-import { curry } from 'ramda';
+import { addIndex, curry, map } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
@@ -15,7 +15,12 @@ import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 
 import './Meal.sass';
+import AlertBar from 'UI/Alert/AlertBar';
+import trace from 'Business/Lib/trace';
+import Message from 'Business/Validation/Types/Message';
+import AlertContianer from 'UI/Alert/AlertContainer';
 
+const mapWithIndex = addIndex(map)
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
     return (
         <button
@@ -125,7 +130,6 @@ function Meal(props: IMealProps) {
         onCancel: cancelEditingHandler
     };
 
-
     return (
         <div className="meal col-12">
             <div className="row m-2">
@@ -133,6 +137,9 @@ function Meal(props: IMealProps) {
                     <DisplayOrEditName {...displayOrEditNameProps}/>
                 </div>
             </div>
+            <p>
+                {`${isWorking}`}
+            </p>
             <div className="row m-2">
                 <div className="col-12 col-lg-2">
                     <h4>Ingredients</h4>
@@ -167,6 +174,13 @@ function Meal(props: IMealProps) {
                     <Link to="/meals" className="btn btn-outline-primary">close</Link>
                 </div>
             </div>
+            <AlertContianer>
+            {
+                messages.map(trace).map(
+                    mapWithIndex((m: Message, i: number) => <AlertBar key={i} level={m.type}>{m.message}</AlertBar>)
+                ).unwrapOr(null)
+            }
+            </AlertContianer>
         </div>
     );
 }

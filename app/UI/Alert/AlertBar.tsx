@@ -1,6 +1,8 @@
 import * as React from 'react';
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
+import './AlertBar.sass';
+
 
 interface IAlertBarProps {
     level: ErrorLevel,
@@ -18,11 +20,11 @@ const getLevelClassName = function (level: ErrorLevel): string {
     return map[level];
 }
 
-function AlertBar(props) {
+function AlertBar(props: IAlertBarProps) {
     const levelClass = getLevelClassName(props.level);
 
     return (
-        <div className={`alert ${levelClass}`} role="alert">
+        <div className={`alert alert-bar ${levelClass}`} role="alert">
             {props.children}
         </div>
     )
