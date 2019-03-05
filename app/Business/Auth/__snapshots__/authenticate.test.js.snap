@@ -4,6 +4,7 @@ exports[`#Business #Auth #authenticate should reject if no password is provided.
 Err {
   "error": Array [
     ErrorMessage {
+      "_id": 0,
       "field": "password",
       "message": "required",
       "type": "Error",
@@ -18,12 +19,14 @@ exports[`#Business #Auth #authenticate should reject if no username is provided.
 Err {
   "error": Array [
     ErrorMessage {
+      "_id": 0,
       "field": "username",
       "message": "required",
       "type": "Error",
       "value": undefined,
     },
     ErrorMessage {
+      "_id": 1,
       "field": "password",
       "message": "required",
       "type": "Error",
@@ -37,6 +40,7 @@ Err {
 exports[`#Business #Auth #authenticate should return a generic error result if it receives no token. 1`] = `
 Array [
   ErrorMessage {
+    "_id": 0,
     "field": "password",
     "message": "It is not possible to log in right now.",
     "type": "Error",
@@ -48,6 +52,7 @@ Array [
 exports[`#Business #Auth #authenticate should return an error result if it receives a failed credentials validation message from the server 1`] = `
 Array [
   ErrorMessage {
+    "_id": 0,
     "field": "password",
     "message": "Username and password did not match.",
     "type": "Error",
@@ -59,6 +64,7 @@ Array [
 exports[`#Business #Auth #authenticate should return an error result if it receives an unknown validation message from the server 1`] = `
 Array [
   ErrorMessage {
+    "_id": 0,
     "field": "password",
     "message": "It is not possible to log in right now.",
     "type": "Error",
