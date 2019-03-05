@@ -1,3 +1,4 @@
+import { pipe } from 'ramda';
 import MealService from 'Business/Meals/Service';
 import * as mealCreatorActionTypes from 'Data/ActionTypes/mealCreatorActionTypes';
 import {
@@ -11,6 +12,7 @@ import {
 } from 'Data/ActionCreators/mealCreatorActionCreators';
 
 import { call, put, takeEvery } from 'redux-saga/effects';
+import responseCheck from 'Business/Meals/Validation/MealCreator/responseCheck';
 
 
 export function* sendCreateMeal(action: ICreateMealAction) {
@@ -21,7 +23,7 @@ export function* sendCreateMeal(action: ICreateMealAction) {
 
     const nextAction = updateResult.match({
         Ok: setMeal,
-        Err: setMealCreatorMessages
+        Err: pipe(responseCheck, setMealCreatorMessages)
     });
 
     yield put(nextAction);
