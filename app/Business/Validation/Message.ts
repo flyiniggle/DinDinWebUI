@@ -26,7 +26,7 @@ abstract class Message implements IMessage {
     }
 
     get id(): string {
-        return this.id
+        return this._id
     }
 }
 

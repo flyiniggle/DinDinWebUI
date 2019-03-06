@@ -1,6 +1,6 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
-interface Message {
+interface IMessage {
     readonly id: string;
     readonly type?: ErrorLevel;
     readonly field?: string;
@@ -8,4 +8,4 @@ interface Message {
     readonly message?: string;
 }
 
-export default Message;
+export default IMessage;
