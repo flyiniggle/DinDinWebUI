@@ -1,4 +1,4 @@
-import { ISetMealCreatorMessagesAction } from 'Data/ActionCreators/mealCreatorActionCreators';
+import { ISetMealCreatorMessagesAction, IAcknowledgeMessage } from 'Data/ActionCreators/mealCreatorActionCreators';
 import * as actions from 'Data/ActionTypes/mealCreatorActionTypes';
 import IMealCreatorState from 'Data/Reducers/Types/IMealCreatorState';
 import createReducer from 'Data/Lib/createReducer';
@@ -41,11 +41,20 @@ export function setMealCreatorMessages(state: IMealCreatorState, action: ISetMea
     };
 }
 
+export function acknowledgeMessage(state: IMealCreatorState, action: IAcknowledgeMessage): IMealCreatorState {
+    return {
+        ...state,
+        messages: state.messages.filter(m => m.id !== action.id)
+    }
+
+}
+
 const subReducers = {
     [actions.ACKNOWLEDGE_CREATE_MEAL]: acknowledgeCreateMeal,
     [actions.START_MEAL_CREATOR_LOADING]: startMealCreatorLoading,
     [actions.END_MEAL_CREATOR_LOADING]: endMealCreatorLoading,
-    [actions.SET_MEAL_CREATOR_MESSAGES]: setMealCreatorMessages
+    [actions.SET_MEAL_CREATOR_MESSAGES]: setMealCreatorMessages,
+    [actions.ACKNOWLEDGE_MESSAGE]: acknowledgeMessage
 }
 
 export default createReducer(initialState, subReducers);

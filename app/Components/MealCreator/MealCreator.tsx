@@ -2,7 +2,7 @@ import { compose, pipe } from 'ramda';
 import { connect } from 'react-redux'
 import Meal from 'Components/Meal/Meal';
 import MealCreatorControl from 'Components/MealCreator/MealCreatorControl';
-import { createMeal } from 'Data/ActionCreators/mealCreatorActionCreators';
+import { createMeal, acknowledgeMessage } from 'Data/ActionCreators/mealCreatorActionCreators';
 import IMealCreatorControlProps from './Types/IMealCreaterControlProps';
 import { isLoading, messages } from 'Data/Selectors/mealCreatorSelectors';
 
@@ -17,6 +17,7 @@ const mapStateToProps = function (state): Partial<IMealCreatorControlProps> {
 function mapDispatchToProps(dispatch) {
     return {
         createMeal: pipe(createMeal, dispatch),
+        acknowledgeMessage: pipe(acknowledgeMessage, dispatch)
     }
 }
 

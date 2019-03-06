@@ -13,6 +13,29 @@ export function createMeal(meal: INewMeal): ICreateMealAction {
 }
 
 
+
+export interface IAcknowledgeCreateMeal {
+    type: string
+}
+
+export function acknowledgeCreateMeal(): IAcknowledgeCreateMeal {
+    return { type: actions.ACKNOWLEDGE_CREATE_MEAL }
+}
+
+
+export interface IAcknowledgeMessage {
+    type: string
+    id: string
+}
+
+export function acknowledgeMessage(id: string): IAcknowledgeMessage {
+    return {
+        type: actions.ACKNOWLEDGE_MESSAGE,
+        id
+    }
+}
+
+
 export interface IStartMealCreatorLoading {
     type: string
 }
@@ -37,13 +60,4 @@ export interface ISetMealCreatorMessagesAction {
 
 export function setMealCreatorMessages(messages: Message[] = null): ISetMealCreatorMessagesAction {
     return { type: actions.SET_MEAL_CREATOR_MESSAGES, messages};
-}
-
-
-export interface IAcknowledgeCreateMeal {
-    type: string
-}
-
-export function acknowledgeCreateMeal(): IAcknowledgeCreateMeal {
-    return { type: actions.ACKNOWLEDGE_CREATE_MEAL }
 }

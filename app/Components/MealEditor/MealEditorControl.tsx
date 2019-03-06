@@ -68,7 +68,7 @@ function MealEditorControl(MealComponent): React.ComponentClass {
         }
 
         render() {
-            const childProps: IMealProps = {
+            const childProps: Partial<IMealProps> = {
                 saveField: this.save,
                 isWorking: this.props.isWorking,
                 useMeal: this.props.useMeal,
