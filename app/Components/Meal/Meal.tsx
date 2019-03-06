@@ -138,9 +138,6 @@ function Meal(props: IMealProps) {
                     <DisplayOrEditName {...displayOrEditNameProps}/>
                 </div>
             </div>
-            <p>
-                {`${isWorking}`}
-            </p>
             <div className="row m-2">
                 <div className="col-12 col-lg-2">
                     <h4>Ingredients</h4>
@@ -179,13 +176,11 @@ function Meal(props: IMealProps) {
             {
                 messages.map(trace).map(
                     map((m: Message) => (
-                        <AlertBar key={m.id} level={m.type}>
-                            {m.message}
-                            <span
-                                className='alert-link'
-                                onClick={acknowledgeMessage.bind(null, m.id)}
-                            >dismiss</span>
-                        </AlertBar>
+                        <AlertBar
+                            key={m.id}
+                            message={m}
+                            dismissMessage={acknowledgeMessage.bind(null, m.id)}
+                        />
                     ))
                 ).unwrapOr(null)
             }
