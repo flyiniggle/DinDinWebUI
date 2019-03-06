@@ -63,7 +63,8 @@ interface TextInputProps {
     type?: string
     value: string
     className?: string
-    onChange?: (e: React.FormEvent<HTMLInputElement>) => void
+    onChange?: (e: React.FormEvent<HTMLInputElement>) => void,
+    onKeyDown?: (e: React.FormEvent<HTMLInputElement>) => void,
     feedbackType?: 'inline' | 'tooltip' | 'auto'
     feedbackPosition?: 'top' | 'bottom' | 'auto'
 }
@@ -80,6 +81,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
         type: 'text',
         value: '',
         onChange: identity,
+        onKeyDown: identity,
         feedbackType: 'auto',
         feedbackPosition: 'auto'
     };
@@ -140,7 +142,8 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
                     value={this.props.value}
                     placeholder={placeholder}
                     className={`form-control ${this.props.className} ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
-                    onChange={this.update} />
+                    onChange={this.update}
+                    onKeyDown={this.props.onKeyDown}/>
                 <div className={`textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}`}>
                     {feedback.unwrapOr(null)}
                 </div>

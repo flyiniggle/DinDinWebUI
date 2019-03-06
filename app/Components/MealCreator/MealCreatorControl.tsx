@@ -32,11 +32,11 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
         }
 
         componentWillMount = function () {
-            document.addEventListener('keydown', this.props.handleKeydown, false);
+            document.addEventListener('keydown', this.handleKeyDown, false);
         }
 
         componentWillUnmount = function () {
-            document.removeEventListener('keydown', this.props.handleKeydown, false);
+            document.removeEventListener('keydown', this.handleKeyDown, false);
         }
 
         cancelEditing = (e: Event): void => {
@@ -61,7 +61,7 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
             this.setState({ activeFieldValue: a });
         }
     
-        doSaveField = async () => {
+        doSaveField = () => {
             if (this.state.activeField) {
                 const updatedNewMeal = {
                     ...this.state.newMeal,
@@ -82,6 +82,14 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
 
         activateEditor = (field: editableFields, value: any) => {
             this.setState({ activeField: field, activeFieldValue: value });
+        }
+
+        handleKeyDown = (event: KeyboardEvent) => {
+            if (this.state.activeField) {
+                if (event.key == 'Enter') {
+                    this.doSaveField();
+                }
+            }
         }
 
         render() {

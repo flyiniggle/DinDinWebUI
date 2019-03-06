@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
+import Message from 'Business/Validation/Types/Message';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
 import DisplayOrEditIngredients, { IDisplayOrEditIngredientsProps } from 'Components/Meal/DisplayOrEditIngredients/DisplayOrEditIngredients';
@@ -13,12 +14,10 @@ import DisplayOrEditTaste, { IDisplayOrEditTasteProps } from 'Components/Meal/Di
 import editableFields from 'Components/Meal/Types/editableFields';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
+import AlertBar from 'UI/Alert/AlertBar';
+import AlertContianer from 'UI/Alert/AlertContainer';
 
 import './Meal.sass';
-import AlertBar from 'UI/Alert/AlertBar';
-import trace from 'Business/Lib/trace';
-import Message from 'Business/Validation/Types/Message';
-import AlertContianer from 'UI/Alert/AlertContainer';
 
 
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
@@ -174,7 +173,7 @@ function Meal(props: IMealProps) {
             </div>
             <AlertContianer>
             {
-                messages.map(trace).map(
+                messages.map(
                     map((m: Message) => (
                         <AlertBar
                             key={m.id}

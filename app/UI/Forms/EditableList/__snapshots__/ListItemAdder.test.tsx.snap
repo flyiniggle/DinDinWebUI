@@ -12,6 +12,7 @@ exports[`#UI #Forms #EditableList #ListItemAdder should render 1`] = `
       feedbackPosition="auto"
       feedbackType="auto"
       onChange={[Function]}
+      onKeyDown={[Function]}
       placeholder=""
       type="text"
       value=""

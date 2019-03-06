@@ -24,6 +24,13 @@ class ListItemAdder extends React.Component<IListItemAdder, State> {
         this.setState({ val: '' });
     }
 
+    handleKeyDown = (e) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+            this.add(e);
+        }
+    }
+
     render() {
         return (
             <div className="ListItemAdder row">
@@ -31,7 +38,8 @@ class ListItemAdder extends React.Component<IListItemAdder, State> {
                     <TextInput
                         className="form-control form-control-sm"
                         value={this.state.val}
-                        onChange={(e) => { this.setState({ val: e.currentTarget.value }) }} />
+                        onChange={(e) => { this.setState({ val: e.currentTarget.value }) }}
+                        onKeyDown={this.handleKeyDown}/>
                     <span className="input-group-append">
                         <AsyncButton onClick={this.add} className="btn btn-sm btn-outline-primary">
                             <FontAwesomeIcon icon={faPlus} />
