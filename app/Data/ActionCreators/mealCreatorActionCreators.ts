@@ -38,3 +38,12 @@ export interface ISetMealCreatorMessagesAction {
 export function setMealCreatorMessages(messages: Message[] = null): ISetMealCreatorMessagesAction {
     return { type: actions.SET_MEAL_CREATOR_MESSAGES, messages};
 }
+
+
+export interface IAcknowledgeCreateMeal {
+    type: string
+}
+
+export function acknowledgeCreateMeal(): IAcknowledgeCreateMeal {
+    return { type: actions.ACKNOWLEDGE_CREATE_MEAL }
+}

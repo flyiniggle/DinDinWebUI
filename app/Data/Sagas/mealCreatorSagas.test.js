@@ -1,7 +1,7 @@
 import { Result } from 'true-myth';
-import MealService from 'Business/Meals/Service';
 import { setMeal } from 'Data/ActionCreators/mealsActionCreators';
 import { setMealCreatorMessages, startMealCreatorLoading, endMealCreatorLoading } from 'Data/ActionCreators/mealCreatorActionCreators';
+import createMeal from 'Business/Meals/createMeal';
 
 import { sendCreateMeal } from './mealCreatorSagas';
 
@@ -23,14 +23,14 @@ describe('#Data #mealCreatorSagas', function() {
             expect(mealCreator.next().value).toEqual(expected);
         });
 
-        it('should call the MealService post API with the new meal data.', function() {
+        it('should call the meal creation prcoess with the new meal data.', function() {
             const meal = {
                 name: 'delish dish',
                 taste: 5,
                 difficulty: 4,
                 notes: 'gonna use you!'
             };
-            const expected = call(MealService.post, meal);
+            const expected = call(createMeal, meal);
             const mealCreator = sendCreateMeal({ meal });
 
             mealCreator.next();

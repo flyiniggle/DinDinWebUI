@@ -7,6 +7,12 @@ import safeGetProp from 'Business/Lib/safeGetProp';
 
 const getMealCreatorProp = safeGetProp('mealCreator');
 
+export const isDirty: (state: IMealCreatorState) => boolean = pipe(
+    getMealCreatorProp,
+    Maybe.chain(safeGetProp('isDirty')),
+    Maybe.unwrapOr(false)
+);
+
 export const isLoading: (state: IMealCreatorState) => boolean = pipe(
     getMealCreatorProp,
     Maybe.chain(safeGetProp('isLoading')),

@@ -5,9 +5,18 @@ import createReducer from 'Data/Lib/createReducer';
 
 
 const initialState: IMealCreatorState = {
+    isDirty: false,
     isLoading: false,
     messages: null
 };
+
+export function acknowledgeCreateMeal(state: IMealCreatorState): IMealCreatorState {
+    return {
+        ...state,
+        isDirty: false,
+        isLoading: false
+    }
+}
 
 export function startMealCreatorLoading(state: IMealCreatorState): IMealCreatorState {
     return {
@@ -33,6 +42,7 @@ export function setMealCreatorMessages(state: IMealCreatorState, action: ISetMea
 }
 
 const subReducers = {
+    [actions.ACKNOWLEDGE_CREATE_MEAL]: acknowledgeCreateMeal,
     [actions.START_MEAL_CREATOR_LOADING]: startMealCreatorLoading,
     [actions.END_MEAL_CREATOR_LOADING]: endMealCreatorLoading,
     [actions.SET_MEAL_CREATOR_MESSAGES]: setMealCreatorMessages
