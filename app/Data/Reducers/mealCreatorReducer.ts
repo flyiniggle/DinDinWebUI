@@ -80,5 +80,3 @@ const subReducers = {
 
 
 export default createReducer(initialState, subReducers);
-
-

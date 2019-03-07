@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
-import INewMeal from 'Business/Meals/Types/NewMeal';
 import Message from 'Business/Validation/Types/Message';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
@@ -16,9 +15,9 @@ import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
 import AlertBar from 'UI/Alert/AlertBar';
 import AlertContianer from 'UI/Alert/AlertContainer';
+import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 import './Meal.sass';
-import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
