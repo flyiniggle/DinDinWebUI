@@ -18,6 +18,7 @@ import AlertBar from 'UI/Alert/AlertBar';
 import AlertContianer from 'UI/Alert/AlertContainer';
 
 import './Meal.sass';
+import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 
 const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
@@ -32,22 +33,6 @@ const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
             }}
         >
             Use it!
-        </button>
-    );
-});
-
-const getRenderSaveButton = curry(function (newMeal: INewMeal, handler: () => any) {
-    return (
-        <button
-            className="btn btn-primary"
-            type="button"
-            onClick={(event) => {
-                event.stopPropagation();
-                event.preventDefault();
-                handler();
-            }}
-        >
-            Save
         </button>
     );
 });
@@ -80,7 +65,6 @@ function Meal(props: IMealProps) {
     const saveNewMealHandler = maybe(saveNewMeal);
     const useHandler = maybe(useMeal);
     const renderUseIt = getRenderUseIt(meal);
-    const renderSaveButton = getRenderSaveButton(meal);
     const displayOrEditNameProps: IDisplayOrEditNameProps = {
         active: activeField === editableFields.name,
         activate: () => props.activateEditor(editableFields.name, meal.name),
@@ -166,7 +150,19 @@ function Meal(props: IMealProps) {
             <div className="row m2 d-flex justify-content-end">
                 <div className="col-2 d-flex justify-content-between">
                     {useHandler.map(renderUseIt).unwrapOr(null)}
-                    {saveNewMealHandler.map(renderSaveButton).unwrapOr(null)}
+                    {saveNewMealHandler.map(handler => ( 
+                        <AsyncButton
+                            className="btn btn-primary"
+                            working={isWorking}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                event.preventDefault();
+                                handler();
+                            }}
+                        >
+                            Save
+                        </AsyncButton>
+                    )).unwrapOr(null)}
 
                     <Link to="/meals" className="btn btn-outline-primary">close</Link>
                 </div>
