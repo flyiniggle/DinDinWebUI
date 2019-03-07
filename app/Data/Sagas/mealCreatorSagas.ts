@@ -9,6 +9,7 @@ import {
     setMealCreatorMessages,
     startMealCreatorLoading,
     endMealCreatorLoading,
+    acknowledgeCreateMeal,
 } from 'Data/ActionCreators/mealCreatorActionCreators';
 
 import { call, put, takeEvery } from 'redux-saga/effects';
@@ -30,6 +31,7 @@ export function* sendCreateMeal(action: ICreateMealAction) {
     });
 
     if (updateResult.isOk()) {
+        yield put(acknowledgeCreateMeal())
         yield put(setMeal(updateResult.unsafelyUnwrap()));
     }
 

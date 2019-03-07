@@ -2,14 +2,34 @@ import * as selectors from 'Data/Selectors/mealCreatorSelectors';
 
 
 describe('#Data #Selectors #mealCreatorSelectors', function() {
-    describe('#isDirty', function() {
+    describe('#newMeal', function() {
+        it('should return the meal data.', function() {
+            const newMeal = {
+                name: '',
+                ingredients: [],
+                taste: 0,
+                difficulty: 0,
+                notes: ''
+            };
+            const testStore = {
+                mealCreator: {
+                    newMeal
+                }
+            };
+            const result = selectors.newMeal(testStore);
+
+            expect(result).toMatchObject(newMeal);
+        });
+    });
+
+    describe('#isSaved', function() {
         it('should return the dirty state.', function() {
             const testStore = {
                 mealCreator: {
-                    isDirty: true
+                    isSaved: true
                 }
             };
-            const result = selectors.isDirty(testStore);
+            const result = selectors.isSaved(testStore);
 
             expect(result).toBe(true);
         });

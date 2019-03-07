@@ -1,5 +1,7 @@
 import IAsyncViewState from './IAsyncViewState';
+import INewMeal from 'Business/Meals/Types/NewMeal';
 
 export default interface IMealCreatorState extends IAsyncViewState { 
-    isDirty: boolean
+    isSaved: boolean,
+    newMeal: INewMeal
 }

@@ -1,20 +1,40 @@
-import { ISetMealCreatorMessagesAction, IAcknowledgeMessage } from 'Data/ActionCreators/mealCreatorActionCreators';
+import { ISetMealCreatorMessagesAction, IAcknowledgeMessage, IUpdateNewMealAction } from 'Data/ActionCreators/mealCreatorActionCreators';
 import * as actions from 'Data/ActionTypes/mealCreatorActionTypes';
 import IMealCreatorState from 'Data/Reducers/Types/IMealCreatorState';
 import createReducer from 'Data/Lib/createReducer';
 
 
+const generateNewMeal = () =>({
+    name: '',
+    ingredients: [],
+    taste: 0,
+    difficulty: 0,
+    notes: ''
+})
+
 const initialState: IMealCreatorState = {
-    isDirty: false,
+    newMeal: generateNewMeal(),
+    isSaved: false,
     isLoading: false,
     messages: null
 };
 
+export function updateNewMeal(state: IMealCreatorState, action: IUpdateNewMealAction): IMealCreatorState {
+    return {
+        ...state,
+        isSaved: false,
+        newMeal: {
+            ...state.newMeal,
+            ...action.mealData
+        }
+    }
+}
+
 export function acknowledgeCreateMeal(state: IMealCreatorState): IMealCreatorState {
     return {
         ...state,
-        isDirty: false,
-        isLoading: false
+        isSaved: true,
+        newMeal: generateNewMeal()
     }
 }
 
@@ -51,11 +71,13 @@ export function acknowledgeMessage(state: IMealCreatorState, action: IAcknowledg
 
 const subReducers = {
     [actions.ACKNOWLEDGE_CREATE_MEAL]: acknowledgeCreateMeal,
+    [actions.UPDATE_NEW_MEAL]: updateNewMeal,
     [actions.START_MEAL_CREATOR_LOADING]: startMealCreatorLoading,
     [actions.END_MEAL_CREATOR_LOADING]: endMealCreatorLoading,
     [actions.SET_MEAL_CREATOR_MESSAGES]: setMealCreatorMessages,
     [actions.ACKNOWLEDGE_MESSAGE]: acknowledgeMessage
 }
+
 
 export default createReducer(initialState, subReducers);
 

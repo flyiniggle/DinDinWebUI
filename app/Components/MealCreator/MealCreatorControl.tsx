@@ -1,17 +1,13 @@
 import * as React from 'react';
-import { Redirect } from 'react-router';
 import editableFields from "Components/Meal/Types/editableFields";
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import IMealCreatorControlProps from 'Components/MealCreator/Types/IMealCreaterControlProps';
-import INewMeal from 'Business/Meals/Types/NewMeal';
 import maybe from 'Business/Lib/maybe';
 
 
 interface IState {
     activeField?: editableFields
-    activeFieldValue?: any,
-    newMeal: INewMeal,
-    mealId: number | null
+    activeFieldValue?: any
 }
 
 function MealCreatorControl(MealComponent: new() => React.Component<IMealProps, any>): React.ComponentClass<IMealCreatorControlProps, IState>
@@ -20,15 +16,7 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
     return class MealEditorControlWrapper extends React.Component<IMealCreatorControlProps, IState> {
         readonly state: IState = {
             activeField: null,
-            activeFieldValue: null,
-            newMeal: {
-                name: '',
-                ingredients: [],
-                taste: 0,
-                difficulty: 0,
-                notes: ''
-            },
-            mealId: null
+            activeFieldValue: null
         }
 
         componentWillMount = function () {
@@ -63,13 +51,9 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
     
         doSaveField = () => {
             if (this.state.activeField) {
-                const updatedNewMeal = {
-                    ...this.state.newMeal,
-                    [this.state.activeField]: this.state.activeFieldValue
-                }
+                this.props.updateMeal(this.state.activeField, this.state.activeFieldValue)
                 
                 this.setState({
-                    newMeal: updatedNewMeal,
                     activeField: null,
                     activeFieldValue: null
                 });
@@ -77,7 +61,7 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
         }
 
         saveNewMeal = (): void => {
-            this.props.createMeal(this.state.newMeal);
+            this.props.createMeal(this.props.newMeal);
         }
 
         activateEditor = (field: editableFields, value: any) => {
@@ -93,14 +77,10 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
         }
 
         render() {
-            if (this.state.mealId) {
-                return <Redirect to={`/meals/${this.state.mealId}`} />
-            }
-
             const childProps = {
                 saveNewMeal: this.saveNewMeal,
                 isWorking: this.props.isWorking,
-                meal: maybe(this.state.newMeal),
+                meal: maybe(this.props.newMeal),
                 saveField: this.doSaveField,
                 updateFieldHandler: this.updateCurrentValue,
                 updateListFieldHandler: this.updateCurrentListValue,

@@ -4,6 +4,61 @@ import * as Reducers from './mealCreatorReducer';
 
 
 describe('mealCreatorReducer', function() {
+    describe('updateNewMeal', function() {
+        it('should update the new meal state.', function() {
+            const initialState = {
+                newMeal: {
+                    name: ''
+                }
+            };
+            const action = { mealData: { name: 'meh' } };
+            const result = Reducers.updateNewMeal(initialState, action);
+
+            expect(result).toHaveProperty('newMeal.name', 'meh');
+        });
+
+        it('should set isSaved to false.', function() {
+            const initialState = {
+                isSaved: true
+            };
+            const action = { mealData: { name: 'meh' } };
+            const result = Reducers.updateNewMeal(initialState, action);
+
+            expect(result).toHaveProperty('isSaved', false);
+        });
+    });
+
+    describe('acknowledgeCreateMeal', function() {
+        it('should set isSaved to true.', function() {
+            const initialState = {
+                isSaved: false
+            };
+            const result = Reducers.acknowledgeCreateMeal(initialState);
+
+            expect(result).toHaveProperty('isSaved', true);
+        });
+
+        it('should reset the newMeal data.', function() {
+            const initialState = {
+                isSaved: false,
+                newMeal: {
+                    name: 'some food or something',
+                    taste: 5,
+                    difficulty: 1
+                }
+            };
+            const result = Reducers.acknowledgeCreateMeal(initialState);
+
+            expect(result.newMeal).toMatchObject({
+                name: '',
+                ingredients: [],
+                taste: 0,
+                difficulty: 0,
+                notes: ''
+            });
+        });
+    });
+
     describe('startMealCreatorLoading', function() {
         it('should set the loading state to true.', function() {
             const initialState1 = {

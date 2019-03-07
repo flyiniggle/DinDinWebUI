@@ -1,6 +1,23 @@
 import * as actions from 'Data/ActionTypes/mealCreatorActionTypes';
 import Message from 'Business/Validation/Types/Message';
 import INewMeal from 'Business/Meals/Types/NewMeal';
+import editableFields from 'Components/Meal/Types/editableFields';
+
+
+export interface IUpdateNewMealAction {
+    type: string,
+    mealData: Partial<INewMeal>
+}
+
+
+export function updateNewMeal(field: editableFields, value: any): IUpdateNewMealAction {
+    return {
+        type: actions.UPDATE_NEW_MEAL,
+        mealData: {
+            [field]: value
+        }
+    }
+}
 
 
 export interface ICreateMealAction {
@@ -11,7 +28,6 @@ export interface ICreateMealAction {
 export function createMeal(meal: INewMeal): ICreateMealAction {
     return { type: actions.CREATE_MEAL, meal };
 }
-
 
 
 export interface IAcknowledgeCreateMeal {
