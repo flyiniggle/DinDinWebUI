@@ -1,12 +1,12 @@
-import Ribbon from 'Components/Ribbon/Ribbon';
 import { pipe } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Ribbon from 'Components/Ribbon/Ribbon';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
 import OverviewBase from 'Components/Dashboard/Overview/Overview';
-import { getMeals, useMeal } from 'Data/ActionCreators/mealsActionCreators';
+import { useMeal } from 'Data/ActionCreators/mealsActionCreators';
 import { meals, isLoading as isMealsLoading, isWorking as isMealsWorking } from 'Data/Selectors/mealsSelectors';
 import { isLoading as isDashbordLoading, messages as dashboardMessages } from 'Data/Selectors/dashboardSelectors';
 
@@ -30,10 +30,6 @@ class DashboardBase extends React.Component {
         useMeal: PropTypes.func,
         mealIsUpdating: PropTypes.bool,
         mealsAreLoading: PropTypes.bool
-    }
-
-    componentWillMount = () => {
-        this.props.getMeals();
     }
 
     render() {
@@ -81,7 +77,6 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = function(dispatch) {
     return {
-        getMeals: pipe(getMeals, dispatch),
         useMeal: pipe(useMeal, dispatch)
     };
 };

@@ -1,7 +1,7 @@
 import authStatus from 'Business/Auth/authStatus';
 import UserContext from 'Business/Auth/UserContext';
 import DinDinService from 'Business/Services/DinDinService';
-import DinDinApp from 'Components/DinDin/DinDinApp';
+import DinDinAppBase from 'Components/DinDin/DinDinApp';
 import Splash from 'Components/Splash/Splash';
 import ProtectedRoute from 'UI/ProtectedRoute';
 import React from 'react';
@@ -26,7 +26,7 @@ class DinDin extends React.Component {
                 <Switch>
                     <ProtectedRoute
                         path="/meals"
-                        component={ DinDinApp }
+                        component={ DinDinAppBase }
                         logoutHandler={ this.logOut }
                     />
                     <Route path="/" component={ Splash } />

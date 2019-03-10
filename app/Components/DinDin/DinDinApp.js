@@ -1,56 +1,75 @@
-
+import { pipe } from 'ramda';
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Header from 'Components/Header/Header';
 import MealEditor from 'Components/MealEditor/MealEditor';
 import MealCreator from 'Components/MealCreator/MealCreator';
+import { getMeals } from 'Data/ActionCreators/mealsActionCreators';
 
 import './DinDinApp.sass';
 
 
-function DinDinApp(props) {
+class DinDinAppBase extends React.Component {
+    static defaultPropTypes = {
+        logoutHandler: () => undefined
+    };
 
-    return (
-        <div className="mainBackground din-din-app container-fluid dashboard d-flex flex-column">
-            <div className="row d-block">
-                <div className="col-12">
-                    <Header logoutHandler={ props.logoutHandler } />
+    static propTypes = {
+        logoutHandler: PropTypes.func
+    };
+
+    componentWillMount = () => {
+        this.props.getMeals();
+    };
+
+    render() {
+        return (
+            <div className="mainBackground din-din-app container-fluid dashboard d-flex flex-column">
+                <div className="row d-block">
+                    <div className="col-12">
+                        <Header logoutHandler={ this.props.logoutHandler } />
+                    </div>
+                </div>
+                <div className="main-container row flex-grow-1">
+                    <Switch>
+                        <Route
+                            exact
+                            path="/meals"
+                            render={ routeProps => (
+                                <Dashboard { ...routeProps } />
+                            ) } />
+                        <Route
+                            exact
+                            path="/meals/new"
+                            render={ () => (
+                                <MealCreator />
+                            ) } />
+                        <Route
+                            exact
+                            path="/meals/:id"
+                            render={ routeProps => (
+                                <MealEditor mealId={ routeProps.match.params.id } />
+                            ) } />
+                    </Switch>
                 </div>
             </div>
-            <div className="main-container row flex-grow-1">
-                <Switch>
-                    <Route
-                        exact
-                        path="/meals"
-                        render={ routeProps => (
-                            <Dashboard { ...routeProps } />
-                        ) } />
-                    <Route
-                        exact
-                        path="/meals/new"
-                        render={ () => (
-                            <MealCreator />
-                        ) } />
-                    <Route
-                        exact
-                        path="/meals/:id"
-                        render={ routeProps => (
-                            <MealEditor mealId={ routeProps.match.params.id } />
-                        ) } />
-                </Switch>
-            </div>
-        </div>
-    );
+        );
+    }
 }
 
-DinDinApp.defaultPropTypes = {
-    logoutHandler: () => undefined
+const mapStateToProps = function() {
+    return {};
 };
 
-DinDinApp.propTypes = {
-    logoutHandler: PropTypes.func
+const mapDispatchToProps = function(dispatch) {
+    return {
+        getMeals: pipe(getMeals, dispatch)
+    };
 };
+
+const DinDinApp = connect(mapStateToProps, mapDispatchToProps)(DinDinAppBase);
 
 export default DinDinApp;
