@@ -2,7 +2,7 @@ import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 
 import responseCheck from './responseCheck';
 
-describe('#Business #Meals #Validation #MealCreator #responseCheck', function() {
+describe('#Business #Meals #CreateMeal #Validation #responseCheck', function() {
     it('should return an empty array if there are no errors.', function() {
         const result = responseCheck({});
 

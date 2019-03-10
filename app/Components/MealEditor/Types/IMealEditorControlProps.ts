@@ -8,7 +8,8 @@ interface IMealEditorControlProps {
     isWorking: boolean
     messages: Maybe<Message[]>
     useMeal: (IMeal: IMeal) => void
-    updateMeal: (IMeal: IMeal, updates: Partial<IMeal>) => void
+    updateMeal: (IMeal: IMeal, updates: Partial<IMeal>) => void,
+    acknowledgeMessage: (id: string) => void
 }
 
 export default IMealEditorControlProps

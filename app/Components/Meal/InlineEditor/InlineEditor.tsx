@@ -14,9 +14,6 @@ function InlineEditor(
     fieldControlDisplay: FieldControlDisplay = FieldControlDisplay.append
 ): React.ComponentClass<IInlineEditorProps, IState> {
     return class InlineEditor extends React.Component<IInlineEditorProps, IState> {
-        readonly state: IState = {
-            submitting: false
-        }
 
         componentWillMount = function() {
             document.addEventListener('keydown', this.handleKeydown, false);
@@ -28,20 +25,14 @@ function InlineEditor(
 
         handleKeydown = (e: KeyboardEvent) => {
             if (e.key === 'Enter') {
-                this.doSave();
+                this.props.onSave();
             } else if (e.key === 'Escape') {
                 this.props.onCancel(e);
             }
         }
 
-        doSave = (): void => {
-            this.setState({ submitting: true });
-            this.props.onSave();
-            this.setState({ submitting: false });
-        }
-
         render() {
-            const { active, activate, onCancel, onChange, displayValue, editingValue, ...rest } = this.props;
+            const { active, activate, onCancel, onChange, displayValue, editingValue, submitting, ...rest } = this.props;
             return (
                 <div className='inline-editor'>
                     {!active &&
@@ -51,7 +42,7 @@ function InlineEditor(
                     {active && renderControls(Editor,
                         fieldControlDisplay,
                         { onChange, value: editingValue, ...rest },
-                        { doSave: this.doSave, doCancel: onCancel, submitting: this.state.submitting }
+                        { doSave: this.props.onSave, doCancel: onCancel, submitting: submitting }
                     )}
                 </div>
             )

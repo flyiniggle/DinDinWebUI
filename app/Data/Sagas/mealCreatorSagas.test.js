@@ -1,7 +1,7 @@
 import { Result } from 'true-myth';
 import { setMeal } from 'Data/ActionCreators/mealsActionCreators';
 import { setMealCreatorMessages, startMealCreatorLoading, endMealCreatorLoading, acknowledgeCreateMeal } from 'Data/ActionCreators/mealCreatorActionCreators';
-import createMeal from 'Business/Meals/createMeal';
+import createMeal from 'Business/Meals/CreateMeal/createMeal';
 
 import { sendCreateMeal } from './mealCreatorSagas';
 

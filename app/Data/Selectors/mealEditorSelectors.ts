@@ -7,7 +7,7 @@ import safeGetProp from 'Business/Lib/safeGetProp';
 
 const getMealEditorProp = safeGetProp('mealEditor');
 
-export const isLoading: (state: IMealEditorState) => boolean = pipe(
+export const isWorking: (state: IMealEditorState) => boolean = pipe(
     getMealEditorProp,
     Maybe.chain(safeGetProp('isLoading')),
     Maybe.unwrapOr(false)

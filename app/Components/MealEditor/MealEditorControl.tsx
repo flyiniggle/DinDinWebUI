@@ -3,6 +3,8 @@ import editableFields from "Components/Meal/Types/editableFields";
 import IMealEditorControlProps from 'Components/MealEditor/Types/IMealEditorControlProps';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import IMeal from 'Business/Meals/Types/Meal';
+import { events } from 'Data/Middleware/events';
+import { MEAL_EDITOR_ACKNOWLEDGE_UPDATE_MEAL } from 'Data/ActionTypes/mealEditorActionTypes';
 
 
 interface IState {
@@ -20,6 +22,12 @@ function MealEditorControl(MealComponent): React.ComponentClass {
         }
 
         componentWillMount = function () {
+            const handler = this.cancelEditing
+
+            events.registerListener({
+                type: MEAL_EDITOR_ACKNOWLEDGE_UPDATE_MEAL,
+                handler: () => handler()
+            })
             document.addEventListener('keydown', this.props.handleKeydown, false);
         }
 
@@ -27,9 +35,12 @@ function MealEditorControl(MealComponent): React.ComponentClass {
             document.removeEventListener('keydown', this.props.handleKeydown, false);
         }
 
-        cancelEditing = (e: Event): void => {
-            e.preventDefault();
-            e.stopPropagation();
+        cancelEditing = (e?: Event): void => {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
             this.setState({ activeField: null, activeFieldValue: null });
         }
 
@@ -63,12 +74,10 @@ function MealEditorControl(MealComponent): React.ComponentClass {
                 },
                 Nothing: () => undefined
             });
-
-            this.setState({ activeField: null, activeFieldValue: null });
         }
 
         render() {
-            const childProps: Partial<IMealProps> = {
+            const childProps: IMealProps = {
                 saveField: this.save,
                 isWorking: this.props.isWorking,
                 useMeal: this.props.useMeal,
@@ -80,6 +89,7 @@ function MealEditorControl(MealComponent): React.ComponentClass {
                 activateEditor: this.activateEditor,
                 meal: this.props.meal,
                 messages: this.props.messages,
+                acknowledgeMessage: this.props.acknowledgeMessage
             }
 
             return <MealComponent {...childProps}/>;

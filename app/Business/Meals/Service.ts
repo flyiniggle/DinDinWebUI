@@ -13,7 +13,7 @@ const MealsService = {
             method: 'GET'
         }).then(map(map(formatMeal)));
     },
-    patch: function (mealID: number, data: Partial<IMeal>): Promise<Result<IMeal, Message[]>> {
+    patch: function (mealID: number, data: Partial<IMeal>): Promise<Result<IMeal, object>> {
         return DinDinService.send(`/meals/${mealID}/`, {
             method: 'PATCH',
             body: pipe(formatMealToAPI, JSON.stringify)(data)

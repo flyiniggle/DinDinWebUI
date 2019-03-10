@@ -46,7 +46,7 @@ export interface IAcknowledgeMessage {
 
 export function acknowledgeMessage(id: string): IAcknowledgeMessage {
     return {
-        type: actions.ACKNOWLEDGE_MESSAGE,
+        type: actions.ACKNOWLEDGE_MEAL_CREATOR_MESSAGE,
         id
     }
 }

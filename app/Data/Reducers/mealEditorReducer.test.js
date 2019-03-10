@@ -1,3 +1,5 @@
+import ErrorMessage from 'Business/Validation/ErrorMessage';
+
 import * as Reducers from './mealEditorReducer';
 
 
@@ -59,6 +61,52 @@ describe('mealEditorReducer', function() {
             const result = Reducers.setMealEditorMessages(initialState, action);
 
             expect(result).toHaveProperty('messages', undefined);
+        });
+    });
+
+    describe('acknowledgeMessage', function() {
+        it('should remove the message with the matching Id from state.', function() {
+            const initialState = {
+                messages: [
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({})
+                ]
+            };
+            const targetMessageId = initialState.messages[3].id;
+            const action = { id: targetMessageId };
+            const result = Reducers.acknowledgeMessage(initialState, action);
+
+            expect(result.messages.find(m => m.id === targetMessageId)).toBeUndefined();
+        });
+
+        it('should do nothing if there is no matching message.', function() {
+            const initialState = {
+                messages: [
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({}),
+                    new ErrorMessage({})
+                ]
+            };
+            const action = { id: 'whooooeeeeeee!' };
+            const result = Reducers.acknowledgeMessage(initialState, action);
+
+            expect(result).toMatchObject(initialState);
+
         });
     });
 });

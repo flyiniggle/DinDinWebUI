@@ -1,5 +1,4 @@
 import MealService from 'Business/Meals/Service';
-import updateMeal from 'Business/Meals/updateMeal';
 import useMeal from 'Business/Meals/useMeal';
 import * as mealActionTypes from 'Data/ActionTypes/mealsActionTypes';
 import {
@@ -11,7 +10,6 @@ import {
     startMealsWorking,
     endMealsWorking,
     IUseMealAction,
-    IUpdateMealAction
 } from 'Data/ActionCreators/mealsActionCreators';
 
 import { call, put, takeEvery } from 'redux-saga/effects';
@@ -29,25 +27,6 @@ export function* loadMeals() {
     });
 
     yield put(action);
-}
-
-export function* sendUpdateMeal(action: IUpdateMealAction) {
-    const meal = action.meal;
-    const updates = action.updates;
-    const updatedMeal = updateMeal(meal, updates);
-
-    yield put(startMealsWorking());
-
-    const updateResult = yield call(MealService.patch, meal.id, updatedMeal);
-
-    yield put(endMealsWorking());
-
-    const nextAction = updateResult.match({
-        Ok: setMeal,
-        Err: setMealMessages
-    });
-
-    yield put(nextAction);
 }
 
 export function* sendUseMeal(action: IUseMealAction) {
@@ -74,8 +53,4 @@ export function* watchGetMeals() {
 
 export function* watchUseMeal() {
     yield takeEvery(mealActionTypes.USE_MEAL, sendUseMeal);
-}
-
-export function* watchUpdateMeal() {
-    yield takeEvery(mealActionTypes.UPDATE_MEAL, sendUpdateMeal);
 }

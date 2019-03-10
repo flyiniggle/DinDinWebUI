@@ -1,10 +1,11 @@
 interface IInlineEditorProps {
-    active: boolean,
-    activate: () => void,
-    onSave: () => void,
-    onCancel: (e: Event) => void,
-    onChange: any,
-    displayValue?: any,
+    active: boolean
+    activate: () => void
+    onSave: () => void
+    onCancel: (e: Event) => void
+    onChange: any
+    submitting?: boolean
+    displayValue?: any
     editingValue?: any
 }
 

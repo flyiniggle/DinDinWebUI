@@ -72,6 +72,7 @@ function Meal(props: IMealProps) {
         displayValue: meal.name,
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
+        submitting: (activeField === editableFields.name) && isWorking
     };
     const displayOrEditTasteProps: IDisplayOrEditTasteProps = {
         active: activeField === editableFields.taste,
@@ -82,6 +83,7 @@ function Meal(props: IMealProps) {
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
         range: 5,
+        submitting: (activeField === editableFields.taste) && isWorking
     };
     const displayOrEditDifficultyProps: IDisplayOrEditDifficultyProps = {
         active: activeField === editableFields.difficulty,
@@ -92,6 +94,7 @@ function Meal(props: IMealProps) {
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
         range: 5,
+        submitting: (activeField === editableFields.difficulty) && isWorking
     };
     const ingredients = meal.ingredients.length !== 0 ? meal.ingredients : null;
     const displayOrEditIngredientsProps: IDisplayOrEditIngredientsProps = {
@@ -102,6 +105,7 @@ function Meal(props: IMealProps) {
         displayValue: ingredients,
         editingValue: activeFieldValue,
         onChange: updateListFieldHandler,
+        submitting: (activeField === editableFields.ingredients) && isWorking
     };
     const displayOrEditNotesProps: IDisplayOrEditNotesProps = {
         onSave: saveField,
@@ -110,7 +114,8 @@ function Meal(props: IMealProps) {
         displayValue: meal.notes,
         editingValue: activeFieldValue,
         onChange: updateFieldHandler,
-        onCancel: cancelEditingHandler
+        onCancel: cancelEditingHandler,
+        submitting: (activeField === editableFields.notes) && isWorking
     };
 
     return (

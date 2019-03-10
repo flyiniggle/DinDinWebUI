@@ -1,5 +1,5 @@
 import { identity } from 'ramda'
-import createMeal from 'Business/Meals/createMeal';
+import createMeal from 'Business/Meals/CreateMeal/createMeal';
 import * as mealCreatorActionTypes from 'Data/ActionTypes/mealCreatorActionTypes';
 import {
     setMeal
@@ -31,7 +31,7 @@ export function* sendCreateMeal(action: ICreateMealAction) {
     });
 
     if (updateResult.isOk()) {
-        yield put(acknowledgeCreateMeal())
+        yield put(acknowledgeCreateMeal());
         yield put(setMeal(updateResult.unsafelyUnwrap()));
     }
 

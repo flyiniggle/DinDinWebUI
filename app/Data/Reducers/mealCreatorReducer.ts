@@ -66,7 +66,6 @@ export function acknowledgeMessage(state: IMealCreatorState, action: IAcknowledg
         ...state,
         messages: state.messages.filter(m => m.id !== action.id)
     }
-
 }
 
 const subReducers = {
@@ -75,7 +74,7 @@ const subReducers = {
     [actions.START_MEAL_CREATOR_LOADING]: startMealCreatorLoading,
     [actions.END_MEAL_CREATOR_LOADING]: endMealCreatorLoading,
     [actions.SET_MEAL_CREATOR_MESSAGES]: setMealCreatorMessages,
-    [actions.ACKNOWLEDGE_MESSAGE]: acknowledgeMessage
+    [actions.ACKNOWLEDGE_MEAL_CREATOR_MESSAGE]: acknowledgeMessage
 }
 
 

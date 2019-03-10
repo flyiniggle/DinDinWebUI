@@ -2,14 +2,14 @@ import * as selectors from 'Data/Selectors/mealEditorSelectors';
 
 
 describe('#Data #Selectors #mealEditorSelectors', function() {
-    describe('#isLoading', function() {
+    describe('#isWorking', function() {
         it('should return the loading state.', function() {
             const testStore = {
                 mealEditor: {
                     isLoading: true
                 }
             };
-            const result = selectors.isLoading(testStore);
+            const result = selectors.isWorking(testStore);
 
             expect(result).toBe(true);
         });

@@ -51,7 +51,6 @@ export function useMeal(meal: IMeal): IUseMealAction {
     return { type: actions.USE_MEAL, meal };
 }
 
-
 export interface IUpdateMealAction {
     type: string,
     meal: IMeal,

@@ -1,7 +1,7 @@
-import INewMeal from './Types/NewMeal';
-import IMeal from './Types/Meal';
-import MealsService from './Service';
-import responseCheck from './Validation/MealCreator/responseCheck';
+import INewMeal from '../Types/NewMeal';
+import IMeal from '../Types/Meal';
+import MealsService from '../Service';
+import responseCheck from './Validation/responseCheck';
 import { Result } from 'true-myth';
 import Message from 'Business/Validation/Types/Message';
 

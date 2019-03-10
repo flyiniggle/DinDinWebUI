@@ -77,7 +77,7 @@ function MealCreatorControl(MealComponent): React.ComponentClass {
         }
 
         render() {
-            const childProps = {
+            const childProps: IMealProps = {
                 saveNewMeal: this.saveNewMeal,
                 isWorking: this.props.isWorking,
                 meal: maybe(this.props.newMeal),
