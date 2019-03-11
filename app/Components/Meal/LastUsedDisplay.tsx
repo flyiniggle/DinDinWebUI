@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { pipe, prop } from 'ramda';
+import { pipe } from 'ramda';
 import { Maybe } from 'true-myth';
-import maybe from 'Business/Lib/maybe';
 import dateString from 'UI/Formatting/dateString';
+import safeGetProp from 'Business/Lib/safeGetProp';
 
 interface ILastUsedDisplayProps {
     date?: string
@@ -18,8 +18,7 @@ function renderLastUsed(lastUsedDate) {
 };
 
 const LastUsedDisplay: (ILastUsedDisplayProps) => JSX.Element = pipe(
-    prop('date'),
-    maybe,
+    safeGetProp('date'),
     Maybe.map(dateString.display),
     Maybe.map(renderLastUsed),
     Maybe.getOr(null)
