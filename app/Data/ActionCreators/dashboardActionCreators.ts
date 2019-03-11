@@ -36,6 +36,6 @@ export interface ISetDashboardMessagesAction {
 }
 
 
-export function setMealMessages(messages: Message[] = null): ISetDashboardMessagesAction {
+export function setDashboardMessages(messages: Message[] = null): ISetDashboardMessagesAction {
     return { type: actions.SET_DASHBOARD_MESSAGES, messages};
 }

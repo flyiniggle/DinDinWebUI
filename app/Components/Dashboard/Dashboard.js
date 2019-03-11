@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Ribbon from 'Components/Ribbon/Ribbon';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
 import OverviewBase from 'Components/Dashboard/Overview/Overview';
-import { useMeal } from 'Data/ActionCreators/mealsActionCreators';
+import { useMeal } from 'Data/ActionCreators/dashboardActionCreators';
 import { meals, isLoading as isMealsLoading, isWorking as isMealsWorking } from 'Data/Selectors/mealsSelectors';
 import { isLoading as isDashbordLoading, messages as dashboardMessages } from 'Data/Selectors/dashboardSelectors';
 
