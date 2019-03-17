@@ -126,21 +126,21 @@ function Meal(props: IMealProps) {
                 </div>
             </div>
             <div className="row m-2">
-                <div className="col-12 col-lg-2">
+                <div className="col-12 col-lg-2 mb-3 mb-md-0">
                     <h4>Ingredients</h4>
                     <DisplayOrEditIngredients { ...displayOrEditIngredientsProps} />
                 </div>
                 <div className="col-12 col-lg-5">
-                    <div>
+                    <div className="mb-3 mb-md-0">
                         <h4 className="d-inline">Taste: </h4>
                         <DisplayOrEditTaste { ...displayOrEditTasteProps} />
                     </div>
-                    <div>
+                    <div className="mb-3 mb-md-0">
                         <h4 className="d-inline">Difficulty: </h4>
                         <DisplayOrEditDifficulty { ...displayOrEditDifficultyProps} />
                     </div>
                 </div>
-                <div className="col-12 col-lg-5">
+                <div className="col-12 col-lg-5 mb-3 mb-md-0">
                     <LastUsedDisplay date={lastUsed} />
                     <UsedCountDisplay usedCount={usedCount} />
                 </div>
@@ -151,8 +151,8 @@ function Meal(props: IMealProps) {
                     <DisplayOrEditNotes {...displayOrEditNotesProps} />
                 </div>
             </div>
-            <div className="row m2 d-flex justify-content-end">
-                <div className="col-2 d-flex justify-content-between">
+            <div className="row p-3 d-flex justify-content-end fixed-bottom">
+                <div className="col-6 col-md-2 d-flex justify-content-between">
                     {useHandler.map(renderUseIt).unwrapOr(null)}
                     {saveNewMealHandler.map(handler => ( 
                         <AsyncButton
