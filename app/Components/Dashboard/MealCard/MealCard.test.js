@@ -1,9 +1,29 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { Provider } from 'react-redux';
+import { StaticRouter } from 'react-router-dom';
+import configureStore from 'redux-mock-store';
+import { mount, shallow, render } from 'enzyme';
 
 import MealCard from './MealCard';
 
+
 describe('#Components #Dashboard #MealCard', function() {
+    const initialState = {
+        meals: [],
+        responsive: {
+            phone: false,
+            tablet: false,
+            mobile: false,
+            desktop: true,
+            fakeWidth: 1200
+        }
+    };
+    let store;
+
+    beforeEach(function() {
+        store = configureStore()(initialState);
+    });
+
     const meal = {
         id: 1,
         name: 'Delicious Meal',
@@ -44,18 +64,41 @@ describe('#Components #Dashboard #MealCard', function() {
     });
 
     it('should show the numbe of times the meal was used.', function() {
-        expect(shallow(<MealCard meal={ meal } />).find('.usedCount').text()).toEqual('Used 3 times');
+        expect(render(
+            <Provider store={ store }>
+                <StaticRouter basename="" context={ {} } location="/meals">
+                    <MealCard meal={ meal } />
+                </StaticRouter>
+            </Provider>
+        ).find('.usedCount').text()).toEqual('Used 3 times');
 
         meal.usedCount = 1;
-        expect(shallow(<MealCard meal={ meal } />).find('.usedCount').text()).toEqual('Used 1 time');
+        expect(render(
+            <Provider store={ store }>
+                <StaticRouter basename="" context={ {} } location="/meals">
+                    <MealCard meal={ meal } />
+                </StaticRouter>
+            </Provider>
+        ).find('.usedCount').text()).toEqual('Used 1 time');
 
         meal.usedCount = 0;
-        expect(shallow(<MealCard meal={ meal } />).find('.usedCount').text()).toEqual('Used 0 times');
+        expect(render(
+            <Provider store={ store }>
+                <StaticRouter basename="" context={ {} } location="/meals">
+                    <MealCard meal={ meal } />
+                </StaticRouter>
+            </Provider>
+        ).find('.usedCount').text()).toEqual('Used 0 times');
     });
 
     it('should call the useMeal handler when clicking the appropriate button.', function() {
         const useMealSpy = jest.fn();
-        const wrapper = shallow(<MealCard meal={ meal } useMeal={ useMealSpy } />);
+        const wrapper = mount(
+            <Provider store={ store }>
+                <StaticRouter basename="" context={ {} } location="/meals">
+                    <MealCard meal={ meal } useMeal={ useMealSpy } />
+                </StaticRouter>
+            </Provider>);
 
         wrapper.find('.useMealButton').simulate('click', { stopPropagation: () => undefined, preventDefault: () => undefined });
 

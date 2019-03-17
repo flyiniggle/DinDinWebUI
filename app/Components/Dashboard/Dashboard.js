@@ -2,7 +2,6 @@ import { pipe } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import PropTypes from 'prop-types';
 import Ribbon from 'Components/Ribbon/Ribbon';
 import MealCard from 'Components/Dashboard/MealCard/MealCard';
@@ -48,7 +47,7 @@ class DashboardBase extends React.Component {
                             <OverviewBase meals={ this.props.meals.unwrapOr([]) } />
                         </div>
                     </div>
-                    <div className="meal-card-container col-12 col-md-8 p-5">
+                    <div className="meal-card-container col-12 col-md-8 p-md-5">
                         {
                             this.props.meals.match({
                                 Just: (m) => m.map((meal) => (

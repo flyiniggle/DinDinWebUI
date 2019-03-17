@@ -7,13 +7,15 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
   to="/meals/1"
 >
   <div
-    className="col-4"
+    className="col-12 col-md-4"
   >
     <h2>
       Delicious Meal
     </h2>
     <React.Fragment>
-      <h4>
+      <h4
+        className="d-inline"
+      >
         Last Used: 
       </h4>
       <span
@@ -24,7 +26,7 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
     </React.Fragment>
   </div>
   <div
-    className="col-4"
+    className="col-12 col-md-4 d-flex flex-column"
   >
     <div>
       <h4
@@ -33,7 +35,7 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
         Taste: 
       </h4>
       <span
-        className="taste"
+        className="taste d-inline"
       >
         5
       </span>
@@ -45,14 +47,14 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
         Difficulty: 
       </h4>
       <span
-        className="difficulty"
+        className="difficulty d-inline"
       >
         3
       </span>
     </div>
   </div>
-  <div
-    className="col-4"
+  <Connect(MediaQueryWrapper)
+    className="col-md-4"
   >
     <button
       className="btn btn-primary useMealButton"
@@ -69,6 +71,29 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
        
       times
     </h4>
-  </div>
+  </Connect(MediaQueryWrapper)>
+  <Connect(MediaQueryWrapper)
+    className="col-12"
+  >
+    <h4
+      className="usedCount"
+    >
+      Used 
+      3
+       
+      times
+    </h4>
+  </Connect(MediaQueryWrapper)>
+  <Connect(MediaQueryWrapper)
+    className="col-12"
+  >
+    <button
+      className="btn btn-primary btn-sm btn-block useMealButton"
+      onClick={[Function]}
+      type="button"
+    >
+      Use it!
+    </button>
+  </Connect(MediaQueryWrapper)>
 </Link>
 `;
