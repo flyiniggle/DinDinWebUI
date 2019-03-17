@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { reducer as responsive } from 'react-responsive-redux';
 import dashboard from 'Data/Reducers/dashboardReducer';
 import mealCreator from 'Data/Reducers/mealCreatorReducer';
 import mealEditor from 'Data/Reducers/mealEditorReducer';
@@ -11,6 +12,7 @@ export const reducers = combineReducers({
     mealCreator,
     mealEditor,
     meals,
+    responsive,
     user
 });
 

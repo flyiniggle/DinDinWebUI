@@ -10,7 +10,16 @@ import authStatus from 'Business/Auth/authStatus';
 import DinDin from './DinDin';
 
 
-const initialState = { meals: [] };
+const initialState = {
+    meals: [],
+    responsive: {
+        phone: false,
+        tablet: false,
+        mobile: false,
+        desktop: false,
+        fakeWidth: 1200
+    }
+};
 let store;
 
 describe('#Components #DinDin #DinDin', function() {
