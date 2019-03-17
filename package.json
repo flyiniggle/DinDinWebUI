@@ -1,6 +1,6 @@
 {
   "name": "dindinwebui",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Web interface for DinDin",
   "main": "index.js",
   "scripts": {
