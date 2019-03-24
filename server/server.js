@@ -7,6 +7,9 @@ const app = express();
 // Serve the static files from the React app
 app.use('/static', express.static(path.join(__dirname, '..', 'build', 'static')));
 
+// Manifest.json and icons
+app.use('/manifest', express.static(path.join(__dirname, '..', 'manifest')));
+
 // Handles any requests that don't match the ones above
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
