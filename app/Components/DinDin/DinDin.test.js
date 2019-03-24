@@ -30,7 +30,12 @@ describe('#Components #DinDin #DinDin', function() {
     });
 
     it('should render the splash page if not logged in.', function() {
-        const wrapper = mount(<StaticRouter basename="" context={ {} } location="/"><DinDin /></StaticRouter>);
+        const wrapper = mount(
+            <Provider store={ store }>
+                <StaticRouter basename="" context={ {} } location="/">
+                    <DinDin />
+                </StaticRouter>
+            </Provider>);
 
         expect(wrapper.find(Splash).exists()).toBe(true);
     });
