@@ -12,18 +12,16 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
     <h2>
       Delicious Meal
     </h2>
-    <React.Fragment>
-      <h4
-        className="d-inline"
-      >
-        Last Used: 
-      </h4>
-      <span
-        className="lastUsed"
-      >
-        May 12, 2018
-      </span>
-    </React.Fragment>
+    <h4
+      className="d-inline"
+    >
+      Last Used: 
+    </h4>
+    <span
+      className="lastUsed"
+    >
+      May 12, 2018
+    </span>
   </div>
   <div
     className="col-12 col-md-4 d-flex flex-column"
@@ -53,7 +51,7 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
       </span>
     </div>
   </div>
-  <Connect(MediaQueryWrapper)
+  <ConnectFunction
     className="col-md-4"
   >
     <button
@@ -71,8 +69,8 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
        
       times
     </h4>
-  </Connect(MediaQueryWrapper)>
-  <Connect(MediaQueryWrapper)
+  </ConnectFunction>
+  <ConnectFunction
     className="col-12"
   >
     <h4
@@ -83,8 +81,8 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
        
       times
     </h4>
-  </Connect(MediaQueryWrapper)>
-  <Connect(MediaQueryWrapper)
+  </ConnectFunction>
+  <ConnectFunction
     className="col-12"
   >
     <button
@@ -94,6 +92,6 @@ exports[`#Components #Dashboard #MealCard should render. 1`] = `
     >
       Use it!
     </button>
-  </Connect(MediaQueryWrapper)>
+  </ConnectFunction>
 </Link>
 `;
