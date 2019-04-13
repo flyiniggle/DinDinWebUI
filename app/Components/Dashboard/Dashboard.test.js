@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 
 import Dashboard from './Dashboard';
 
-describe('#Components #Dashboard #Dashboard', function () {
+describe('#Components #Dashboard #Dashboard', function() {
     let store;
 
     beforeEach(function() {
@@ -14,7 +14,7 @@ describe('#Components #Dashboard #Dashboard', function () {
     });
     it('should render.', function() {
         expect(() => mount(
-            <Provider store={store}>
+            <Provider store={ store }>
                 <StaticRouter basename="" context={ {} } location="/">
                     <Dashboard />
                 </StaticRouter>
