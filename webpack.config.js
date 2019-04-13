@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 require('dotenv').config();
 
 const ENV = process.env.NODE_ENV || 'production';
@@ -98,6 +99,42 @@ module.exports = {
         new WebpackMd5Hash(),
         new webpack.DefinePlugin({
             __APIRoot__: JSON.stringify(`${APIRoot}`)
+        }),
+        new WebpackPwaManifest({
+            name: 'Din Din',
+            short_name: 'Din Din',
+            description: 'Meal tracking and yumminess.',
+            theme_color: '#ff9e01',
+            background_color: '#655643',
+            display: 'fullscreen',
+            scope: '/',
+            start_url: '/',
+            icons: [{
+                src: path.join(__dirname, 'manifest', '72.png'),
+                sizes: '72x72',
+                type: 'image/png'
+            }, {
+                src: path.join(__dirname, 'manifest', '96.png'),
+                sizes: '96x96',
+                type: 'image/png'
+            }, {
+                src: path.join(__dirname, 'manifest', '128.png'),
+                sizes: '128x128',
+                type: 'image/png'
+            }, {
+                src: path.join(__dirname, 'manifest', '144.png'),
+                sizes: '144x144',
+                type: 'image/png'
+            }, {
+                src: path.join(__dirname, 'manifest', '192.png'),
+                sizes: '192x192',
+                type: 'image/png'
+            }, {
+                src: path.join(__dirname, 'manifest', '512.png'),
+                sizes: '512x512',
+                type: 'image/png'
+            }
+            ]
         })
     ],
     optimization: {
