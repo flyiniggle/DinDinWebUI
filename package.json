@@ -13,9 +13,9 @@
     "start": "node server/server.js",
     "start-dev": "run-p build-dev serve-dev",
     "storybook": "start-storybook -p 9001 -c storybook",
-    "test": "jest --config test/jest.config.js",
-    "test-ci": "jest --ci --coverage --config test/jest.config.js && cat ./test/coverage/lcov.info | coveralls",
-    "test-dev": "jest --config test/jest.config.js --watch --verbose"
+    "test": "jest --config ./test/jest.config.js",
+    "test-ci": "jest --ci --coverage --config ./test/jest.config.js && cat ./test/coverage/lcov.info | coveralls",
+    "test-dev": "jest --config ./test/jest.config.js --watch --verbose"
   },
   "author": "Dan Thompson",
   "license": "ISC",
