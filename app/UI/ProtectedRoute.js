@@ -15,7 +15,6 @@ const ProtectedRoute = function({ component: Component, ...rest }) {
 };
 
 ProtectedRoute.propTypes = {
-    component: PropTypes.oneOfType([PropTypes.instanceOf(React.Component), PropTypes.func]),
     location: PropTypes.object
 };
 
