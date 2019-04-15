@@ -109,6 +109,8 @@ module.exports = {
             display: 'fullscreen',
             scope: '/',
             start_url: '/',
+            ios: true,
+            inject: true,
             icons: [{
                 src: path.join(__dirname, 'manifest', '72.png'),
                 sizes: '72x72',
@@ -116,6 +118,11 @@ module.exports = {
             }, {
                 src: path.join(__dirname, 'manifest', '96.png'),
                 sizes: '96x96',
+                type: 'image/png',
+                ios: true
+            }, {
+                src: path.join(__dirname, 'manifest', 'apple-120.png'),
+                sizes: '120x120',
                 type: 'image/png',
                 ios: true
             }, {
@@ -129,6 +136,11 @@ module.exports = {
                 type: 'image/png',
                 ios: true
             }, {
+                src: path.join(__dirname, 'manifest', 'apple-180.png'),
+                sizes: '180x180',
+                type: 'image/png',
+                ios: true
+            }, {
                 src: path.join(__dirname, 'manifest', '192.png'),
                 sizes: '192x192',
                 type: 'image/png',
@@ -136,7 +148,8 @@ module.exports = {
             }, {
                 src: path.join(__dirname, 'manifest', '512.png'),
                 sizes: '512x512',
-                type: 'image/png'
+                type: 'image/png',
+                ios: true
             }
             ]
         })
