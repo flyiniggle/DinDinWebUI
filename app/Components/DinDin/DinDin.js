@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import authStatus from 'Business/Auth/authStatus';
 import UserContext from 'Business/Auth/UserContext';
 import DinDinService from 'Business/Services/DinDinService';
@@ -36,4 +37,4 @@ class DinDin extends React.Component {
     }
 }
 
-export default DinDin;
+export default hot(DinDin);

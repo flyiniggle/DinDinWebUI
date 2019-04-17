@@ -4,6 +4,7 @@
   "env": {
     "test": {
       "plugins": [
+        "react-hot-loader/babel",
         "transform-async-to-generator",
         "transform-es2015-modules-commonjs",
         "transform-class-properties",
