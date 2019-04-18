@@ -3,6 +3,18 @@ const path = require('path');
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const webpack = require('webpack');
+
+const webpackConfig = require('../webpack.config');
+const compiler = webpack(webpackConfig);
+
+app.use(
+    require('webpack-dev-middleware')(compiler, {
+        noInfo: true,
+        publicPath: webpackConfig.output.publicPath
+    })
+);
+app.use(require('webpack-hot-middleware')(compiler));
 
 // Serve the static files from the React app
 app.use('/static', express.static(path.join(__dirname, '..', 'build', 'static')));
