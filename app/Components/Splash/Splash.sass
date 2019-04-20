@@ -3,3 +3,35 @@
 .splash-header
   padding: 15px
   border-bottom: 2px solid $primary
+
+.splash-icon
+  stroke: $primary2
+  padding: 10px
+
+.splash-title
+  font-family: dindin
+  align-content:  space-between
+  color: $primary4
+  display: inline
+
+  &.phone
+    @media only screen and (orientation: portrait) 
+      font-size: 3rem
+    @media only screen and (orientation: landscape)
+      font-size: 5rem 
+  &.tablet
+    font-size: 6rem
+  &.desktop
+    font-size: 8rem
+
+=logo-direction($direction)
+  flex-direction: $direction
+
+
+@media only screen and (orientation: portrait) 
+  .logo-direction
+    +logo-direction(column)
+
+@media only screen and (orientation: landscape) 
+  .logo-direction
+    +logo-direction(row)
