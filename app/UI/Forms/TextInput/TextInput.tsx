@@ -57,7 +57,7 @@ const messageIsTallerThanTopSpace = function (input: HTMLInputElement, message: 
     return isTaller;
 };
 
-interface TextInputProps {
+interface ITextInputProps {
     placeholder?: string
     message?: InputMessage
     type?: string
@@ -73,7 +73,7 @@ interface TextInputState {
     //value: string
 }
 
-class TextInput extends React.Component<TextInputProps, TextInputState> {
+class TextInput extends React.Component<ITextInputProps, TextInputState> {
 
     static defaultProps = {
         placeholder: '',
@@ -143,7 +143,7 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
                     placeholder={placeholder}
                     className={`form-control ${this.props.className} ${showInputErrorClass(message)} ${showInputTextErrorClass(message)}`}
                     onChange={this.update}
-                    onKeyDown={this.props.onKeyDown}/>
+                    onKeyDown={this.props.onKeyDown} />
                 <div className={`textInputFeedback position-absolute ${feedbackPosition.unwrapOr('')}`}>
                     {feedback.unwrapOr(null)}
                 </div>
@@ -152,4 +152,5 @@ class TextInput extends React.Component<TextInputProps, TextInputState> {
     }
 }
 
+export { ITextInputProps }
 export default TextInput;

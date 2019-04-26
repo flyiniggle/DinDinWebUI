@@ -1,6 +1,8 @@
 import IMeal from "Business/Meals/Types/Meal";
+import { curry } from 'ramda';
 
-function findMeal(parameter: string, meal: IMeal): boolean {
+
+const findMeal = curry(function (parameter: string, meal: IMeal): boolean {
     const tester = new RegExp(parameter, 'ig');
     if (tester.test(meal.name)) {
         return true
@@ -9,6 +11,6 @@ function findMeal(parameter: string, meal: IMeal): boolean {
         return true
     }
     return false
-}
+});
 
 export default findMeal
