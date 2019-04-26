@@ -1,4 +1,4 @@
-import authenticate from 'Business/Auth/authenticate';
+import authenticate from 'Business/Auth/Authenticate/authenticate';
 import authStatus from 'Business/Auth/authStatus';
 import TextInput from 'UI/Forms/TextInput/TextInput';
 import React from 'react';

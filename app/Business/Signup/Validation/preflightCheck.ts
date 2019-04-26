@@ -1,5 +1,5 @@
 import ErrorMessage from 'Business/Validation/ErrorMessage';
-import AuthValidationMessages from 'Business/Auth/Validation/Messages';
+import AuthValidationMessages from 'Business/Auth/Authenticate/Validation/Messages';
 import SignupValidationMessages from 'Business/Signup/Validation/Messages';
 import { SignupProps } from "Business/Signup/Service";
 import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
@@ -59,7 +59,7 @@ function preflightCheck({ password, username, email, passwordRepeat }: SignupPar
         }));
     }
 
-    return errors.length ? Result.err(errors) : Result.ok({username, email, password});
+    return errors.length ? Result.err(errors) : Result.ok({ username, email, password });
 }
 
 export default preflightCheck;

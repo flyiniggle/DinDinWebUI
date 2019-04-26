@@ -1,5 +1,5 @@
 import ErrorMessage from 'Business/Validation/ErrorMessage';
-import AuthValidationMessages from 'Business/Auth/Validation/Messages';
+import AuthValidationMessages from 'Business/Auth/Authenticate/Validation/Messages';
 import fieldIsEmpty from 'Business/Validation/Lib/fieldIsEmpty';
 import Message from "Business/Validation/Types/Message";
 import { Result } from "true-myth";
@@ -10,7 +10,7 @@ interface paramTypes {
 }
 
 function preflightCheck(data: paramTypes = {}): Result<paramTypes, Message[]> {
-    const {username, password} = data;
+    const { username, password } = data;
     const errors = [];
 
     if (fieldIsEmpty(username) === true) {

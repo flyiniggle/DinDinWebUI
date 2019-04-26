@@ -1,12 +1,12 @@
-import authenticate from 'Business/Auth/authenticate';
+import authenticate from 'Business/Auth/Authenticate/authenticate';
 import authStatus, { USERNAME_KEY } from 'Business/Auth/authStatus';
 import { fake, replace, restore } from 'sinon';
 import { Result } from 'true-myth';
-import AuthService from 'Business/Auth/Service';
+import AuthService from 'Business/Auth/Authenticate/Service';
 import * as uuid from 'Business/Lib/uuid';
 
 
-describe('#Business #Auth #authenticate', function() {
+describe('#Business #Auth #Authenticate #authenticate', function() {
     const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
 
     beforeEach(function() {

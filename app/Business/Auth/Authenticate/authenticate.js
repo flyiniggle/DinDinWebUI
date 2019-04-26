@@ -1,7 +1,7 @@
 import authStatus from 'Business/Auth/authStatus';
-import AuthService from 'Business/Auth/Service';
-import preflightCheck from 'Business/Auth/Validation/preflightCheck';
-import responseCheck from 'Business/Auth/Validation/responseCheck';
+import AuthService from 'Business/Auth/Authenticate/Service';
+import preflightCheck from 'Business/Auth/Authenticate/Validation/preflightCheck';
+import responseCheck from 'Business/Auth/Authenticate/Validation/responseCheck';
 import { chain, pipe, pipeP } from 'ramda';
 import { Result } from 'true-myth';
 

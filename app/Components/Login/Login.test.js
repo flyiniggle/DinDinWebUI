@@ -1,10 +1,9 @@
 import ErrorLevel from 'Business/Validation/Types/ErrorLevel';
 import React from 'react';
-import { StaticRouter, Route } from 'react-router-dom';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { fake, replace, restore, createSandbox } from 'sinon';
 import { Result } from 'true-myth';
-import Service from 'Business/Auth/Service';
+import Service from 'Business/Auth/Authenticate/Service';
 import authStatus from 'Business/Auth/authStatus';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 

@@ -1,4 +1,4 @@
-import AuthValidationMessages from 'Business/Auth/Validation/Messages';
+import AuthValidationMessages from 'Business/Auth/Authenticate/Validation/Messages';
 import SignupValidationMessages from 'Business/Signup/Validation/Messages';
 
 import preflightCheck from './preflightCheck';

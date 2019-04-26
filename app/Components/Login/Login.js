@@ -1,4 +1,4 @@
-import authenticate from 'Business/Auth/authenticate';
+import authenticate from 'Business/Auth/Authenticate/authenticate';
 import authStatus from 'Business/Auth/authStatus';
 import getFirstInputMessageForField from 'UI/Forms/Validation/getFirstInputMessageForField';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';

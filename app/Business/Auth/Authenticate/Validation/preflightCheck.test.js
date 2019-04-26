@@ -3,17 +3,18 @@ import getMessagesForField from 'Business/Validation/getMessagesForField';
 
 import preflightCheck from './preflightCheck';
 
-describe('#Business #Auth #Validation #preflightCheck', function() {
-    it('should return an OK result with the input data', function() {
-        const input = {username: 'test', password: 'test'};
+
+describe('#Business #Auth #Authenticate #Validation #preflightCheck', function () {
+    it('should return an OK result with the input data', function () {
+        const input = { username: 'test', password: 'test' };
         const result = preflightCheck(input);
 
         expect(result.isOk()).toBe(true);
         expect(result.unwrapOr('uh oh')).toEqual(input);
     });
 
-    it('should return an error result if no password is provided.', function() {
-        const input = {username: 'test', password: ''};
+    it('should return an error result if no password is provided.', function () {
+        const input = { username: 'test', password: '' };
         const result = preflightCheck(input);
 
         expect(result.isErr()).toBe(true);
@@ -24,8 +25,8 @@ describe('#Business #Auth #Validation #preflightCheck', function() {
         expect(passwordError).toHaveProperty('message', 'required');
     });
 
-    it('should return an error if no username is provided.', function() {
-        const input = {username: '', password: 'test'};
+    it('should return an error if no username is provided.', function () {
+        const input = { username: '', password: 'test' };
         const result = preflightCheck(input);
 
         expect(result.isErr()).toBe(true);
@@ -36,7 +37,7 @@ describe('#Business #Auth #Validation #preflightCheck', function() {
         expect(usernameError).toHaveProperty('message', 'required');
     });
 
-    it('should return multiple errors if neither username nor password are provided.', function() {
+    it('should return multiple errors if neither username nor password are provided.', function () {
         const result = preflightCheck();
 
         expect(result.isErr()).toBe(true);

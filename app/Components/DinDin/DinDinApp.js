@@ -3,6 +3,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import reauthenticate from 'Business/Auth/Reauthenticate/reauthenticate';
 import Dashboard from 'Components/Dashboard/Dashboard';
 import Header from 'Components/Header/Header';
 import MealEditor from 'Components/MealEditor/MealEditor';
@@ -17,20 +18,28 @@ class DinDinAppBase extends React.Component {
         logoutHandler: () => undefined
     };
 
+    timeout = null;
+
     static propTypes = {
-        logoutHandler: PropTypes.func
+        logoutHandler: PropTypes.func,
+        getMeals: PropTypes.func.isRequired
     };
 
     componentWillMount = () => {
         this.props.getMeals();
+        this.timeout = window.setInterval(reauthenticate, 240000);
     };
+
+    componentWillUnmount = () => {
+        window.clearInterval(this.timeout);
+    }
 
     render() {
         return (
             <div className="mainBackground din-din-app container-fluid dashboard d-flex flex-column">
                 <div className="row d-block">
                     <div className="col-12">
-                        <Header logoutHandler={ this.props.logoutHandler } />
+                        <Header logoutHandler={this.props.logoutHandler} />
                     </div>
                 </div>
                 <div className="main-container row flex-grow-1">
@@ -38,21 +47,21 @@ class DinDinAppBase extends React.Component {
                         <Route
                             exact
                             path="/meals"
-                            render={ routeProps => (
-                                <Dashboard { ...routeProps } />
-                            ) } />
+                            render={routeProps => (
+                                <Dashboard {...routeProps} />
+                            )} />
                         <Route
                             exact
                             path="/meals/new"
-                            render={ () => (
+                            render={() => (
                                 <MealCreator />
-                            ) } />
+                            )} />
                         <Route
                             exact
                             path="/meals/:id"
-                            render={ routeProps => (
-                                <MealEditor mealId={ routeProps.match.params.id } />
-                            ) } />
+                            render={routeProps => (
+                                <MealEditor mealId={routeProps.match.params.id} />
+                            )} />
                     </Switch>
                 </div>
             </div>
@@ -60,11 +69,11 @@ class DinDinAppBase extends React.Component {
     }
 }
 
-const mapStateToProps = function() {
+const mapStateToProps = function () {
     return {};
 };
 
-const mapDispatchToProps = function(dispatch) {
+const mapDispatchToProps = function (dispatch) {
     return {
         getMeals: pipe(getMeals, dispatch)
     };

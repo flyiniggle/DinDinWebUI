@@ -1,9 +1,8 @@
 import AuthService from './Service';
 
-describe('#Business #Auth #Service', function() {
+describe('#Business #Auth #Authenticate #Service', function() {
     beforeEach(() => fetch.mockResponse(JSON.stringify({ token: '1234' })));
     afterEach(fetch.resetMocks);
-
 
     describe('#get', function() {
         it('should send a username and password to a server.', async function() {

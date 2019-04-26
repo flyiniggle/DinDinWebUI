@@ -1,16 +1,16 @@
-import responseCheck from 'Business/Auth/Validation/responseCheck';
+import responseCheck from 'Business/Auth/Authenticate/Validation/responseCheck';
 import ErrorType from 'Business/Validation/Types/ErrorLevel';
 
 
-describe('#Business #Auth #Validation #responseCheck', function() {
+describe('#Business #Auth #Authetnicate #Validation #responseCheck', function() {
     it('should return no message if a token is present.', function() {
-        const input = {token: 12345};
+        const input = { token: 12345 };
 
         expect(responseCheck(input)).toEqual([]);
     });
 
     it('should return a message if the login credentials were wrong.', function() {
-        const input = {non_field_errors: ['Unable to log in with provided credentials.']};
+        const input = { non_field_errors: ['Unable to log in with provided credentials.'] };
         const result = responseCheck(input);
 
         expect(result.length).toEqual(1);
@@ -19,7 +19,7 @@ describe('#Business #Auth #Validation #responseCheck', function() {
     });
 
     it('should return a message if the login request failed.', function() {
-        const input = {unknown: ['Some unexpected message.']};
+        const input = { unknown: ['Some unexpected message.'] };
         const result = responseCheck(input);
 
         expect(result.length).toEqual(1);
