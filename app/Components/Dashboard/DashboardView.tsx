@@ -35,7 +35,7 @@ function DashboardView(props) {
                 <Link to="meals/new" className="btn btn-sm btn-outline-accent">
                     new meal
                 </Link>
-                <TextInput {...inputProps} />
+                <TextInput {...inputProps} className={"form-control-sm"} />
             </Ribbon>
             <div className="dashboard-main row d-flex flex-column flex-md-row flex-grow-1">
                 <div className="d-none d-md-block col-12 col-md-4">

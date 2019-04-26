@@ -1,12 +1,11 @@
 @import "~Styles/theme.sass"
 
 .ribbon
+    display: flex
+    align-items: center
     width: 100%
     padding-top: .5em
     padding-bottom: .5em
 
-    .ribbon-content
-        display: flex
-
-        &not(:last-child)
-            padding: 5px
+    .ribbon-item:not(:last-child)
+        padding-right: 2rem
