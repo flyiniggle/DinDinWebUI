@@ -9,7 +9,7 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 require('dotenv').config();
 
-const ENV = 'production';
+const ENV = process.env.NODE_ENV || 'production';
 const IN_PRODUCTION = ENV === 'production';
 const APIRoot = process.env.API_ROOT;
 
