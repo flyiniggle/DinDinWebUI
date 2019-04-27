@@ -18,7 +18,7 @@ module.exports = {
     context: __dirname,
     devtool: 'source-map',
     entry: {
-        index: ['./index.js', !IN_PRODUCTION ? false : 'webpack-hot-middleware/client'].filter(Boolean),
+        index: ['./index.js', IN_PRODUCTION ? false : 'webpack-hot-middleware/client'].filter(Boolean),
         vendors: ['babel-polyfill', 'react', 'react-dom', 'ramda']
     },
     output: {
@@ -63,7 +63,7 @@ module.exports = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    IN_PRODUCTION ? MiniCssExtractPlugin.loader : 'style-loader',
                     {
                         loader: 'css-loader'
                     },
@@ -88,8 +88,8 @@ module.exports = {
         ]
     },
     plugins: [
-        !IN_PRODUCTION ? false : new webpack.HotModuleReplacementPlugin(),
-        IN_PRODUCTION ? false : new MiniCssExtractPlugin({
+        IN_PRODUCTION ? false : new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css'
         }),
         new HtmlWebpackPlugin({
@@ -154,7 +154,7 @@ module.exports = {
             }
             ]
         })
-    ].filter(Boolean),
+    ],
     optimization: {
         minimize: IN_PRODUCTION,
         minimizer: [
