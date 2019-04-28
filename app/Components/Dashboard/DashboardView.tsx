@@ -30,14 +30,16 @@ function DashboardView(props) {
     }
 
     return (
-        <div className="dashboard col-12 d-flex flex-column">
-            <Ribbon>
-                <Link to="meals/new" className="btn btn-sm btn-outline-accent">
-                    new meal
-                </Link>
-                <TextInput {...inputProps} className={"form-control-sm"} />
-            </Ribbon>
-            <div className="dashboard-main row d-flex flex-column flex-md-row flex-grow-1">
+        <div className="dashboard col-12">
+            <div className="dashboard-ribbon row">
+                <div className="col-12">
+                    <Ribbon>
+                        <Link to="meals/new" className="btn btn-sm btn-outline-accent">new meal</Link>
+                        <TextInput {...inputProps} className={"form-control-sm"} />
+                    </Ribbon>
+                </div>
+            </div>
+            <div className="dashboard-main row">
                 <div className="d-none d-md-block col-12 col-md-4">
                     <div className="position-fixed">
                         <OverviewBase meals={meals.unwrapOr([])} />

@@ -1,8 +1,11 @@
+@import "~Styles/layout.sass"
+    
 .dashboard
 
     .dashboard-main
         flex-wrap: nowrap !important
-        min-height: 0
-    
-    .meal-card-container
-        overflow-y: scroll
+        height: $body-height
+
+        .meal-card-container
+            height: 100%
+            overflow-y: scroll

@@ -18,12 +18,13 @@ import AlertContianer from 'UI/Alert/AlertContainer';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 import './Meal.sass';
+import Ribbon from 'Components/Ribbon/Ribbon';
 
 
-const getRenderUseIt = curry(function(meal: IMeal, handler: (IMeal) => any) {
+const getRenderUseIt = curry(function (meal: IMeal, handler: (IMeal) => any) {
     return (
         <button
-            className="btn btn-primary"
+            className="btn btn-sm btn-accent"
             type="button"
             onClick={(event) => {
                 event.stopPropagation();
@@ -57,7 +58,7 @@ function Meal(props: IMealProps) {
     if (maybeMeal.isNothing()) {
         return <p>Loading...</p>
     }
-    
+
     const meal = maybeMeal.unsafelyUnwrap();
     const usedCount = 'usedCount' in meal ? meal.usedCount : null;
     const lastUsed = 'lastUsed' in meal ? meal.lastUsed : null;
@@ -120,69 +121,71 @@ function Meal(props: IMealProps) {
 
     return (
         <div className="meal col-12">
-            <div className="row m-2">
-                <div className="editable">
-                    <DisplayOrEditName {...displayOrEditNameProps}/>
-                </div>
-            </div>
-            <div className="row m-2">
-                <div className="col-12 col-lg-2 mb-3 mb-md-0">
-                    <h4>Ingredients</h4>
-                    <DisplayOrEditIngredients { ...displayOrEditIngredientsProps} />
-                </div>
-                <div className="col-12 col-lg-5">
-                    <div className="mb-3 mb-md-0">
-                        <h4 className="d-inline">Taste: </h4>
-                        <DisplayOrEditTaste { ...displayOrEditTasteProps} />
-                    </div>
-                    <div className="mb-3 mb-md-0">
-                        <h4 className="d-inline">Difficulty: </h4>
-                        <DisplayOrEditDifficulty { ...displayOrEditDifficultyProps} />
-                    </div>
-                </div>
-                <div className="col-12 col-lg-5 mb-3 mb-md-0">
-                    <LastUsedDisplay date={lastUsed} />
-                    <UsedCountDisplay usedCount={usedCount} />
-                </div>
-            </div>
-            <div className="row m-2">
+            <div className="row meal-ribbon">
                 <div className="col-12">
-                    <h4>Notes:</h4>
-                    <DisplayOrEditNotes {...displayOrEditNotesProps} />
+                    <Ribbon>
+                        <Link to="/meals" className="btn btn-sm btn-outline-accent">close</Link>
+                        {useHandler.map(renderUseIt).unwrapOr(null)}
+                        {saveNewMealHandler.map(handler => (
+                            <AsyncButton
+                                className="btn btn-sm btn-accent"
+                                working={isWorking}
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    event.preventDefault();
+                                    handler();
+                                }}>Save</AsyncButton>
+                        )).unwrapOr(null)}
+                    </Ribbon>
                 </div>
             </div>
-            <div className="row p-3 d-flex justify-content-end fixed-bottom">
-                <div className="col-6 col-md-2 d-flex justify-content-between">
-                    {useHandler.map(renderUseIt).unwrapOr(null)}
-                    {saveNewMealHandler.map(handler => ( 
-                        <AsyncButton
-                            className="btn btn-primary"
-                            working={isWorking}
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                event.preventDefault();
-                                handler();
-                            }}
-                        >
-                            Save
-                        </AsyncButton>
-                    )).unwrapOr(null)}
-
-                    <Link to="/meals" className="btn btn-outline-primary">close</Link>
+            <div className="row meal-main">
+                <div className="col-12">
+                    <div className="row m-2">
+                        <div className="editable">
+                            <DisplayOrEditName {...displayOrEditNameProps} />
+                        </div>
+                    </div>
+                    <div className="row m-2">
+                        <div className="col-12 col-lg-2 mb-3 mb-md-0">
+                            <h4>Ingredients</h4>
+                            <DisplayOrEditIngredients {...displayOrEditIngredientsProps} />
+                        </div>
+                        <div className="col-12 col-lg-5">
+                            <div className="mb-3 mb-md-0">
+                                <h4 className="d-inline">Taste: </h4>
+                                <DisplayOrEditTaste {...displayOrEditTasteProps} />
+                            </div>
+                            <div className="mb-3 mb-md-0">
+                                <h4 className="d-inline">Difficulty: </h4>
+                                <DisplayOrEditDifficulty {...displayOrEditDifficultyProps} />
+                            </div>
+                        </div>
+                        <div className="col-12 col-lg-5 mb-3 mb-md-0">
+                            <LastUsedDisplay date={lastUsed} />
+                            <UsedCountDisplay usedCount={usedCount} />
+                        </div>
+                    </div>
+                    <div className="row m-2">
+                        <div className="col-12">
+                            <h4>Notes:</h4>
+                            <DisplayOrEditNotes {...displayOrEditNotesProps} />
+                        </div>
+                    </div>
                 </div>
             </div>
             <AlertContianer>
-            {
-                messages.map(
-                    map((m: Message) => (
-                        <AlertBar
-                            key={m.id}
-                            message={m}
-                            dismissMessage={acknowledgeMessage.bind(null, m.id)}
-                        />
-                    ))
-                ).unwrapOr(null)
-            }
+                {
+                    messages.map(
+                        map((m: Message) => (
+                            <AlertBar
+                                key={m.id}
+                                message={m}
+                                dismissMessage={acknowledgeMessage.bind(null, m.id)}
+                            />
+                        ))
+                    ).unwrapOr(null)
+                }
             </AlertContianer>
         </div>
     );
