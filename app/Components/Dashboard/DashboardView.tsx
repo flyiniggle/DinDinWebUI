@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Maybe } from 'true-myth';
 import Ribbon from 'Components/Ribbon/Ribbon';
-import MealCard from 'Components/Dashboard/MealCard/MealCard';
+import MealCard, { IMealCardProps } from 'Components/Dashboard/MealCard/MealCard';
 import OverviewBase from 'Components/Dashboard/Overview/Overview';
 import IMeal from 'Business/Meals/Types/Meal';
 import TextInput, { ITextInputProps } from 'UI/Forms/TextInput/TextInput';
@@ -14,10 +14,12 @@ import './DashboardView.sass';
 interface IDashboardViewProps {
     meals: Maybe<IMeal[]>
     searchString: string
+    useMeal: (meal: IMeal) => void
     updateSearchString: (string) => void
+    mealIsUpdating: boolean
 }
 
-function DashboardView(props) {
+function DashboardView(props: IDashboardViewProps) {
     const {
         meals,
         searchString,
@@ -35,7 +37,7 @@ function DashboardView(props) {
                 <div className="col-12">
                     <Ribbon>
                         <Link to="meals/new" className="btn btn-sm btn-outline-accent">new meal</Link>
-                        <TextInput {...inputProps} className={"form-control-sm"} />
+                        <TextInput {...inputProps} className={"form-control-sm search-meals"} />
                     </Ribbon>
                 </div>
             </div>
@@ -47,14 +49,16 @@ function DashboardView(props) {
                 </div>
                 <div className="meal-card-container col-12 col-md-8 p-md-5">
                     {
-                        meals.match({
-                            Just: (m) => m.map((meal) => (
-                                <MealCard
-                                    meal={meal}
-                                    key={meal.id}
-                                    useMeal={props.useMeal}
-                                    mealIsUpdating={props.mealIsUpdating} />
-                            )),
+                        meals.match<JSX.Element | JSX.Element[]>({
+                            Just: (m: IMeal[]) => m.map((meal) => {
+                                const mealCardProps: IMealCardProps = {
+                                    meal,
+                                    useMeal: props.useMeal,
+                                    mealIsUpdating: props.mealIsUpdating
+                                };
+
+                                return <MealCard key={meal.id} {...mealCardProps} />
+                            }),
                             Nothing: () => <span>No meals</span>
                         })
                     }

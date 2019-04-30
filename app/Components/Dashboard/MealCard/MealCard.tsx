@@ -9,15 +9,12 @@ import dateString from 'UI/Formatting/dateString';
 
 import './MealCard.sass';
 
-interface ILastUsedDisplayProps {
-    date?: string
-}
 
 function renderLastUsed(lastUsedDate: string) {
     return (
         <>
-        <h4 className='d-inline'>Last Used: </h4>
-        <span className='lastUsed'>{lastUsedDate}</span>
+            <h4 className='d-inline'>Last Used: </h4>
+            <span className='lastUsed'>{lastUsedDate}</span>
         </>
     );
 };
@@ -29,13 +26,13 @@ const displayLastUsed: (date: string) => JSX.Element | null = pipe(
     Maybe.getOr(null)
 )
 
-interface MealCardProps {
+interface IMealCardProps {
     meal: Meal
     useMeal: (meal: Meal) => void,
     mealIsUpdating: boolean
 }
 
-function MealCard(props: MealCardProps) {
+function MealCard(props: IMealCardProps) {
     const { meal, useMeal, mealIsUpdating: isMealUpdating } = props;
     const handleUseMeal = function (e: React.MouseEvent<HTMLButtonElement>) {
         e.stopPropagation();
@@ -48,7 +45,7 @@ function MealCard(props: MealCardProps) {
         <Link to={`/meals/${meal.id}`} className="mealCard row p-lg-4 p-2 mb-2">
             <div className="col-12 col-md-4">
                 <h2>{meal.name}</h2>
-                { displayLastUsed(meal.lastUsed) }
+                {displayLastUsed(meal.lastUsed)}
             </div>
             <div className="col-12 col-md-4 d-flex flex-column">
                 <div><h4 className="d-inline">Taste: </h4><span className="taste d-inline">{meal.taste}</span></div>
@@ -65,7 +62,7 @@ function MealCard(props: MealCardProps) {
                 <h4 className="usedCount">Used {meal.usedCount} {(meal.usedCount === 1) ? 'time' : 'times'}</h4>
             </MobileScreen>
             <MobileScreen className="col-12">
-            <button
+                <button
                     className="btn btn-primary btn-sm btn-block useMealButton"
                     type="button"
                     onClick={handleUseMeal}>Use it!</button>
@@ -74,5 +71,5 @@ function MealCard(props: MealCardProps) {
     );
 }
 
-
+export { IMealCardProps }
 export default MealCard;
