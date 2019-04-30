@@ -12,7 +12,8 @@ const mapStateToProps = function(state) {
     return {
         meals: meals(state),
         mealsAreLoading: isMealsLoading(state),
-        mealIsUpdating: isMealsWorking(state)
+        mealIsUpdating: isMealsWorking(state),
+        dashboardIsLoading: isDashbordLoading(state)
     };
 };
 

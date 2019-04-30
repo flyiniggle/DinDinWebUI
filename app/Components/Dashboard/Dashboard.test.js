@@ -3,13 +3,10 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
-import TextInput from 'UI/Forms/TextInput/TextInput';
 
 import Dashboard from './Dashboard';
 import Fixtures from './Dashboard.fixtures';
 import MealCard from './MealCard/MealCard';
-import DashboardControl from './DashboardControl';
-import DashboardView from './DashboardView';
 
 describe('#Components #Dashboard #Dashboard', function() {
     const initialState = {
