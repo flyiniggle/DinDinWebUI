@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar} from '@fortawesome/free-solid-svg-icons';
 import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
+import RatingDisplay, { IRatingDisplayProps } from 'UI/Forms/Rating/RatingDisplay';
 import './DisplayTaste.sass'
 
 
@@ -11,24 +11,14 @@ interface IDisplayTaste {
 }
 
 function DisplayTaste(props: IDisplayTaste) {
-    const { range, value } = props;
+    const ratingDisplayProps: IRatingDisplayProps = {
+        selectedIcon: solidStar,
+        unselectedIcon: emptyStar,
+        className: 'display-taste',
+        ...props
+    }
 
-    return (
-        <div className={"display-taste"}>
-            {
-                Array.from(Array(range).keys())
-                    .map(function (i) {
-                        const icon = (i < value) ? solidStar : emptyStar;
-
-                        return (
-                            <span key={i} >
-                                <FontAwesomeIcon className="font" icon={icon} size="lg"/>
-                            </span>
-                        );
-                    })
-            }
-        </div>
-    )
+    return <RatingDisplay {...ratingDisplayProps}/>
 }
 
 export default DisplayTaste;
