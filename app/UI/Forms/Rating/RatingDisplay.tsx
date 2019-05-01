@@ -15,7 +15,7 @@ function RatingDisplay(props: IRatingDisplayProps) {
     const { selectedIcon, unselectedIcon, range, value, className } = props;
 
     return (
-        <div className={`rating ${className}`}>
+        <div className={`rating-display ${className}`}>
             {
                 Array.from(Array(range).keys())
                     .map(function (i) {

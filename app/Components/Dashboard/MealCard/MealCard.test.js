@@ -54,13 +54,13 @@ describe('#Components #Dashboard #MealCard', function() {
     it('should show the meal taste rating.', function() {
         const wrapper = shallow(<MealCard meal={ meal } />);
 
-        expect(wrapper.find('.taste').text()).toEqual('5');
+        expect(wrapper.find('.taste').find('RatingDisplay').prop('value')).toEqual(5);
     });
 
     it('should show the difficulty rating.', function() {
         const wrapper = shallow(<MealCard meal={ meal } />);
 
-        expect(wrapper.find('.difficulty').text()).toEqual('3');
+        expect(wrapper.find('.difficulty').find('RatingDisplay').prop('value')).toEqual(3);
     });
 
     it('should show the numbe of times the meal was used.', function() {
