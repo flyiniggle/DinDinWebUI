@@ -141,32 +141,32 @@ function Meal(props: IMealProps) {
             </div>
             <div className="row meal-main">
                 <div className="col-12">
-                    <div className="row m-2">
+                    <div className="row mb-4 mx-2">
                         <div className="editable">
                             <DisplayOrEditName {...displayOrEditNameProps} />
                         </div>
                     </div>
-                    <div className="row m-2">
-                        <div className="col-12 col-lg-2 mb-3 mb-md-0">
+                    <div className="row mb-5 mx-2">
+                        <div className="col-12 col-md-4 mb-4 mb-md-0">
                             <h4>Ingredients</h4>
                             <DisplayOrEditIngredients {...displayOrEditIngredientsProps} />
                         </div>
-                        <div className="col-12 col-lg-5">
-                            <div className="mb-3 mb-md-0">
+                        <div className="col-12 col-md-4">
+                            <div className="mb-4">
                                 <h4 className="d-inline">Taste: </h4>
                                 <DisplayOrEditTaste {...displayOrEditTasteProps} />
                             </div>
-                            <div className="mb-3 mb-md-0">
+                            <div className="mb-4">
                                 <h4 className="d-inline">Difficulty: </h4>
                                 <DisplayOrEditDifficulty {...displayOrEditDifficultyProps} />
                             </div>
                         </div>
-                        <div className="col-12 col-lg-5 mb-3 mb-md-0">
+                        <div className="col-12 col-md-4">
                             <LastUsedDisplay date={lastUsed} />
                             <UsedCountDisplay usedCount={usedCount} />
                         </div>
                     </div>
-                    <div className="row m-2">
+                    <div className="row mb-5 mx-2">
                         <div className="col-12">
                             <h4>Notes:</h4>
                             <DisplayOrEditNotes {...displayOrEditNotesProps} />
