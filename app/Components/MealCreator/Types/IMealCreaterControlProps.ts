@@ -1,5 +1,5 @@
 import Message from 'Business/Validation/Types/Message';
-import INewMeal from 'Business/Meals/Types/NewMeal';
+import INewMeal from 'Business/Meals/Types/INewMeal';
 import { Maybe } from 'true-myth';
 import editableFields from 'Components/Meal/Types/editableFields';
 

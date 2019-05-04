@@ -7,7 +7,8 @@ interface IMeal {
     lastUsed: string,
     usedCount: number,
     notes: string,
-    ingredients: Array<string>
+    ingredients: Array<string>,
+    collaborators: number[]
 }
 
 export default IMeal;

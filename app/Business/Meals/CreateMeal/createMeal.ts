@@ -1,5 +1,5 @@
-import INewMeal from '../Types/NewMeal';
-import IMeal from '../Types/Meal';
+import INewMeal from 'Business/Meals/Types/INewMeal';
+import IMeal from 'Business/Meals/Types/Meal';
 import MealsService from '../Service';
 import responseCheck from './Validation/responseCheck';
 import { Result } from 'true-myth';

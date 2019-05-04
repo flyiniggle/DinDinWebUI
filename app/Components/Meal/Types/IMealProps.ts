@@ -1,15 +1,16 @@
 import { ReactNode } from 'react';
 import editableFields from 'Components/Meal/Types/editableFields';
 import IMeal from 'Business/Meals/Types/Meal';
-import INewMeal from 'Business/Meals/Types/NewMeal';
+import INewMeal from 'Business/Meals/Types/INewMeal';
 import IMessage from 'Business/Validation/Types/Message';
 import { Maybe } from 'true-myth';
 import { IGetUsernamesListAction } from 'Data/ActionCreators/userActionCreators';
+import IUser from 'Business/Auth/Types/User';
 
 
 interface IMealProps {
     meal: Maybe<IMeal | INewMeal>
-    usernamesList: string[]
+    usernamesList: IUser[]
     getUsernamesList: () => IGetUsernamesListAction
     messages?: Maybe<IMessage[]>
     isWorking: boolean

@@ -22,6 +22,8 @@ import './Meal.sass';
 import Ribbon from 'Components/Ribbon/Ribbon';
 import { usernamesList } from 'Data/Selectors/userSelectors';
 import { getUsernamesList } from 'Data/ActionCreators/userActionCreators';
+import DisplayCollaborators from './DisplayOrEditCollaborators/DisplayCollaborators';
+import DisplayOrEditCollaborators, { IDisplayOrEditCollaboratorsProps } from './DisplayOrEditCollaborators/DisplayOrEditCollaborators';
 
 
 const getRenderUseIt = curry(function (meal: IMeal, handler: (IMeal) => any) {
@@ -128,6 +130,15 @@ function MealBase(props: IMealProps) {
         onCancel: cancelEditingHandler,
         submitting: (activeField === editableFields.notes) && isWorking
     };
+    const displayOrEditCollaboratorsProps: IDisplayOrEditCollaboratorsProps = {
+        onSave: saveField,
+        active: activeField === editableFields.collaborators,
+        activate: () => props.activateEditor(editableFields.collaborators, meal.collaborators),
+        users: usernamesList,
+        collaborators: [2].map(c => usernamesList.find(user => user.id === c)),
+        onCancel: cancelEditingHandler,
+        onChange: () => undefined
+    }
 
 
     return (
@@ -152,9 +163,14 @@ function MealBase(props: IMealProps) {
             </div>
             <div className="row meal-main">
                 <div className="col-12">
-                    <div className="row mb-4 mx-2">
-                        <div className="editable">
-                            <DisplayOrEditName {...displayOrEditNameProps} />
+                    <div className="row mb-4 mx-2 d-flex">
+                        <div className="col-12 col-md-6">
+                            <div className="editable">
+                                <DisplayOrEditName {...displayOrEditNameProps} />
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <DisplayOrEditCollaborators { ...displayOrEditCollaboratorsProps} />
                         </div>
                     </div>
                     <div className="row mb-5 mx-2">

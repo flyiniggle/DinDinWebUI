@@ -4,6 +4,7 @@ interface INewMeal {
     taste: number
     difficulty: number
     notes: string
+    collaborators: number[]
 }
 
 export default INewMeal;

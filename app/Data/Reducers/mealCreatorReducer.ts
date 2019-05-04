@@ -9,7 +9,8 @@ const generateNewMeal = () =>({
     ingredients: [],
     taste: 0,
     difficulty: 0,
-    notes: ''
+    notes: '',
+    collaborators: []
 })
 
 const initialState: IMealCreatorState = {

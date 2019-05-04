@@ -1,6 +1,7 @@
 interface IUser {
-    email: string;
-    username: string;
+    id?: number
+    email: string
+    username: string
 }
 
 function createUser(username: string, email: string): IUser {

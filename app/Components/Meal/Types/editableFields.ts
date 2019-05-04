@@ -3,7 +3,8 @@ enum editableFields {
     notes = 'notes',
     taste = 'taste',
     difficulty = 'difficulty',
-    ingredients = 'ingredients'
+    ingredients = 'ingredients',
+    collaborators = 'collaborators'
 }
 
 export default editableFields;

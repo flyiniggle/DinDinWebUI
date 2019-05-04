@@ -7,7 +7,8 @@ interface APIMeal {
     last_used?: string,
     used_count?: number,
     notes?: string,
-    ingredients?: Array<string>
+    ingredients?: Array<string>,
+    collaborators?: number[]
 }
 
 export default APIMeal;

@@ -4,7 +4,7 @@ import { filter, isNil, map, not, pipe } from 'ramda';
 import { Result } from "true-myth";
 import Message from "Business/Validation/Types/Message";
 import APIMeal from 'Business/Meals/Types/APIMeal';
-import INewMeal from 'Business/Meals/Types/NewMeal';
+import INewMeal from 'Business/Meals/Types/INewMeal';
 
 
 const MealsService = {
@@ -27,7 +27,7 @@ const MealsService = {
     }
 };
 
-function formatMealToAPI({ id: pk, name, owner, taste, difficulty, lastUsed: last_used, usedCount: used_count, notes, ingredients }: Partial<IMeal>): APIMeal {
+function formatMealToAPI({ id: pk, name, owner, taste, difficulty, lastUsed: last_used, usedCount: used_count, notes, ingredients, collaborators }: Partial<IMeal>): APIMeal {
     return filter(pipe(isNil, not), {
         pk,
         name,
@@ -37,11 +37,12 @@ function formatMealToAPI({ id: pk, name, owner, taste, difficulty, lastUsed: las
         last_used,
         used_count,
         notes,
-        ingredients
+        ingredients,
+        collaborators
     })
 }
 
-function formatMeal({ pk: id, name, owner, taste, difficulty, last_used: lastUsed, used_count: usedCount, notes, ingredients }: APIMeal): IMeal {
+function formatMeal({ pk: id, name, owner, taste, difficulty, last_used: lastUsed, used_count: usedCount, notes, ingredients, collaborators }: APIMeal): IMeal {
     return {
         id,
         name,
@@ -51,7 +52,8 @@ function formatMeal({ pk: id, name, owner, taste, difficulty, last_used: lastUse
         lastUsed,
         usedCount,
         notes,
-        ingredients
+        ingredients,
+        collaborators
     }
 }
 

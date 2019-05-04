@@ -1,5 +1,6 @@
 import * as userActions from "Data/ActionTypes/userActionTypes";
 import IReduxAction from "Data/Lib/Types/IReduxAction";
+import IUser from "Business/Auth/Types/User";
 
 
 export interface ISetUsernameAction extends IReduxAction {
@@ -37,10 +38,10 @@ export function getUsernamesList(): IGetUsernamesListAction {
 }
 
 export interface ISetUsernamesListAction extends IReduxAction { 
-    usernamesList: string[]
+    usernamesList: IUser[]
 }
 
-export function setUsernamesList(usernames: string[] = []): ISetUsernamesListAction {
+export function setUsernamesList(usernames: IUser[] = []): ISetUsernamesListAction {
     return {
         type: userActions.SET_USERNAMES_LIST,
         usernamesList: usernames

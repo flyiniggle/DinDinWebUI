@@ -3,7 +3,7 @@ import IMealCreatorState from 'Data/Reducers/Types/IMealCreatorState';
 import Message from 'Business/Validation/Message';
 import { Maybe } from 'true-myth';
 import safeGetProp from 'Business/Lib/safeGetProp';
-import INewMeal from 'Business/Meals/Types/NewMeal';
+import INewMeal from 'Business/Meals/Types/INewMeal';
 
 
 
