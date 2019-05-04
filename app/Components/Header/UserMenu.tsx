@@ -7,6 +7,7 @@ import { DesktopScreen } from 'react-responsive-redux';
 interface UserMenuProps {
     logoutHandler: () => void
 }
+
 function UserMenu(props: UserMenuProps) {
     return (
         <UserContext.Consumer>

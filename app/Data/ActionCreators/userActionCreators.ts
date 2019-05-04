@@ -1,16 +1,31 @@
-import { SET_MEALS } from "Data/ActionTypes/mealsActionTypes";
-import { SET_EMAIL } from "Data/ActionTypes/userActionTypes";
+import * as userActions from "Data/ActionTypes/userActionTypes";
+import IReduxAction from "Data/Lib/Types/IReduxAction";
 
-export function setUsername(username: string = null) {
+
+export interface ISetUsernameAction extends IReduxAction {
+    username: string
+}
+
+export function setUsername(username: string = null): ISetUsernameAction {
     return {
-        type: SET_MEALS,
+        type: userActions.SET_USERNAME,
         username
     }
 }
 
-export function setEmail(email: string = null) {
+export interface ISetEmailAction extends IReduxAction {
+    email: string
+}
+
+export function setEmail(email: string = null): ISetEmailAction {
     return {
-        type: SET_EMAIL,
+        type: userActions.SET_EMAIL,
         email
     }
+}
+
+export interface IGetProfileAction extends IReduxAction {}
+
+export function getProfile(): IGetProfileAction {
+    return { type: userActions.GET_PROFILE }
 }

@@ -8,6 +8,7 @@ import Header from 'Components/Header/Header';
 import MealEditor from 'Components/MealEditor/MealEditor';
 import MealCreator from 'Components/MealCreator/MealCreator';
 import { getMeals } from 'Data/ActionCreators/mealsActionCreators';
+import { getProfile } from 'Data/ActionCreators/userActionCreators';
 
 import './DinDinApp.sass';
 
@@ -15,11 +16,13 @@ import './DinDinApp.sass';
 interface IDinDinAppProps {
     logoutHandler: () => void
     getMeals: () => any
+    getProfile: () => any
 }
 
 function DinDinAppBase(props: IDinDinAppProps) {
     React.useEffect(() => {
         props.getMeals();
+        props.getProfile();
 
         const timeout = window.setInterval(reauthenticate, 240000);
 
@@ -68,7 +71,8 @@ const mapStateToProps = function () {
 
 const mapDispatchToProps = function (dispatch) {
     return {
-        getMeals: pipe(getMeals, dispatch)
+        getMeals: pipe(getMeals, dispatch),
+        getProfile: pipe(getProfile, dispatch)
     };
 };
 

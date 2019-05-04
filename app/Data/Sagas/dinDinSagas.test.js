@@ -1,10 +1,13 @@
 import { Result } from 'true-myth';
 import MealService from 'Business/Meals/Service';
 import { setMealMessages, setMeals, startMealsLoading, endMealsLoading } from 'Data/ActionCreators/mealsActionCreators';
+import { GET_PROFILE } from 'Data/ActionTypes/userActionTypes';
+import { setUsername, setEmail } from 'Data/ActionCreators/userActionCreators';
+import ProfileService from 'Business/Auth/Profile/Sevice';
 
-import { loadMeals } from './dinDinSagas';
+import { loadMeals, getProfile } from './dinDinSagas';
 
-import { call, put } from 'redux-saga/effects';
+import { call, put, take } from 'redux-saga/effects';
 
 describe('#Data #dinDinSagas', function() {
     describe('loadMeals', function() {
@@ -86,6 +89,26 @@ describe('#Data #dinDinSagas', function() {
             mealLoader.next(mockResponse);
 
             expect(mealLoader.next().value).toEqual(expected);
+        });
+    });
+
+    describe('getProfile', function() {
+        it('should set the username and user email.', function() {
+            const testProfile = {
+                username: 'miguel',
+                email: 'miguel@rest.com'
+            };
+            const testResult = Result.ok(testProfile);
+            const expectedFirstAction = take(GET_PROFILE);
+            const expectedSecondAction = call(ProfileService.get);
+            const expectedThirdAction = put(setUsername(testProfile.username));
+            const expectedFourthAction = put(setEmail(testProfile.email));
+            const profileLoader = getProfile();
+
+            expect(profileLoader.next().value).toEqual(expectedFirstAction);
+            expect(profileLoader.next().value).toEqual(expectedSecondAction);
+            expect(profileLoader.next(testResult).value).toEqual(expectedThirdAction);
+            expect(profileLoader.next().value).toEqual(expectedFourthAction);
         });
     });
 });
