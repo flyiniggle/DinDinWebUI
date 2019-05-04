@@ -15,3 +15,7 @@ export const username = pipe(
     getUserStore,
     Maybe.chain(safeGetProp('username'))
 );
+
+export function usernamesList(state): string[] {
+    return state.user.usernamesList;
+}

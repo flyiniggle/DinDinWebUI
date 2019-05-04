@@ -1,11 +1,12 @@
 import * as actionTypes from 'Data/ActionTypes/userActionTypes';
 import createReducer from 'Data/Lib/createReducer';
-import { ISetUsernameAction, ISetEmailAction } from 'Data/ActionCreators/userActionCreators';
+import { ISetUsernameAction, ISetEmailAction, ISetUsernamesListAction } from 'Data/ActionCreators/userActionCreators';
 
 
 const initialState = {
     username: null,
-    email: null
+    email: null,
+    usernamesList: []
 };
 
 export function setEmail(state, action: ISetEmailAction) {
@@ -26,10 +27,20 @@ export function setUsername(state, action: ISetUsernameAction) {
     };
 }
 
+export function setUsernamesList(state, action: ISetUsernamesListAction) {
+    const usernamesList = action.usernamesList;
+
+    return {
+        ...state,
+        usernamesList
+    }
+}
+
 
 const subReducers = {
     [actionTypes.SET_EMAIL]: setEmail,
-    [actionTypes.SET_USERNAME]: setUsername
+    [actionTypes.SET_USERNAME]: setUsername,
+    [actionTypes.SET_USERNAMES_LIST]:setUsernamesList
 };
 
 export default createReducer(initialState, subReducers);

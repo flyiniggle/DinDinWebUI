@@ -1,6 +1,6 @@
 import { identity } from 'ramda';
 import MealService from 'Business/Meals/Service';
-import ProfileService from 'Business/Auth/Profile/Sevice';
+import ProfileService from 'Business/Users/Profile/Sevice';
 import * as mealActionTypes from 'Data/ActionTypes/mealsActionTypes';
 import * as userActionTypes from 'Data/ActionTypes/userActionTypes';
 import {
@@ -11,10 +11,12 @@ import {
 } from 'Data/ActionCreators/mealsActionCreators';
 import {
     setUsername,
-    setEmail
+    setEmail,
+    setUsernamesList
 } from 'Data/ActionCreators/userActionCreators';
 
 import { call, put, take, takeEvery } from 'redux-saga/effects';
+import UsersService from 'Business/Users/Users/Service';
 
 
 export function* loadMeals() {
@@ -49,5 +51,20 @@ export function* getProfile() {
 
     yield put(setUsername(username));
     yield put(setEmail(email));
-    //yield put(setUsername(errors));//errors
+    //yield put(setMessages(errors));//errors
+}
+
+export function* getUsers() {
+    const usernames = yield call(UsersService.get);
+    const nextAction = usernames.match({
+        Ok: setUsernamesList,
+        Err: identity //setMessages
+    });
+
+    yield put(nextAction);
+
+}
+
+export function* watchGetUsers() {
+    yield takeEvery(userActionTypes.GET_USERNAMES_LIST, getUsers);
 }

@@ -29,3 +29,20 @@ export interface IGetProfileAction extends IReduxAction {}
 export function getProfile(): IGetProfileAction {
     return { type: userActions.GET_PROFILE }
 }
+
+export interface IGetUsernamesListAction extends IReduxAction { }
+
+export function getUsernamesList(): IGetUsernamesListAction {
+    return { type: userActions.GET_USERNAMES_LIST }
+}
+
+export interface ISetUsernamesListAction extends IReduxAction { 
+    usernamesList: string[]
+}
+
+export function setUsernamesList(usernames: string[] = []): ISetUsernamesListAction {
+    return {
+        type: userActions.SET_USERNAMES_LIST,
+        usernamesList: usernames
+    }
+}

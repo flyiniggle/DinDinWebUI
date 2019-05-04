@@ -1,5 +1,6 @@
-import { curry, map } from 'ramda';
+import { curry, map, pipe } from 'ramda';
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
@@ -19,6 +20,8 @@ import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 import './Meal.sass';
 import Ribbon from 'Components/Ribbon/Ribbon';
+import { usernamesList } from 'Data/Selectors/userSelectors';
+import { getUsernamesList } from 'Data/ActionCreators/userActionCreators';
 
 
 const getRenderUseIt = curry(function (meal: IMeal, handler: (IMeal) => any) {
@@ -38,9 +41,11 @@ const getRenderUseIt = curry(function (meal: IMeal, handler: (IMeal) => any) {
 });
 
 
-function Meal(props: IMealProps) {
+function MealBase(props: IMealProps) {
     const {
         meal: maybeMeal,
+        getUsernamesList,
+        usernamesList,
         messages,
         isWorking,
         saveField,
@@ -54,6 +59,11 @@ function Meal(props: IMealProps) {
         acknowledgeMessage
     } = props;
 
+    React.useEffect(function () {
+        if (maybeMeal.isJust()) {
+            getUsernamesList();
+        }
+    }, [getUsernamesList]);
 
     if (maybeMeal.isNothing()) {
         return <p>Loading...</p>
@@ -118,6 +128,7 @@ function Meal(props: IMealProps) {
         onCancel: cancelEditingHandler,
         submitting: (activeField === editableFields.notes) && isWorking
     };
+
 
     return (
         <div className="meal col-12">
@@ -191,4 +202,19 @@ function Meal(props: IMealProps) {
     );
 }
 
+const mapStateToProps = function (state) {
+    return {
+        usernamesList: usernamesList(state)
+    };
+};
+
+const mapDispatchToProps = function (dispatch) {
+    return {
+        getUsernamesList: pipe(getUsernamesList, dispatch)
+    };
+};
+
+const Meal = connect(mapStateToProps, mapDispatchToProps)(MealBase)
+
+export { MealBase };
 export default Meal;

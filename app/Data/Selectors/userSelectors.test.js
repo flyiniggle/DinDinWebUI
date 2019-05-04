@@ -59,4 +59,17 @@ describe('#Data #Selectors #userSelectors', function() {
             expect(result.unwrapOr('fail')).toEqual('fail');
         });
     });
+
+    describe('#usernamesLit', function() {
+        it('should return the list of usernames.', function() {
+            const testStore = {
+                user: {
+                    usernamesList: ['fooddude', 'muffinman', 'bakingqueen']
+                }
+            };
+            const result = selectors.usernamesList(testStore);
+
+            expect(result).toEqual(testStore.user.usernamesList);
+        });
+    });
 });

@@ -4,10 +4,13 @@ import IMeal from 'Business/Meals/Types/Meal';
 import INewMeal from 'Business/Meals/Types/NewMeal';
 import IMessage from 'Business/Validation/Types/Message';
 import { Maybe } from 'true-myth';
+import { IGetUsernamesListAction } from 'Data/ActionCreators/userActionCreators';
 
 
 interface IMealProps {
     meal: Maybe<IMeal | INewMeal>
+    usernamesList: string[]
+    getUsernamesList: () => IGetUsernamesListAction
     messages?: Maybe<IMessage[]>
     isWorking: boolean
     saveField?: () => void

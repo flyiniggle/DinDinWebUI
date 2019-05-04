@@ -2,10 +2,11 @@ import { Result } from 'true-myth';
 import MealService from 'Business/Meals/Service';
 import { setMealMessages, setMeals, startMealsLoading, endMealsLoading } from 'Data/ActionCreators/mealsActionCreators';
 import { GET_PROFILE } from 'Data/ActionTypes/userActionTypes';
-import { setUsername, setEmail } from 'Data/ActionCreators/userActionCreators';
-import ProfileService from 'Business/Auth/Profile/Sevice';
+import { setUsername, setEmail, setUsernamesList } from 'Data/ActionCreators/userActionCreators';
+import ProfileService from 'Business/Users/Profile/Sevice';
 
-import { loadMeals, getProfile } from './dinDinSagas';
+import UsersService from 'Business/Users/Users/Service';
+import { loadMeals, getProfile, getUsers } from './dinDinSagas';
 
 import { call, put, take } from 'redux-saga/effects';
 
@@ -109,6 +110,19 @@ describe('#Data #dinDinSagas', function() {
             expect(profileLoader.next().value).toEqual(expectedSecondAction);
             expect(profileLoader.next(testResult).value).toEqual(expectedThirdAction);
             expect(profileLoader.next().value).toEqual(expectedFourthAction);
+        });
+    });
+
+    describe('getUsers', function() {
+        it('should load a list of active users names.', function() {
+            const testNames = ['fooddude', 'muffinman', 'bakingqueen'];
+            const testResult = Result.ok(testNames);
+            const expectedFirstAction = call(UsersService.get);
+            const expectedSecondAction = put(setUsernamesList(testNames));
+            const userNamesListLoader = getUsers();
+
+            expect(userNamesListLoader.next().value).toEqual(expectedFirstAction);
+            expect(userNamesListLoader.next(testResult).value).toEqual(expectedSecondAction);
         });
     });
 });
