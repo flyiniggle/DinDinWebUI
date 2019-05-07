@@ -11,6 +11,7 @@ import IUser from 'Business/Auth/Types/User';
 interface IMealProps {
     meal: Maybe<IMeal | INewMeal>
     usernamesList: IUser[]
+    username: Maybe<string>
     getUsernamesList: () => IGetUsernamesListAction
     messages?: Maybe<IMessage[]>
     isWorking: boolean

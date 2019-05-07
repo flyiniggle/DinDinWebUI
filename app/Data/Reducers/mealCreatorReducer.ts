@@ -4,7 +4,7 @@ import IMealCreatorState from 'Data/Reducers/Types/IMealCreatorState';
 import createReducer from 'Data/Lib/createReducer';
 
 
-const generateNewMeal = () =>({
+const generateNewMeal = () => ({
     name: '',
     ingredients: [],
     taste: 0,

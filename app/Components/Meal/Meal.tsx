@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import IMeal from 'Business/Meals/Types/Meal';
 import Message from 'Business/Validation/Types/Message';
+import Collaborations, { ICollaborationsProps } from 'Components/Meal/Collaborations/Collaborations';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
 import DisplayOrEditIngredients, { IDisplayOrEditIngredientsProps } from 'Components/Meal/DisplayOrEditIngredients/DisplayOrEditIngredients';
@@ -14,16 +15,14 @@ import DisplayOrEditTaste, { IDisplayOrEditTasteProps } from 'Components/Meal/Di
 import editableFields from 'Components/Meal/Types/editableFields';
 import IMealProps from 'Components/Meal/Types/IMealProps';
 import UsedCountDisplay from 'Components/Meal/UsedCountDisplay';
+import Ribbon from 'Components/Ribbon/Ribbon';
+import { usernamesList, username } from 'Data/Selectors/userSelectors';
+import { getUsernamesList } from 'Data/ActionCreators/userActionCreators';
 import AlertBar from 'UI/Alert/AlertBar';
 import AlertContianer from 'UI/Alert/AlertContainer';
 import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 
 import './Meal.sass';
-import Ribbon from 'Components/Ribbon/Ribbon';
-import { usernamesList } from 'Data/Selectors/userSelectors';
-import { getUsernamesList } from 'Data/ActionCreators/userActionCreators';
-import DisplayCollaborators from './DisplayOrEditCollaborators/DisplayCollaborators';
-import DisplayOrEditCollaborators, { IDisplayOrEditCollaboratorsProps } from './DisplayOrEditCollaborators/DisplayOrEditCollaborators';
 
 
 const getRenderUseIt = curry(function (meal: IMeal, handler: (IMeal) => any) {
@@ -48,6 +47,7 @@ function MealBase(props: IMealProps) {
         meal: maybeMeal,
         getUsernamesList,
         usernamesList,
+        username,
         messages,
         isWorking,
         saveField,
@@ -130,16 +130,12 @@ function MealBase(props: IMealProps) {
         onCancel: cancelEditingHandler,
         submitting: (activeField === editableFields.notes) && isWorking
     };
-    const displayOrEditCollaboratorsProps: IDisplayOrEditCollaboratorsProps = {
-        onSave: saveField,
-        active: activeField === editableFields.collaborators,
-        activate: () => props.activateEditor(editableFields.collaborators, meal.collaborators),
-        users: usernamesList,
-        collaborators: [2].map(c => usernamesList.find(user => user.id === c)),
-        onCancel: cancelEditingHandler,
-        onChange: () => undefined
+    const collaborationsProps: ICollaborationsProps = {
+        ownerName: 'owner' in meal ? meal.owner : username.unwrapOr(''),
+        currentUserName: username.unwrapOr(''),
+        collaborations: meal.collaborators,
+        users: usernamesList
     }
-
 
     return (
         <div className="meal col-12">
@@ -163,14 +159,14 @@ function MealBase(props: IMealProps) {
             </div>
             <div className="row meal-main">
                 <div className="col-12">
-                    <div className="row mb-4 mx-2 d-flex">
+                    <div className="meal-info-box row mb-4 mx-2 d-flex">
                         <div className="col-12 col-md-6">
                             <div className="editable">
                                 <DisplayOrEditName {...displayOrEditNameProps} />
                             </div>
                         </div>
                         <div className="col-12 col-md-6">
-                            <DisplayOrEditCollaborators { ...displayOrEditCollaboratorsProps} />
+                            <Collaborations {...collaborationsProps} />
                         </div>
                     </div>
                     <div className="row mb-5 mx-2">
@@ -220,7 +216,8 @@ function MealBase(props: IMealProps) {
 
 const mapStateToProps = function (state) {
     return {
-        usernamesList: usernamesList(state)
+        usernamesList: usernamesList(state),
+        username: username(state)
     };
 };
 
