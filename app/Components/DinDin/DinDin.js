@@ -1,7 +1,7 @@
 import { hot } from 'react-hot-loader/root';
 import authStatus from 'Business/Auth/authStatus';
 import UserContext from 'Business/Auth/UserContext';
-import DinDinService from 'Business/Services/DinDinService';
+import DinDinService from 'Business/Services/DinDinServiceConnector';
 import DinDinAppBase from 'Components/DinDin/DinDinApp';
 import Splash from 'Components/Splash/Splash';
 import ProtectedRoute from 'UI/ProtectedRoute';

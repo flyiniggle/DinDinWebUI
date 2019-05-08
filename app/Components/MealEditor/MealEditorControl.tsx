@@ -2,7 +2,7 @@ import * as React from 'react';
 import editableFields from "Components/Meal/Types/editableFields";
 import IMealEditorControlProps from 'Components/MealEditor/Types/IMealEditorControlProps';
 import IMealProps from 'Components/Meal/Types/IMealProps';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 import { events } from 'Data/Middleware/events';
 import { MEAL_EDITOR_ACKNOWLEDGE_UPDATE_MEAL } from 'Data/ActionTypes/mealEditorActionTypes';
 
@@ -65,11 +65,11 @@ function MealEditorControl(MealComponent): React.ComponentClass {
         }
 
         save = () => {
-            const updates: Partial<IMeal> = { [this.state.activeField]: this.state.activeFieldValue }
+            const updates: Partial<Meal> = { [this.state.activeField]: this.state.activeFieldValue }
             const { updateMeal, meal } = this.props;
 
             meal.match({
-                Just: function (meal: IMeal): void {
+                Just: function (meal: Meal): void {
                     updateMeal(meal, updates);
                 },
                 Nothing: () => undefined

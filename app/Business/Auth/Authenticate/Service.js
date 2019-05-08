@@ -1,4 +1,4 @@
-import DinDinService from 'Business/Services/DinDinService';
+import DinDinService from 'Business/Services/DinDinServiceConnector';
 
 
 const AuthService = {

@@ -1,4 +1,4 @@
-interface INewMeal {
+interface NewMeal {
     name: string
     ingredients: Array<string>
     taste: number
@@ -6,4 +6,4 @@ interface INewMeal {
     notes: string
 }
 
-export default INewMeal;
+export default NewMeal;

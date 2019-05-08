@@ -16,12 +16,12 @@ import { call, put, takeEvery } from 'redux-saga/effects';
 import OkMessage from 'Business/Validation/OkMessage';
 import Message from 'Business/Validation/Types/Message';
 import { Result } from 'true-myth';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 
 
 export function* sendCreateMeal(action: ICreateMealAction) {
     yield put(startMealCreatorLoading());
-    const updateResult: Result<IMeal, Message[]> = yield call(createMeal, action.meal);
+    const updateResult: Result<Meal, Message[]> = yield call(createMeal, action.meal);
 
     yield put(endMealCreatorLoading());
 

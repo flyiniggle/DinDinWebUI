@@ -1,16 +1,16 @@
 import * as actions from 'Data/ActionTypes/mealEditorActionTypes';
 import Message from 'Business/Validation/Types/Message';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 import editableFields from 'Components/Meal/Types/editableFields';
 
 
 export interface IUpdateMealAction {
     type: string,
-    meal: IMeal
-    updates: Partial<IMeal>
+    meal: Meal
+    updates: Partial<Meal>
 }
 
-export function updateMeal(meal: IMeal, updates: Partial<IMeal>): IUpdateMealAction {
+export function updateMeal(meal: Meal, updates: Partial<Meal>): IUpdateMealAction {
     return {
         type: actions.MEAL_EDITOR_UPDATE_MEAL,
         meal,
@@ -21,10 +21,10 @@ export function updateMeal(meal: IMeal, updates: Partial<IMeal>): IUpdateMealAct
 
 export interface IUseMealAction {
     type: string,
-    meal: IMeal
+    meal: Meal
 }
 
-export function useMeal(meal: IMeal): IUseMealAction {
+export function useMeal(meal: Meal): IUseMealAction {
     return { type: actions.MEAL_EDITOR_USE_MEAL, meal };
 }
 

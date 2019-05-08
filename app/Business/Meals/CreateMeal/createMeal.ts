@@ -1,11 +1,11 @@
 import INewMeal from '../Types/NewMeal';
-import IMeal from '../Types/Meal';
+import Meal from '../Types/Meal';
 import MealsService from '../Service';
 import responseCheck from './Validation/responseCheck';
-import { Result } from 'true-myth';
 import Message from 'Business/Validation/Types/Message';
+import { DinDinServiceResponse } from 'Business/Services/Types/DinDinServiceResponse';
 
-async function createMeal(meal: INewMeal): Promise<Result<IMeal, Message[]>> {
+async function createMeal(meal: INewMeal): DinDinServiceResponse<Meal, Message[]> {
     const result = await MealsService.post(meal);
 
     return result.mapErr(responseCheck);

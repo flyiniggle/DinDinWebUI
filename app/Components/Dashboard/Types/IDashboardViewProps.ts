@@ -1,12 +1,12 @@
 import { Maybe } from "true-myth";
-import IMeal from "Business/Meals/Types/Meal";
+import Meal from "Business/Meals/Types/Meal";
 
 
 export default interface IDashboardViewProps {
-    meals: Maybe<IMeal[]>
-    filteredMeals: Maybe<IMeal[]>
+    meals: Maybe<Meal[]>
+    filteredMeals: Maybe<Meal[]>
     searchString: string
-    useMeal: (meal: IMeal) => void
+    useMeal: (meal: Meal) => void
     updateSearchString: (string) => void
     mealIsUpdating: boolean,
     dashboardIsLoading: boolean

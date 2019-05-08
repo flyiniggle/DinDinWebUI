@@ -2,7 +2,7 @@ import { curry, map } from 'ramda';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 import Message from 'Business/Validation/Types/Message';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
 import DisplayOrEditDifficulty, { IDisplayOrEditDifficultyProps } from 'Components/Meal/DisplayOrEditDifficulty/DisplayOrEditDifficulty';
@@ -21,7 +21,7 @@ import './Meal.sass';
 import Ribbon from 'Components/Ribbon/Ribbon';
 
 
-const getRenderUseIt = curry(function (meal: IMeal, handler: (IMeal) => any) {
+const getRenderUseIt = curry(function (meal: Meal, handler: (IMeal) => any) {
     return (
         <button
             className="btn btn-sm btn-accent"

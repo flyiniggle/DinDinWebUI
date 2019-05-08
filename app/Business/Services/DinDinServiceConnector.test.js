@@ -1,16 +1,16 @@
 import authStatus from 'Business/Auth/authStatus';
 import { spy } from 'sinon';
 
-import DinDinService from './DinDinService';
+import DinDinServiceConnector from './DinDinServiceConnector';
 
-describe('#Business #Services #DinDinService', function() {
+describe('#Business #Services #DinDinServiceConnector', function() {
     beforeEach(() => { fetch.mockResponse(JSON.stringify({ token: '1234' })); });
     afterEach(fetch.resetMocks);
 
     describe('#send', function() {
         it('should send a request to the server with root html and specified path.', async function() {
             expect.assertions(1);
-            await DinDinService.send('/test/');
+            await DinDinServiceConnector.send('/test/');
 
             const url = fetch.mock.calls[0][0];
 
@@ -19,7 +19,7 @@ describe('#Business #Services #DinDinService', function() {
 
         it('should send a request to the server with default headers.', async function() {
             expect.assertions(2);
-            await DinDinService.send('/test/');
+            await DinDinServiceConnector.send('/test/');
 
             const { credentials, headers } = fetch.mock.calls[0][1];
 
@@ -34,7 +34,7 @@ describe('#Business #Services #DinDinService', function() {
             authStatus.authToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTM2MDYzOTQ1LCJlbWFpbCI6ImFkbWluQGRpbmRpbi5jb20ifQ.XE1L9rd1akii_Y6Kv-YqG0xgdKgmtw1OgWjL8BWHC_o';
 
             expect.assertions(1);
-            await DinDinService.send('/test/');
+            await DinDinServiceConnector.send('/test/');
 
             const { headers } = fetch.mock.calls[0][1];
 
@@ -54,7 +54,7 @@ describe('#Business #Services #DinDinService', function() {
             };
 
             expect.assertions(4);
-            await DinDinService.send('/test/', options);
+            await DinDinServiceConnector.send('/test/', options);
 
             const { method, body, headers, credentials } = fetch.mock.calls[0][1];
 
@@ -75,7 +75,7 @@ describe('#Business #Services #DinDinService', function() {
             };
 
             expect.assertions(4);
-            await DinDinService.send('/test/', options);
+            await DinDinServiceConnector.send('/test/', options);
 
             const { method, body, headers, credentials } = fetch.mock.calls[0][1];
 
@@ -97,7 +97,7 @@ describe('#Business #Services #DinDinService', function() {
             };
 
             expect.assertions(1);
-            await DinDinService.send('/test/', options);
+            await DinDinServiceConnector.send('/test/', options);
             const { headers } = fetch.mock.calls[0][1];
 
             expect(headers).toMatchObject({
@@ -110,7 +110,7 @@ describe('#Business #Services #DinDinService', function() {
 
         it('should return an ok result containing the data if the fetch succeeds.', async function() {
             expect.assertions(2);
-            const result = await DinDinService.send('/test/');
+            const result = await DinDinServiceConnector.send('/test/');
 
             expect(result.isOk()).toBe(true);
             expect(result.unwrapOr({})).toEqual({ token: '1234' });
@@ -121,7 +121,7 @@ describe('#Business #Services #DinDinService', function() {
             fetch.mockReject('this is bad');
             expect.assertions(2);
 
-            const result = await DinDinService.send('/test/');
+            const result = await DinDinServiceConnector.send('/test/');
 
             expect(result.isErr()).toBe(true);
             expect(result.unsafelyUnwrapErr()).toEqual('this is bad');
@@ -132,8 +132,8 @@ describe('#Business #Services #DinDinService', function() {
 
             expect.assertions(1);
             fetch.mockResponseOnce(JSON.stringify({}), { status: 401 });
-            DinDinService.addNotLoggedInHandler(handler);
-            const result = await DinDinService.send('/test/');
+            DinDinServiceConnector.addNotLoggedInHandler(handler);
+            const result = await DinDinServiceConnector.send('/test/');
 
             expect(result.isErr()).toBe(true);
         });
@@ -145,8 +145,8 @@ describe('#Business #Services #DinDinService', function() {
 
             expect.assertions(1);
             fetch.mockResponseOnce(JSON.stringify({}), { status: 401 });
-            DinDinService.addNotLoggedInHandler(handler);
-            await DinDinService.send('/test/');
+            DinDinServiceConnector.addNotLoggedInHandler(handler);
+            await DinDinServiceConnector.send('/test/');
 
             expect(handler.calledOnce).toBe(true);
         });
@@ -155,12 +155,12 @@ describe('#Business #Services #DinDinService', function() {
             const handler = spy();
 
             expect.assertions(1);
-            DinDinService.addNotLoggedInHandler(handler);
+            DinDinServiceConnector.addNotLoggedInHandler(handler);
             fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
-            await DinDinService.send('/test/');
+            await DinDinServiceConnector.send('/test/');
 
             fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
-            await DinDinService.send('/test/');
+            await DinDinServiceConnector.send('/test/');
 
             expect(handler.callCount).toBe(0);
         });
@@ -172,8 +172,8 @@ describe('#Business #Services #DinDinService', function() {
 
             expect.assertions(1);
             fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
-            DinDinService.addNotOkResponseHandler(handler);
-            await DinDinService.send('/test/');
+            DinDinServiceConnector.addNotOkResponseHandler(handler);
+            await DinDinServiceConnector.send('/test/');
 
             expect(handler.calledOnce).toBe(true);
         });
@@ -182,9 +182,9 @@ describe('#Business #Services #DinDinService', function() {
             const handler = spy();
 
             expect.assertions(1);
-            DinDinService.addNotOkResponseHandler(handler);
+            DinDinServiceConnector.addNotOkResponseHandler(handler);
             fetch.mockResponseOnce(JSON.stringify({}));
-            await DinDinService.send('/test/');
+            await DinDinServiceConnector.send('/test/');
 
             expect(handler.callCount).toBe(0);
         });

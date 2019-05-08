@@ -1,10 +1,11 @@
-import SignupService from 'Business/Signup/Service';
+import SignupService, { SignupProps } from 'Business/Signup/Service';
 import preflightCheck from 'Business/Signup/Validation/preflightCheck';
 import Message from "Business/Validation/Types/Message";
 import responseCheck from "Business/Signup/Validation/responseCheck";
 import { Result } from "true-myth";
 import { pipe, pipeP } from 'ramda';
-import IUser, { createUser } from "Business/Auth/Types/User";
+import User, { createUser } from "Business/Auth/Types/User";
+import { DinDinServiceResponse } from 'Business/Services/Types/DinDinServiceResponse';
 
 interface SignupData {
     username: string,
@@ -13,12 +14,12 @@ interface SignupData {
     passwordRepeat: string
 }
 
-async function signup(data: SignupData): Promise<Result<IUser, Message[]>> {
-    const trySignup = pipeP(
+async function signup(data: SignupData): DinDinServiceResponse<User, Message[]> {
+    const trySignup: (t: SignupProps) => Result<User, Message[]> = pipeP(
         SignupService.post,
         Result.mapErr(responseCheck)
     );
-    const result = await pipe(
+    const result: Result<User, Message[]> = await pipe(
         preflightCheck,
         Result.andThen(trySignup)
     )(data);

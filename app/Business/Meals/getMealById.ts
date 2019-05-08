@@ -1,7 +1,7 @@
 import { curry } from 'ramda';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 
-const getMealById = curry(function (id: number | string, meals: Array<IMeal>): IMeal {
+const getMealById = curry(function (id: number | string, meals: Array<Meal>): Meal {
     return meals.find(m => m.id.toString() === id.toString())
 });
 

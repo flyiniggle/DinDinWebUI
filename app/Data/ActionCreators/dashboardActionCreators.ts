@@ -1,14 +1,14 @@
 import * as actions from 'Data/ActionTypes/dashboardActionTypes';
 import Message from 'Business/Validation/Types/Message';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 
 
 export interface IUseMealAction {
     type: string,
-    meal: IMeal
+    meal: Meal
 }
 
-export function useMeal(meal: IMeal): IUseMealAction {
+export function useMeal(meal: Meal): IUseMealAction {
     return { type: actions.DASHBOARD_USE_MEAL, meal };
 }
 
