@@ -1,6 +1,6 @@
 import * as actions from 'Data/ActionTypes/mealCreatorActionTypes';
 import Message from 'Business/Validation/Types/Message';
-import INewMeal from 'Business/Meals/Types/INewMeal';
+import INewMeal from 'Business/Meals/Types/NewMeal';
 import editableFields from 'Components/Meal/Types/editableFields';
 
 

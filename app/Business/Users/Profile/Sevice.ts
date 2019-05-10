@@ -1,8 +1,8 @@
-import DinDinService from "Business/Services/DinDinService";
+import DinDinServiceConnector from "Business/Services/DinDinServiceConnector";
 
 
 const ProfileService = {
-    get: () => DinDinService.send('/users/profile')
+    get: () => DinDinServiceConnector.send('/users/profile')
 }
 
 

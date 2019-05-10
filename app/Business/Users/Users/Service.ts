@@ -1,13 +1,14 @@
-import DinDinService from "Business/Services/DinDinService";
-import IUser from 'Business/Auth/Types/User'
+import DinDinServiceConnector from "Business/Services/DinDinServiceConnector";
+import User from 'Business/Auth/Types/User'
 import { Result } from "true-myth";
+import { DinDinServiceResponse } from 'Business/Services/Types/DinDinServiceResponse';
 
 interface IUserService {
-    get: () => Promise<Result<IUser, unknown>>
+    get: () => DinDinServiceResponse<User, unknown>
 }
 
 const UsersService: IUserService = {
-    get: () => DinDinService.send('/users/')
+    get: () => DinDinServiceConnector.send('/users/')
 };
 
 export default UsersService;

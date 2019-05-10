@@ -4,11 +4,12 @@ import { setMealMessages, setMeals, startMealsLoading, endMealsLoading } from 'D
 import { GET_PROFILE } from 'Data/ActionTypes/userActionTypes';
 import { setUsername, setEmail, setUsernamesList } from 'Data/ActionCreators/userActionCreators';
 import ProfileService from 'Business/Users/Profile/Sevice';
-
 import UsersService from 'Business/Users/Users/Service';
+
 import { loadMeals, getProfile, getUsers } from './dinDinSagas';
 
 import { call, put, take } from 'redux-saga/effects';
+
 
 describe('#Data #dinDinSagas', function() {
     describe('loadMeals', function() {
