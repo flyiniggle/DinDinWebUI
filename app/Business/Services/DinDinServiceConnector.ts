@@ -1,11 +1,12 @@
 import { mergeDeepRight } from 'ramda';
 import { Result } from 'true-myth';
 import authStatus from 'Business/Auth/authStatus';
+import { DinDinServiceResponse } from './Types/DinDinServiceResponse';
 
 const DinDinAPI = __APIRoot__;
 
-function DinDinService() {
-    this.send = async function (url: string, options: object = {}): Promise<Result<any, any>> {
+function DinDinServiceConnector() {
+    this.send = async function (url: string, options: object = {}): DinDinServiceResponse<unknown, unknown> {
         const authHeader = authStatus.authToken ? { Authorization: `JWT ${authStatus.authToken}` } : {};
         const defaultOptions = {
             credentials: 'include',
@@ -47,4 +48,4 @@ function DinDinService() {
     }.bind(this);
 }
 
-export default new DinDinService();
+export default new DinDinServiceConnector();

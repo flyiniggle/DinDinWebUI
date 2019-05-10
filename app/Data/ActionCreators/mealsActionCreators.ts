@@ -1,5 +1,5 @@
 import * as actions from 'Data/ActionTypes/mealsActionTypes';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 import Message from 'Business/Validation/Types/Message';
 
 
@@ -14,20 +14,20 @@ export function getMeals(): IGetMealsAction {
 
 export interface ISetMealsAction {
     type: string,
-    meals: IMeal[]
+    meals: Meal[]
 }
 
-export function setMeals(meals: IMeal[]): ISetMealsAction {
+export function setMeals(meals: Meal[]): ISetMealsAction {
     return { type: actions.SET_MEALS, meals };
 }
 
 
 export interface ISetMealAction {
     type: string,
-    meal: IMeal
+    meal: Meal
 }
 
-export function setMeal(meal: IMeal): ISetMealAction {
+export function setMeal(meal: Meal): ISetMealAction {
     return { type: actions.SET_MEAL, meal };
 }
 
@@ -44,20 +44,20 @@ export function setMealMessages(messages: Message[] = null): ISetMealMessagesAct
 
 export interface IUseMealAction {
     type: string,
-    meal: IMeal
+    meal: Meal
 }
 
-export function useMeal(meal: IMeal): IUseMealAction {
+export function useMeal(meal: Meal): IUseMealAction {
     return { type: actions.USE_MEAL, meal };
 }
 
 export interface IUpdateMealAction {
     type: string,
-    meal: IMeal,
-    updates: Partial<IMeal>
+    meal: Meal,
+    updates: Partial<Meal>
 }
 
-export function updateMeal(meal: IMeal, updates: Partial<IMeal> = {}): IUpdateMealAction {
+export function updateMeal(meal: Meal, updates: Partial<Meal> = {}): IUpdateMealAction {
     return {type: actions.UPDATE_MEAL, meal, updates };
 }
 

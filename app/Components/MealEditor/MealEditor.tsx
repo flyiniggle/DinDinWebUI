@@ -1,10 +1,10 @@
 import { pipe } from 'ramda';
 import { connect } from 'react-redux';
-import Meal from 'Components/Meal/Meal';
+import MealView from 'Components/Meal/Meal';
 import MealEditorControl from 'Components/MealEditor/MealEditorControl';
 import { meal } from 'Data/Selectors/mealsSelectors';
 import IMealEditorControlProps from './Types/IMealEditorControlProps';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 import {
     acknowledgeMealEditorMessage,
     useMeal,
@@ -24,7 +24,7 @@ const mapStateToProps = function (state, ownProps): Partial<IMealEditorControlPr
 function mapDispatchToProps(dispatch): Partial<IMealEditorControlProps> {
     return {
         useMeal: pipe(useMeal, dispatch),
-        updateMeal: function (meal: IMeal, updates: Partial<IMeal>): void {
+        updateMeal: function (meal: Meal, updates: Partial<Meal>): void {
             const action = updateMeal(meal, updates)
 
             dispatch(action)
@@ -34,6 +34,6 @@ function mapDispatchToProps(dispatch): Partial<IMealEditorControlProps> {
 }
 
 const MealEditorProvider = connect(mapStateToProps, mapDispatchToProps);
-const MealEditor = pipe(MealEditorControl, MealEditorProvider)(Meal);
+const MealEditor = pipe(MealEditorControl, MealEditorProvider)(MealView);
 
 export default MealEditor;

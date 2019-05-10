@@ -1,5 +1,5 @@
 import { pipe, reverse } from 'ramda';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 
 interface UsedCount {
     usedCount: number
@@ -16,7 +16,7 @@ function returnMoreUsed(mealA: UsedCount, mealB: UsedCount): number {
     return mealBUses - mealAUses;
 }
 
-function sortMostUsed(meals: IMeal[]) {
+function sortMostUsed(meals: Meal[]) {
     return Array.from(meals as UsedCount[]).sort(returnMoreUsed);
 }
 
@@ -27,11 +27,11 @@ function compareLastUsed(mealA: LastUsed, mealB: LastUsed): number {
     return new Date(mealBDate).getTime() - new Date(mealADate).getTime();
 }
 
-function sortRecentlyPrepared(meals: IMeal[] = []): IMeal[] {
+function sortRecentlyPrepared(meals: Meal[] = []): Meal[] {
     return Array.from(meals).sort(compareLastUsed);
 }
 
-function sortLeastRecentlyPrepared(meals: IMeal[] = []) {
+function sortLeastRecentlyPrepared(meals: Meal[] = []) {
     return pipe(
         sortRecentlyPrepared,
         reverse

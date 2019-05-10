@@ -1,14 +1,14 @@
 import Message from 'Business/Validation/Types/Message';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 import { Maybe } from 'true-myth';
 
 
 interface IMealEditorControlProps {
-    meal: Maybe<IMeal>,
+    meal: Maybe<Meal>,
     isWorking: boolean
     messages: Maybe<Message[]>
-    useMeal: (IMeal: IMeal) => void
-    updateMeal: (IMeal: IMeal, updates: Partial<IMeal>) => void,
+    useMeal: (IMeal: Meal) => void
+    updateMeal: (IMeal: Meal, updates: Partial<Meal>) => void,
     acknowledgeMessage: (id: string) => void
 }
 

@@ -4,7 +4,7 @@ import createReducer from 'Data/Lib/createReducer';
 import safeGetProp from 'Business/Lib/safeGetProp';
 import IMealsState from './Types/IMealsState';
 import { ISetMealAction, ISetMealMessagesAction, ISetMealsAction } from 'Data/ActionCreators/mealsActionCreators';
-import IMeal from 'Business/Meals/Types/Meal';
+import Meal from 'Business/Meals/Types/Meal';
 
 
 const initialState: IMealsState = {
@@ -31,7 +31,7 @@ export function setMeal(state: IMealsState, action: ISetMealAction): IMealsState
         const replaceMatchingMeal = map(when(isMatchingMeal, mergeDeepLeft(meal)));
         const addMeal = append(meal);
         const setter = mealExists ? replaceMatchingMeal : addMeal;
-        const meals: IMeal[] = setter(state.meals);
+        const meals: Meal[] = setter(state.meals);
 
         return {
             ...state,

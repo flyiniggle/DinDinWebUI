@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import editableFields from 'Components/Meal/Types/editableFields';
-import IMeal from 'Business/Meals/Types/Meal';
-import INewMeal from 'Business/Meals/Types/INewMeal';
+import INewMeal from 'Business/Meals/Types/NewMeal';
+import Meal from 'Business/Meals/Types/Meal';
 import IMessage from 'Business/Validation/Types/Message';
 import { Maybe } from 'true-myth';
 import { IGetUsernamesListAction } from 'Data/ActionCreators/userActionCreators';
@@ -9,14 +9,14 @@ import IUser from 'Business/Auth/Types/User';
 
 
 interface IMealProps {
-    meal: Maybe<IMeal | INewMeal>
+    meal: Maybe<Meal | INewMeal>
     usernamesList: IUser[]
     username: Maybe<string>
     getUsernamesList: () => IGetUsernamesListAction
     messages?: Maybe<IMessage[]>
     isWorking: boolean
     saveField?: () => void
-    useMeal?: (meal: IMeal) => void
+    useMeal?: (meal: Meal) => void
     saveNewMeal?: () => void
     updateFieldHandler: (any) => void
     updateListFieldHandler: (a: Array<any>) => void
