@@ -20,13 +20,13 @@ export const newMeal = function(state: IMealSelectorStateProp): INewMeal {
 
 export const isSaved: (state: IMealSelectorStateProp) => boolean = pipe(
     getMealCreatorProp,
-    Maybe.chain(safeGetProp('isSaved')),
+    Maybe.chain(<(o: object) => Maybe<boolean>><unknown>safeGetProp('isSaved')),
     Maybe.unwrapOr(false)
 );
 
 export const isLoading: (state: IMealSelectorStateProp) => boolean = pipe(
     getMealCreatorProp,
-    Maybe.chain(safeGetProp('isLoading')),
+    Maybe.chain(<(o: object) => Maybe<boolean>><unknown>safeGetProp('isLoading')),
     Maybe.unwrapOr(false)
 );
 

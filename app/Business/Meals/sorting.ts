@@ -1,15 +1,8 @@
 import { pipe, reverse } from 'ramda';
 import Meal from 'Business/Meals/Types/Meal';
 
-interface UsedCount {
-    usedCount: number
-}
 
-interface LastUsed {
-    lastUsed: string
-}
-
-function returnMoreUsed(mealA: UsedCount, mealB: UsedCount): number {
+function returnMoreUsed(mealA: Meal, mealB: Meal): number {
     const mealAUses = mealA.usedCount || 0;
     const mealBUses = mealB.usedCount || 0;
 
@@ -17,10 +10,10 @@ function returnMoreUsed(mealA: UsedCount, mealB: UsedCount): number {
 }
 
 function sortMostUsed(meals: Meal[]) {
-    return Array.from(meals as UsedCount[]).sort(returnMoreUsed);
+    return Array.from(meals).sort(returnMoreUsed);
 }
 
-function compareLastUsed(mealA: LastUsed, mealB: LastUsed): number {
+function compareLastUsed(mealA: Meal, mealB: Meal): number {
     const mealADate = mealA.lastUsed || 0;
     const mealBDate = mealB.lastUsed || 0;
 
@@ -32,7 +25,12 @@ function sortRecentlyPrepared(meals: Meal[] = []): Meal[] {
 }
 
 function sortLeastRecentlyPrepared(meals: Meal[] = []) {
-    return pipe(
+    type mealPiper = (
+        f1: (m: Meal[]) => Meal[],
+        f2: (m: Meal[]) => Meal[]
+    ) => (m: Meal[]) => Meal[]
+
+    return (pipe as mealPiper)(
         sortRecentlyPrepared,
         reverse
     )(meals);

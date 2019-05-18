@@ -57,7 +57,7 @@ function DinDinAppBase(props: IDinDinAppProps) {
                         exact
                         path="/meals/:id"
                         render={routeProps => (
-                            <MealEditor mealId={routeProps.match.params.id} />
+                            <MealEditor mealId={(routeProps.match.params.id as number)} />
                         )} />
                 </Switch>
             </div>

@@ -1,17 +1,13 @@
 import getMessagesForField from 'Business/Validation/getMessagesForField';
 import { Maybe } from 'true-myth';
-import { curry, head, pipe } from 'ramda';
+import { curry } from 'ramda';
 import Message from "Business/Validation/Types/Message";
 
-// String => [Message] => Maybe(Message)
-const getFirstMessageForField = curry(function(field: string, messages: Maybe<Message>[]): Maybe<Message> {
-    const getMessages = getMessagesForField(field);
 
-    return pipe(
-        getMessages,
-        head,
-        Maybe.of
-    )(messages);
+// String => [Message] => Maybe(Message)
+const getFirstMessageForField = curry(function(field: string, messages: Message[]): Maybe<Message> {
+    return Maybe.first(getMessagesForField(field, messages))
 });
+
 
 export default getFirstMessageForField;

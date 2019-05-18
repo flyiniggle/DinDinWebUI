@@ -3,7 +3,7 @@ import preflightCheck from 'Business/Signup/Validation/preflightCheck';
 import Message from "Business/Validation/Types/Message";
 import responseCheck from "Business/Signup/Validation/responseCheck";
 import { Result } from "true-myth";
-import { pipe, pipeP } from 'ramda';
+import { pipe, pipeWith, then } from 'ramda';
 import User, { createUser } from "Business/Auth/Types/User";
 import { DinDinServiceResponse } from 'Business/Services/Types/DinDinServiceResponse';
 
@@ -15,10 +15,10 @@ interface SignupData {
 }
 
 async function signup(data: SignupData): DinDinServiceResponse<User, Message[]> {
-    const trySignup: (t: SignupProps) => Result<User, Message[]> = pipeP(
+    const trySignup: (t: SignupProps) => Result<User, Message[]> = pipeWith(then)([
         SignupService.post,
         Result.mapErr(responseCheck)
-    );
+    ]);
     const result: Result<User, Message[]> = await pipe(
         preflightCheck,
         Result.andThen(trySignup)

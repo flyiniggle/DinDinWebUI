@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { addIndex, map, pipe , prop} from 'ramda';
+import { pipe } from 'ramda';
 import { Maybe } from 'true-myth';
-import maybe from 'Business/Lib/maybe';
+import safeGetProp from 'Business/Lib/safeGetProp';
 
 
 interface IDisplayIngredientsProps {
     value?: Array<string>
 }
 
-const mapWithIndex = addIndex(map);
-const renderIngredientsDisplay = mapWithIndex((ingredient, i) => <span key={i} className="d-block">{ingredient}</span>);
+const renderIngredientsDisplay = function (ingredients: string[]) {
+    return ingredients.map((ingredient, i) => <span key={i} className="d-block">{ingredient}</span>);
+}
 const DisplayIngredients = function (props: IDisplayIngredientsProps) {
     return pipe(
-        prop('value'),
-        maybe,
+        safeGetProp('value'),
         Maybe.map(renderIngredientsDisplay),
         Maybe.map(list => <React.Fragment>{list}</React.Fragment>),
         Maybe.unwrapOrElse(() => <span>add ingredients</span>)

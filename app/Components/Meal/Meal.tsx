@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import maybe from 'Business/Lib/maybe';
 import Meal from 'Business/Meals/Types/Meal';
+import NewMeal from 'Business/Meals/Types/NewMeal';
 import Message from 'Business/Validation/Types/Message';
 import Collaborations, { ICollaborationsProps } from 'Components/Meal/Collaborations/Collaborations';
 import LastUsedDisplay from 'Components/Meal/LastUsedDisplay';
@@ -25,7 +26,7 @@ import AsyncButton from 'UI/Forms/AsyncButton/AsyncButton';
 import './Meal.sass';
 
 
-const getRenderUseIt = curry(function (meal: Meal, handler: (IMeal) => any) {
+const getRenderUseIt = curry(function (meal: Meal | NewMeal, handler: (x: Meal | NewMeal) => any) {
     return (
         <button
             className="btn btn-sm btn-accent"

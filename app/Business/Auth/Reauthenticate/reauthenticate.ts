@@ -5,7 +5,7 @@ import authStatus from '../authStatus';
 
 async function reauthenticate(): Promise<void> {
     const result = await ReauthenticateService.post(authStatus.authToken);
-    const newToken = result.match({
+    const newToken = <string>result.match({
         Ok: prop('token'),
         Err: () => ''
     });

@@ -1,4 +1,4 @@
-import { append, eqProps, map, mergeDeepLeft, when } from 'ramda';
+import { append, eqProps, update } from 'ramda';
 import * as actionTypes from 'Data/ActionTypes/mealsActionTypes';
 import createReducer from 'Data/Lib/createReducer';
 import safeGetProp from 'Business/Lib/safeGetProp';
@@ -26,11 +26,10 @@ export function setMeals(state: IMealsState, action: ISetMealsAction): IMealsSta
 export function setMeal(state: IMealsState, action: ISetMealAction): IMealsState {
     if (action.meal) {
         const meal = action.meal;
-        const isMatchingMeal = eqProps('id', meal);
-        const mealExists = state.meals.find(isMatchingMeal);
-        const replaceMatchingMeal = map(when(isMatchingMeal, mergeDeepLeft(meal)));
+        const mealIndex = state.meals.findIndex(eqProps('id', meal));
+        const replaceMatchingMeal = update(mealIndex, meal);
         const addMeal = append(meal);
-        const setter = mealExists ? replaceMatchingMeal : addMeal;
+        const setter = mealIndex > -1 ? replaceMatchingMeal : addMeal;
         const meals: Meal[] = setter(state.meals);
 
         return {

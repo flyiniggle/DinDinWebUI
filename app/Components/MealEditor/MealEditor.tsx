@@ -34,6 +34,6 @@ function mapDispatchToProps(dispatch): Partial<IMealEditorControlProps> {
 }
 
 const MealEditorProvider = connect(mapStateToProps, mapDispatchToProps);
-const MealEditor = pipe(MealEditorControl, MealEditorProvider)(MealView);
+const MealEditor = pipe(MealEditorControl, MealEditorProvider)(MealView) as React.FC<Partial<IMealEditorControlProps>>;
 
 export default MealEditor;

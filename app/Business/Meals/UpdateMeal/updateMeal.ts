@@ -1,13 +1,15 @@
 import Meal from "Business/Meals/Types/Meal";
 import Message from 'Business/Validation/Types/Message';
-import { mergeDeepLeft } from 'ramda';
 import MealsService from '../Service';
 import { Result } from 'true-myth';
 import responseCheck from './Validation/responseCheck';
 
 
 async function updateMeal(meal: Meal, updates: Partial<Meal>): Promise<Result<Meal, Message[]>> {
-    const updatedMeal: Meal = mergeDeepLeft(updates, meal);
+    const updatedMeal: Meal = {
+        ...meal,
+        ...updates
+    };
     const result = await MealsService.patch(meal.id, updatedMeal);
     
     return result.mapErr(responseCheck);

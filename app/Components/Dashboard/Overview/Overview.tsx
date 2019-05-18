@@ -12,10 +12,18 @@ interface OverviewProps {
 const Overview = function(props: OverviewProps) {
     const meals = props.meals || [];
     const getFirstThree = slice(0, 3);
-    const renderMealNamesList = map((meal: Meal) => <li key={ meal.id }>{meal.name}</li>);
+    const renderMealNamesList: (m: Meal[]) => JSX.Element[] = map((meal: Meal) => <li key={ meal.id }>{meal.name}</li>);
+    type pipeFour<A, B, C, D, E> = (
+        first: (a: A) => B,
+        second: (b: B) => C,
+        third: (c: C) => D,
+        fourth: (d: D) => E
+    ) => (a: A) => E
+    let mostPreparedPipe: pipeFour<Meal[], Meal[], Meal[], Meal[], JSX.Element[]> = pipe;
+    let leastPreparedPipe: pipeFour<Meal[], Meal[], Meal[], Meal, string> = pipe;
     const threeMostPrepared = pipe(sortMostUsed, getFirstThree, renderMealNamesList);
-    const threeLeastPrepared = pipe(sortMostUsed, reverse, getFirstThree, renderMealNamesList);
-    const lastMeal = pipe(sortRecentlyPrepared, reverse, last, prop('name'));
+    const threeLeastPrepared = mostPreparedPipe(sortMostUsed, reverse, getFirstThree, renderMealNamesList);
+    const lastMeal = leastPreparedPipe(sortRecentlyPrepared, reverse, last, prop('name'));
 
     return (
         <div className="overview">

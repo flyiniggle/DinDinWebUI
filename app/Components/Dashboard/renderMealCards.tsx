@@ -13,7 +13,7 @@ function renderMealCards(props: Partial<IDashboardViewProps>): JSX.Element | JSX
         mealIsUpdating,
         dashboardIsLoading
     } = props;
-    const hasLoaded = dashboardIsLoading ? Result.err(<span>Loading...</span>) : Result.ok();
+    const hasLoaded: Result<any, JSX.Element> = dashboardIsLoading ? Result.err(<span>Loading...</span>) : Result.ok();
     const areMeals = Result.fromMaybe(<span>Oops! Something went wrong.</span>, meals);
     const areFilteredMeals = Result.fromMaybe(<span>Oops! Something went wrong.</span>, filteredMeals)
     
@@ -32,7 +32,7 @@ function renderMealCards(props: Partial<IDashboardViewProps>): JSX.Element | JSX
     
                 return <MealCard key={meal.id} {...mealCardProps} />
             }),
-            Err: (err) => err
+            Err: (err) => [err]
         })
     )(hasLoaded);
 }

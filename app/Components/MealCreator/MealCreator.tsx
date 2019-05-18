@@ -30,6 +30,6 @@ const MealCreatorStoreConnector = connect(mapStateToProps, mapDispatchToProps);
 const MealCreator = compose(
     MealCreatorStoreConnector,
     MealCreatorControl
-)(Meal)
+)(Meal) as React.FC
 
 export default MealCreator

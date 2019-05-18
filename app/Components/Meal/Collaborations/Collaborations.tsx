@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { map, pipe, prop, propEq } from 'ramda';
+import { pipe, prop, propEq } from 'ramda';
 import IUser from 'Business/Auth/Types/User';
 import { Maybe } from 'true-myth';
 
@@ -19,8 +19,8 @@ function Collaborations(props: ICollaborationsProps) {
     const ownerDisplay = isMyMeal ? 'my meal' : `${ownerName}'s meal`;
     const renderUserFromId = pipe(
         id => Maybe.find(propEq('id', id), users),
-        map(prop('username')),
-        map(u => <h2 className="user-display">{u.split('').shift()}</h2>),
+        Maybe.map(prop('username')),
+        Maybe.map((u: string) => <h2 className="user-display">{u.split('').shift()}</h2>),
         Maybe.unwrapOr(null)
     )
     const collaboratorsDisplay = collaborations.map(renderUserFromId)

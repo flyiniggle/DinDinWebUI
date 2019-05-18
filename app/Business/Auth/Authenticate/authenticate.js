@@ -2,15 +2,15 @@ import authStatus from 'Business/Auth/authStatus';
 import AuthService from 'Business/Auth/Authenticate/Service';
 import preflightCheck from 'Business/Auth/Authenticate/Validation/preflightCheck';
 import responseCheck from 'Business/Auth/Authenticate/Validation/responseCheck';
-import { chain, pipe, pipeP } from 'ramda';
+import { chain, pipe, pipeWith, then } from 'ramda';
 import { Result } from 'true-myth';
 
 // String => String => Promise(Response<Result<User, Message[]>>)
 async function authenticate(username, password) {
-    const authenticateUser = pipeP(
+    const authenticateUser = pipeWith(then)([
         AuthService.post,
         Result.mapErr(responseCheck)
-    );
+    ]);
     const result = await pipe(
         preflightCheck,
         chain(authenticateUser)

@@ -17,7 +17,8 @@ interface IDashboardControllerProps {
 function DashboardControl(Dashboard) {
     return function DashboardController(props: IDashboardControllerProps) {
         const [searchString, setSearchString] = React.useState('');
-        const maybeSearch: Maybe<(t: Meal[]) => Meal[]> = maybe(searchString).map(findMeal).map(filter);
+        const maybeSearch: Maybe<(t: Meal[]) => Meal[]> = maybe(searchString)
+            .map(searchString => filter(findMeal(searchString)) as unknown as (t: Meal[]) => Meal[]);
         const filteredMeals: Maybe<Meal[]> = pipe(
             Maybe.ap(maybeSearch),
             Maybe.or(props.meals)

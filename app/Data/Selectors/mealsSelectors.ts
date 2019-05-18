@@ -1,24 +1,28 @@
-import { map, pipe } from 'ramda';
+import { pipe } from 'ramda';
 import { Maybe } from 'true-myth';
 import safeGetProp from 'Business/Lib/safeGetProp';
 import Meal from 'Business/Meals/Types/Meal';
 import Message from 'Business/Validation/Types/Message';
 import getMealById from 'Business/Meals/getMealById';
 import IMealsState from 'Data/Reducers/Types/IMealsState';
+import RootState from 'Data/Reducers/Types/RootState';
 
-const getMealsProp: (state: IMealsState) => Maybe<Meal[]> = safeGetProp('meals');
 
-export const meals: (state: IMealsState) => Maybe<Meal[]> = pipe(
-    getMealsProp,
-    Maybe.chain(getMealsProp)
+function getMealsProp(x: RootState | IMealsState): Maybe<unknown> {
+    return safeGetProp('meals', x);
+}
+
+export const meals: (state: RootState) => Maybe<Meal[]> = pipe(
+    <(x: { meals: IMealsState }) => Maybe<IMealsState>>getMealsProp,
+    Maybe.chain(<(x: IMealsState) => Maybe<Meal[]>>getMealsProp)
 );
 
-export const meal = function (state: IMealsState, id: number): Maybe<Meal> {
+export const meal = function (state: RootState, id: number): Maybe<Meal> {
     const getMeal = getMealById(id);
 
     return pipe(
         meals,
-        map(getMeal)
+        Maybe.map(getMeal)
     )(state);
 }
 
