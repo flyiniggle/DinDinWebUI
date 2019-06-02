@@ -30,6 +30,7 @@ const displayLastUsed: (date: string) => JSX.Element | null = pipe(
 )
 
 interface IMealCardProps {
+    key?: any
     meal: Meal
     useMeal: (meal: Meal) => void,
     mealIsUpdating: boolean

@@ -5,6 +5,7 @@ import Meal from 'Business/Meals/Types/Meal';
 import MealCard, { IMealCardProps } from './MealCard/MealCard';
 import IDashboardViewProps from './Types/IDashboardViewProps';
 
+
 function renderMealCards(props: Partial<IDashboardViewProps>): JSX.Element | JSX.Element[] {
     const {
         meals,

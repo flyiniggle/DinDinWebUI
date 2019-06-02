@@ -57,7 +57,7 @@ describe('#Components #Dashboard #renderMealCards', function() {
             dashboardIsLoading: true,
             mealIsUpdating: false
         };
-        const wrapper = shallow(renderMealCards(props));
+        const wrapper = shallow(<span>{renderMealCards(props)}</span>);
         expect(wrapper.text()).toEqual('Loading...');
     });
 
@@ -68,7 +68,7 @@ describe('#Components #Dashboard #renderMealCards', function() {
             dashboardIsLoading: false,
             mealIsUpdating: false
         };
-        const wrapper = shallow(renderMealCards(props));
+        const wrapper = shallow(<span>{renderMealCards(props)}</span>);
         expect(wrapper.text()).toEqual('You haven\'t made any meals yet!');
     });
 
@@ -79,7 +79,7 @@ describe('#Components #Dashboard #renderMealCards', function() {
             dashboardIsLoading: false,
             mealIsUpdating: false
         };
-        const wrapper = shallow(renderMealCards(props));
+        const wrapper = shallow(<span>{renderMealCards(props)}</span>);
         expect(wrapper.text()).toEqual('No meals matched your search.');
     });
 
@@ -115,7 +115,7 @@ describe('#Components #Dashboard #renderMealCards', function() {
             dashboardIsLoading: false,
             mealIsUpdating: false
         };
-        const wrapper = shallow(renderMealCards(props));
+        const wrapper = shallow(<span>{renderMealCards(props)}</span>);
         expect(wrapper.text()).toEqual('Oops! Something went wrong.');
     });
 
@@ -126,7 +126,7 @@ describe('#Components #Dashboard #renderMealCards', function() {
             dashboardIsLoading: false,
             mealIsUpdating: false
         };
-        const wrapper = shallow(renderMealCards(props));
+        const wrapper = shallow(<span>{renderMealCards(props)}</span>);
         expect(wrapper.text()).toEqual('Oops! Something went wrong.');
     });
 });

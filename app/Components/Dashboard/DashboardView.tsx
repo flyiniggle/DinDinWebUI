@@ -10,7 +10,6 @@ import 'Styles/theme.sass';
 import './DashboardView.sass';
 
 
-
 function DashboardView(props: IDashboardViewProps) {
     const {
         meals,
